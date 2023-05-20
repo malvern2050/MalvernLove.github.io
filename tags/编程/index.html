@@ -53,6 +53,7 @@
 
 <style>.github-emoji { position: relative; display: inline-block; width: 1.2em; min-height: 1.2em; overflow: hidden; vertical-align: top; color: transparent; }  .github-emoji > span { position: relative; z-index: 10; }  .github-emoji img, .github-emoji .fancybox { margin: 0 !important; padding: 0 !important; border: none !important; outline: none !important; text-decoration: none !important; user-select: none !important; cursor: auto !important; }  .github-emoji img { height: 1.2em !important; width: 1.2em !important; position: absolute !important; left: 50% !important; top: 50% !important; transform: translate(-50%, -50%) !important; user-select: none !important; cursor: auto !important; } .github-emoji-fallback { color: inherit; } .github-emoji-fallback img { opacity: 0 !important; }</style>
 </head>
+<link rel="stylesheet" href="/js/prism/prism.css">
 
 <body>
   
@@ -73,7 +74,7 @@
 <div class="widgets">
 <widget class="widget-wrapper search"><div class="widget-body"><div class="search-wrapper" id="search"><form class="search-form"><input type="text" class="search-input" id="search-input" placeholder="站内搜索"></form><div id="search-result"></div><div class="search-no-result">没有找到内容！</div></div></div></widget>
 
-<widget class="widget-wrapper recent"><div class="widget-header cap theme dis-select"><span class="name">最近更新</span></div><div class="widget-body related-posts fs14"><a class="item title" href="/posts/56014/"><span class="title">⬆️我的简历（请发邮件至email@malvern.love获取密码）</span></a><a class="item title" href="/posts/62492/"><span class="title">从零开始写数控系统0：直线插补</span></a><a class="item title" href="/posts/22404/"><span class="title">塞尔维亚共产党 在第22次共产党和工人党国际会议上的发言</span></a><a class="item title" href="/posts/26985/"><span class="title">共产主义原理</span></a><a class="item title" href="/posts/31923/"><span class="title">一个人的旅行——香港&澳门</span></a></div></widget>
+<widget class="widget-wrapper recent"><div class="widget-header cap theme dis-select"><span class="name">最近更新</span></div><div class="widget-body related-posts fs14"><a class="item title" href="/posts/62713/"><span class="title">python编程：我的电脑开着吗</span></a><a class="item title" href="/posts/62492/"><span class="title">从零开始写数控系统0：直线插补</span></a><a class="item title" href="/posts/56014/"><span class="title">⬆️ 我的简历</span></a><a class="item title" href="/posts/45037/"><span class="title">我的一些诗</span></a><a class="item title" href="/posts/22404/"><span class="title">塞尔维亚共产党 在第22次共产党和工人党国际会议上的发言</span></a></div></widget>
 </div>
 
 
@@ -95,20 +96,34 @@
 
 <div class="nav-wrap"><nav class="sub post cap"><a href="/">近期发布</a><a class="active" href="/tags">标签：编程</a><a href="/archives">归档</a></nav></div>
 
-  <div class="post-list post"><a class="post-card post  reveal" href="/posts/62492/">
+  <div class="post-list post"><a class="post-card post  reveal" href="/posts/62713/">
+<article class="md-text"><h2 class="post-title">python编程：我的电脑开着吗</h2><div class="excerpt"><p>
+一个比较无聊的编程小玩意，学习python写GUI的练手作品。
+
+代码# 我的电脑开着吗
+import time
+import random
+import tkinter.ttk
+
+def show():
+    # 进度值最大值
+    progressbarOne['maximum'] = 100
+    # 进度值初始值
+    progressbarOne['value'] = 0...</p></div><div class="meta cap"><span class="cap" id="post-meta">发布于&nbsp;<time datetime="2023-05-20T09:33:55.762Z">2023-05-20</time></span></div></article>
+</a><a class="post-card post  reveal" href="/posts/62492/">
 <article class="md-text"><h2 class="post-title">从零开始写数控系统0：直线插补</h2><div class="excerpt"><p>
 本来打算直接写一个数控系统可视化的python程序的，但是发现难度比较大（主要在圆弧编程方面），所以就准备从头开始写吧。
 
 
-详细的思路请参见https://blog.csdn.net/Lovely_him/article/details/122273709，我就直接解释我写的代码了。
+详细的思路请参见数控技术 - 直线插补 - 逐点比较法，我就直接解释我写的代码了。
 
-
-
-import math
+代码import math
 
 # 起点终点坐标
 start = (-8, -3)
-end = (2, ...</p></div><div class="meta cap"><span class="cap" id="post-meta">发布于&nbsp;<time datetime="2023-05-14T11:57:36.287Z">2023-05-14</time></span></div></article>
+end = (2, -5)
+k = 1
+xs, ys = start[0] * k, start[...</p></div><div class="meta cap"><span class="cap" id="post-meta">发布于&nbsp;<time datetime="2023-05-14T11:57:36.287Z">2023-05-14</time></span></div></article>
 </a></div>
   
 
@@ -119,6 +134,7 @@ end = (2, ...</p></div><div class="meta cap"><span class="cap" id="post-meta">�
       
 <footer class="page-footer reveal fs12"><hr><div class="text"><p>本站由 <a href="/">Malvern</a> 使用 <a target="_blank" rel="noopener" href="https://xaoxuu.com/wiki/stellar/">Stellar</a> 主题创建。<br>本博客所有文章除特别声明外，均采用 <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a> 许可协议，转载请注明出处。</p>
 </div></footer>
+<script src="/js/prism/prism.js" async></script>
 
       <div class='float-panel mobile-only blur' style='display:none'>
   <button type='button' class='sidebar-toggle mobile' onclick='sidebar.toggle()'>
