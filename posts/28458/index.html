@@ -1,0 +1,531 @@
+<!DOCTYPE html>
+<html lang='zh-CN'>
+
+<head><!-- hexo injector head_begin start -->
+<link rel="stylesheet" href="/css/bilicard.css">
+<!-- hexo injector head_begin end -->
+  <meta name="generator" content="Hexo 6.3.0">
+  <meta name="hexo-theme" content="https://github.com/xaoxuu/hexo-theme-stellar/tree/1.19.0">
+  <meta charset="utf-8">
+  
+
+  <meta http-equiv='x-dns-prefetch-control' content='on' />
+  <link rel='dns-prefetch' href='https://fastly.jsdelivr.net'>
+  <link rel="preconnect" href="https://fastly.jsdelivr.net" crossorigin>
+  <link rel='dns-prefetch' href='//unpkg.com'>
+
+  <meta name="renderer" content="webkit">
+  <meta name="force-rendering" content="webkit">
+  <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+  <meta name="HandheldFriendly" content="True" >
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="theme-color" content="#f8f8f8">
+  
+  <title>Markdown简明语法教程 - 𝑴𝒂𝒍𝒗𝒆𝒓𝒏′𝑠博客</title>
+
+  
+    <meta name="description" content="转自    说明：  本教程基于Markdown语言编写，项目地址位于Simple-Markdown-Guide。 本教程定位为基础教程，更加详细的用法可参考其他资料。 本教程中代码块内的代码为Markdown的语法。 本教程中部分语法使用的是GitHub Flavored Markdown，GFM语法与标准语法在不同环境中存在解析差异，本教程在使用时会加以说明。 推荐使用Haroopad(Wi">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Markdown简明语法教程">
+<meta property="og:url" content="https://malvern.love/posts/28458/index.html">
+<meta property="og:site_name" content="𝑴𝒂𝒍𝒗𝒆𝒓𝒏′𝑠博客">
+<meta property="og:description" content="转自    说明：  本教程基于Markdown语言编写，项目地址位于Simple-Markdown-Guide。 本教程定位为基础教程，更加详细的用法可参考其他资料。 本教程中代码块内的代码为Markdown的语法。 本教程中部分语法使用的是GitHub Flavored Markdown，GFM语法与标准语法在不同环境中存在解析差异，本教程在使用时会加以说明。 推荐使用Haroopad(Wi">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://github-readme-stats.xaoxuu.com/api/pin/?username=Melo618&amp;repo=Simple-Markdown-Guide&amp;theme=gruvbox&amp;show_owner=true">
+<meta property="og:image" content="https://www.wikipedia.org/portal/wikipedia.org/assets/img/Wikipedia-logo-v2.png">
+<meta property="article:published_time" content="2023-05-28T13:15:33.000Z">
+<meta property="article:modified_time" content="2023-05-28T13:47:48.869Z">
+<meta property="article:author" content="Malvern">
+<meta property="article:tag" content="其他">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://github-readme-stats.xaoxuu.com/api/pin/?username=Melo618&amp;repo=Simple-Markdown-Guide&amp;theme=gruvbox&amp;show_owner=true">
+  
+  
+
+  <!-- feed -->
+  
+
+  
+    
+<link rel="stylesheet" href="/css/main.css">
+
+  
+
+  
+
+  
+
+  
+
+
+  
+
+<style>.github-emoji { position: relative; display: inline-block; width: 1.2em; min-height: 1.2em; overflow: hidden; vertical-align: top; color: transparent; }  .github-emoji > span { position: relative; z-index: 10; }  .github-emoji img, .github-emoji .fancybox { margin: 0 !important; padding: 0 !important; border: none !important; outline: none !important; text-decoration: none !important; user-select: none !important; cursor: auto !important; }  .github-emoji img { height: 1.2em !important; width: 1.2em !important; position: absolute !important; left: 50% !important; top: 50% !important; transform: translate(-50%, -50%) !important; user-select: none !important; cursor: auto !important; } .github-emoji-fallback { color: inherit; } .github-emoji-fallback img { opacity: 0 !important; }</style>
+</head>
+<link rel="stylesheet" href="/js/prism/prism.css">
+
+<body>
+  
+
+
+
+
+  <div class='l_body' id='start'>
+    <aside class='l_left' layout='post'>
+    
+
+  
+
+<header class="header"><div class="logo-wrap"><a class="avatar" href="/about/me.jpg"><div class="bg" style="opacity:0;background-image:url(https://fastly.jsdelivr.net/gh/cdn-x/placeholder@1.0.2/avatar/round/rainbow64@3x.webp);"></div><img no-lazy class="avatar" src="\about\me.jpg" onerror="javascript:this.classList.add('error');this.src='https://fastly.jsdelivr.net/gh/cdn-x/placeholder@1.0.1/image/2659360.svg';"></a><a class="title" href="/"><div class="main" ff="title">𝑴𝒂𝒍𝒗𝒆𝒓𝒏′𝑠博客</div><div class="sub normal cap">✌</div><div class="sub hover cap" style="opacity:0">我就是自己的礼物</div></a></div>
+
+<nav class="menu dis-select"><a class="nav-item active" href="/">博客主页</a><a class="nav-item" href="/about">关于我</a></nav>
+</header>
+
+
+<div class="widgets">
+
+<widget class="widget-wrapper toc single" id="toc"><div class="widget-header cap dis-select"><span class="name">Markdown简明语法教程</span></div><div class="widget-body fs14"><div class="doc-tree active"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9F%BA%E6%9C%AC"><span class="toc-text">基本</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AD%97%E4%BD%93"><span class="toc-text">字体</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%8D%A2%E8%A1%8C"><span class="toc-text">换行</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%A0%87%E9%A2%98"><span class="toc-text">标题</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%BF%99%E6%98%AF%E6%A0%87%E9%A2%98"><span class="toc-text">这是标题</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%88%97%E8%A1%A8"><span class="toc-text">列表</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%BC%95%E7%94%A8"><span class="toc-text">引用</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BB%A3%E7%A0%81%E5%8C%BA%E5%9D%97"><span class="toc-text">代码区块</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%93%BE%E6%8E%A5"><span class="toc-text">链接</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9B%BE%E7%89%87"><span class="toc-text">图片</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%88%86%E9%9A%94%E7%BA%BF"><span class="toc-text">分隔线</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%A1%A8%E6%A0%BC"><span class="toc-text">表格</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%89%B9%E6%AE%8A%E7%AC%A6%E5%8F%B7"><span class="toc-text">特殊符号</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%8E%A8%E8%8D%90%E9%98%85%E8%AF%BB"><span class="toc-text">推荐阅读</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#License"><span class="toc-text">License</span></a></li></ol></div></div></widget>
+
+
+
+<widget class="widget-wrapper search"><div class="widget-body"><div class="search-wrapper" id="search"><form class="search-form"><input type="text" class="search-input" id="search-input" placeholder="站内搜索"></form><div id="search-result"></div><div class="search-no-result">没有找到内容！</div></div></div></widget>
+
+
+</div>
+
+
+    </aside>
+    <div class='l_main'>
+      
+
+      
+
+
+<div class="bread-nav fs12"><div id="breadcrumb"><a class="cap breadcrumb" href="/">主页</a><span class="sep"></span><a class="cap breadcrumb" href="/">文章</a></div><div id="post-meta">发布于&nbsp;<time datetime="2023-05-28T13:15:33.000Z">2023-05-28</time></div></div>
+
+<article class='md-text content post reveal'>
+<h1 class="article-title"><span>Markdown简明语法教程</span></h1>
+<blockquote>
+<p>转自 </p><center><div class="tag-plugin ghcard"><a class="ghcard" rel="external nofollow noopener noreferrer noopener" target="_blank" href="https://github.com/Melo618/Simple-Markdown-Guide"><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://github-readme-stats.xaoxuu.com/api/pin/?username=Melo618&amp;repo=Simple-Markdown-Guide&amp;theme=gruvbox&amp;show_owner=true"></a></div></center><p></p>
+</blockquote>
+<hr>
+<p><strong>说明：</strong></p>
+<ul>
+<li>本教程基于Markdown语言编写，项目地址位于<a target="_blank" rel="noopener" href="https://github.com/Melo618/Simple-Markdown-Guide">Simple-Markdown-Guide</a>。</li>
+<li>本教程定位为基础教程，更加详细的用法可参考其他资料。</li>
+<li>本教程中代码块内的代码为Markdown的语法。</li>
+<li>本教程中部分语法使用的是<a target="_blank" rel="noopener" href="https://help.github.com/articles/github-flavored-markdown/">GitHub Flavored Markdown</a>，GFM语法与标准语法在不同环境中存在解析差异，本教程在使用时会加以说明。</li>
+<li>推荐使用Haroopad(Win)、MarkdownPad(Win)和Mou(OS X)编辑器，部分编辑器中文效果欠佳，可通过自定义CSS字体解决。</li>
+</ul>
+<h2 id="基本"><a href="#基本" class="headerlink" title="基本"></a>基本</h2><ul>
+<li>Markdown是一种用来写作的轻量级标记语言。</li>
+<li>用标记语法，来代替常见的排版格式。</li>
+<li>兼容 HTML代码。</li>
+<li>特殊字符自动转换，例如<code>&lt;</code>和<code>&amp;</code>。</li>
+</ul>
+<h2 id="字体"><a href="#字体" class="headerlink" title="字体"></a>字体</h2><ul>
+<li><p>使用星号<code>*</code>和底号<code>_</code>表示<code>&lt;em&gt;</code>标签。</p>
+<p>例如：</p>
+<pre class="line-numbers language-none"><code class="language-none">*斜体*
+_斜体_<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+
+<p>效果：</p>
+<p><em>斜体</em></p>
+</li>
+<li><p>使用双星号<code>**</code>和双底号<code>__</code>表示<code>&lt;strong&gt;</code>标签。</p>
+<p>例如：</p>
+<pre class="line-numbers language-none"><code class="language-none">**强调**
+__强调__<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+
+<p>效果：</p>
+<p><strong>强调</strong></p>
+</li>
+</ul>
+<h2 id="换行"><a href="#换行" class="headerlink" title="换行"></a>换行</h2><ul>
+<li>单一段落用空白行。</li>
+</ul>
+<h2 id="标题"><a href="#标题" class="headerlink" title="标题"></a>标题</h2><ul>
+<li><p>生成<code>&lt;h1&gt;</code>-<code>&lt;h6&gt;</code>标签，是通过在文字前面加上同等个数<code>#</code>符号来实现。</p>
+</li>
+<li><p>出于美观，也可以使用对称的闭合式标题符号。</p>
+<p>例如：</p>
+<pre class="line-numbers language-none"><code class="language-none">### 这是标题
+### 这是标题 ###<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+
+<p>效果：</p>
+<h3 id="这是标题"><a href="#这是标题" class="headerlink" title="这是标题"></a>这是标题</h3></li>
+</ul>
+<h2 id="列表"><a href="#列表" class="headerlink" title="列表"></a>列表</h2><ul>
+<li><p><code>*</code>，<code>-</code>，<code>+</code>这三个符号效果都一样，这3个符号被称为Markdown列表符号。而有序列表则使用数字接着一个英文句点（数字大小并不会影响输出序列）。</p>
+<p>例如：</p>
+<pre class="line-numbers language-none"><code class="language-none">* 第一行
+* 第二行
+* 第三行
+6. 第四行
+5. 第五行
+4. 第六行<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>效果：</p>
+<ul>
+<li>第一行</li>
+<li>第二行</li>
+<li>第三行</li>
+</ul>
+<ol start="6">
+<li>第四行</li>
+<li>第五行</li>
+<li>第六行</li>
+</ol>
+</li>
+</ul>
+<h2 id="引用"><a href="#引用" class="headerlink" title="引用"></a>引用</h2><ul>
+<li><p><code>&gt;</code>符号表示引用，可简写于第一行，也可以每一行都添加。</p>
+</li>
+<li><p>区块的引用可以嵌套，只需要在层次数上加上同等数量的<code>&gt;</code>符号。</p>
+</li>
+<li><p>引用内可以使用其他Markdown语法，包括标题、列表、代码区块等。</p>
+<p>例如：</p>
+<pre class="line-numbers language-none"><code class="language-none">&gt;    引用
+&gt;    &gt;    引用中的引用<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+
+<p>效果：</p>
+<blockquote>
+<p>   引用</p>
+<blockquote>
+<p>   引用中的引用</p>
+</blockquote>
+</blockquote>
+</li>
+</ul>
+<h2 id="代码区块"><a href="#代码区块" class="headerlink" title="代码区块"></a>代码区块</h2><ul>
+<li><p><code>`</code>是表示inline代码，4个<code> </code>（空格）来表示缩进式代码段，分别对应HTML的<code>&lt;code&gt;</code>，<code>&lt;pre&gt;</code>标签。也可以使用<code>```</code>来表达围栏式代码块（<strong>GFM语法</strong>，部分编辑器不支持），并指定他的语言类型，实现语法高亮。围栏式代码块可以大量减少缩进的使用，大规模的代码块使用非常方便。</p>
+<p>例如：</p>
+<pre class="line-numbers language-none"><code class="language-none">`sort()` 函数按升序对给定数组的值排序。<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p>普通的缩进式代码块。</p>
+<pre class="line-numbers language-none"><code class="language-none">&lt;?php
+    $my_array = array('a' =&gt; 'Dog', 'b' =&gt; 'Cat');
+    sort($my_array);
+    print_r($my_array);
+?&gt;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>带语法高亮的围栏式代码块（<strong>GFM语法</strong>，部分编辑器不支持）。</p>
+<pre><code><pre class="line-numbers language-php" data-language="php"><code class="language-php"><span class="token php language-php"><span class="token delimiter important">&lt;?php</span>
+    <span class="token variable">$my_array</span> <span class="token operator">=</span> <span class="token keyword">array</span><span class="token punctuation">(</span><span class="token string single-quoted-string">'a'</span> <span class="token operator">=&gt;</span> <span class="token string single-quoted-string">'Dog'</span><span class="token punctuation">,</span> <span class="token string single-quoted-string">'b'</span> <span class="token operator">=&gt;</span> <span class="token string single-quoted-string">'Cat'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token function">sort</span><span class="token punctuation">(</span><span class="token variable">$my_array</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token function">print_r</span><span class="token punctuation">(</span><span class="token variable">$my_array</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token delimiter important">?&gt;</span></span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+</code></pre>
+<p>效果：</p>
+<p><code>sort()</code> 函数按升序对给定数组的值排序。</p>
+<p>普通的缩进式代码块。</p>
+<pre><code>&lt;?php
+    $my_array = array('a' =&gt; 'Dog', 'b' =&gt; 'Cat');
+    sort($my_array);
+    print_r($my_array);
+?&gt;
+</code></pre>
+<p>带语法高亮的围栏式代码块（<strong>GFM语法</strong>，部分编辑器不支持）。</p>
+<pre class="line-numbers language-php" data-language="php"><code class="language-php"><span class="token php language-php"><span class="token delimiter important">&lt;?php</span>
+    <span class="token variable">$my_array</span> <span class="token operator">=</span> <span class="token keyword">array</span><span class="token punctuation">(</span><span class="token string single-quoted-string">'a'</span> <span class="token operator">=&gt;</span> <span class="token string single-quoted-string">'Dog'</span><span class="token punctuation">,</span> <span class="token string single-quoted-string">'b'</span> <span class="token operator">=&gt;</span> <span class="token string single-quoted-string">'Cat'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token function">sort</span><span class="token punctuation">(</span><span class="token variable">$my_array</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token function">print_r</span><span class="token punctuation">(</span><span class="token variable">$my_array</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token delimiter important">?&gt;</span></span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre></li>
+</ul>
+<h2 id="链接"><a href="#链接" class="headerlink" title="链接"></a>链接</h2><ul>
+<li><p>Markdown支持两种形式的链接语法：行内式和参考式两种形式。</p>
+<p>行内式链接，是在方括号后面接圆括号即可。<br>例如：</p>
+<pre class="line-numbers language-none"><code class="language-none">[Google](https://www.google.com "Google")<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p>效果：</p>
+<p><a target="_blank" rel="noopener" href="https://www.google.com/" title="Google">Google</a></p>
+<p>参考式链接，是在链接文字的括号后面加上另一个方括号，在第二个方括号里面要填入用以辨识链接的标记。<br>例如：</p>
+<pre class="line-numbers language-none"><code class="language-none">[Google][GOOGL]
+
+[GOOGL]: https://www.google.com "Google"<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+
+<p>效果：</p>
+<p><a target="_blank" rel="noopener" href="https://www.google.com/" title="Google">Google</a></p>
+</li>
+</ul>
+<h2 id="图片"><a href="#图片" class="headerlink" title="图片"></a>图片</h2><ul>
+<li><p>Markdown使用一种和链接很相似的语法来标记图片，只是多了一个<code>!</code>在最前面，同样也允许两种样式：行内式和参考式。</p>
+</li>
+<li><p>目前为止，Markdown还没有办法指定图片的宽高，如果你需要的话，你可以使用普通的<code>&lt;img&gt;</code>标签。</p>
+<p>行内式链接，是在方括号后面接圆括号即可。<br>例如：</p>
+<pre class="line-numbers language-none"><code class="language-none">![Wikipedia](https://www.wikipedia.org/portal/wikipedia.org/assets/img/Wikipedia-logo-v2.png "Wikipedia")<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p>效果：</p>
+<p><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://www.wikipedia.org/portal/wikipedia.org/assets/img/Wikipedia-logo-v2.png" alt="Wikipedia" title="Wikipedia"></p>
+</li>
+</ul>
+<h2 id="分隔线"><a href="#分隔线" class="headerlink" title="分隔线"></a>分隔线</h2><ul>
+<li><p>使用三个以上的<code>*</code>、<code>-</code>来建立一个分隔线，行内不能有其他字符。</p>
+<p>例如：</p>
+<pre class="line-numbers language-none"><code class="language-none">* * *
+***
+- - -
+---<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>效果：</p>
+<p>上文</p>
+<hr>
+<p>下文</p>
+</li>
+</ul>
+<h2 id="表格"><a href="#表格" class="headerlink" title="表格"></a>表格</h2><ul>
+<li><p>Markdown使用<code>|</code>和<code>-</code>来绘制表格，<code>:</code>可控制左对齐、右对齐及居中。</p>
+<p>例如：</p>
+<pre class="line-numbers language-none"><code class="language-none">| Title   | Description                        |
+| :------ | :--------------------------------: |
+| Version | 0.0.1                              |
+| Editor  | [Melo618](mailto:Editor@Email.com) |<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>效果：</p>
+<table>
+<thead>
+<tr>
+<th align="left">Title</th>
+<th align="center">Description</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">Version</td>
+<td align="center">0.0.1</td>
+</tr>
+<tr>
+<td align="left">Editor</td>
+<td align="center"><a href="mailto:Editor@Email.com">Melo618</a></td>
+</tr>
+</tbody></table>
+</li>
+</ul>
+<h2 id="特殊符号"><a href="#特殊符号" class="headerlink" title="特殊符号"></a>特殊符号</h2><ul>
+<li>Markdown利用<code>\</code>字符来转义一些在语法中有特殊意义的符号。</li>
+</ul>
+<h2 id="推荐阅读"><a href="#推荐阅读" class="headerlink" title="推荐阅读"></a>推荐阅读</h2><ul>
+<li><a target="_blank" rel="noopener" href="http://wowubuntu.com/markdown/index.html">Markdown语法说明（简体中文版）</a></li>
+<li><a target="_blank" rel="noopener" href="http://daringfireball.net/projects/markdown/syntax">Markdown Syntax Documentation</a></li>
+<li><a target="_blank" rel="noopener" href="https://help.github.com/articles/github-flavored-markdown">GitHub Flavored Markdown</a></li>
+</ul>
+<h2 id="License"><a href="#License" class="headerlink" title="License"></a>License</h2><p>  Copyright © 2014-2018, Melo Chan. <a target="_blank" rel="noopener" href="http://opensource.org/licenses/MIT">MIT License</a>.</p>
+
+
+<div class="article-footer reveal fs14"><section id="license"><div class="header"><span>许可协议</span></div><div class="body"><p>本文采用 <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">署名-非商业性使用-相同方式共享 4.0 国际</a> 许可协议，转载请注明出处。</p>
+</div></section><section id="share"><div class="header"><span>分享文章</span></div><div class="body"><div class="link"><input class="copy-area" readonly="true" id="copy-link" value="https://malvern.love/posts/28458/" /></div><div class="social-wrap dis-select"><a class="social share-item wechat" onclick="util.toggle(&quot;qrcode-wechat&quot)"><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://fastly.jsdelivr.net/gh/cdn-x/placeholder@1.0.1/social/b32ef3da1162a.svg"/></a><a class="social share-item weibo" target="_blank" rel="external nofollow noopener noreferrer" href="https://service.weibo.com/share/share.php?url=https://malvern.love/posts/28458/&title=Markdown简明语法教程 - 𝑴𝒂𝒍𝒗𝒆𝒓𝒏′𝑠博客&summary=
+转自 
+
+
+说明：
+
+本教程基于Markdown语言编写，项目地址位于Simple-Markdown-Guide。
+本教程定位为基础教程，更加详细的用法可参考其他资料。
+本教程中代码块内的代码为Markdown的语法。
+本教程中部分..."><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://fastly.jsdelivr.net/gh/cdn-x/placeholder@1.0.1/social/80c07e4dbb303.svg"/></a><a class="social share-item email" href="mailto:?subject=Markdown简明语法教程 - 𝑴𝒂𝒍𝒗𝒆𝒓𝒏′𝑠博客&amp;body=https://malvern.love/posts/28458/"><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://fastly.jsdelivr.net/gh/cdn-x/placeholder@1.0.1/social/a1b00e20f425d.svg"/></a><a class="social share-item link" onclick="util.copy(&quot;copy-link&quot;, &quot;复制成功&quot;)"><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://fastly.jsdelivr.net/gh/cdn-x/placeholder@1.0.1/social/8411ed322ced6.svg"/></a></div><div class="qrcode" id="qrcode-wechat" style="visibility:hidden;height:0"><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://api.qrserver.com/v1/create-qr-code/?size=256x256&data=https://malvern.love/posts/28458/index.html"/></div></div></section></div>
+
+</article>
+
+<div class="related-wrap reveal" id="read-next"><section class="body"><div class="item" id="prev"></div><div class="item" id="next"><div class="note">较早文章</div><a href="/posts/32484/">即便Windows屏蔽了IE浏览器，仍要打开</a></div></section></div>
+
+
+<div class="related-wrap reveal" id="related-posts">
+    <section class='header'>
+      <div class='title cap theme'>您可能感兴趣的文章</div>
+    </section>
+    <section class='body'>
+    <div class="related-posts"><a class="item" href="\posts\32484\" title="即便Windows屏蔽了IE浏览器，仍要打开"><span class="title">即便Windows屏蔽了IE浏览器，仍要打开</span></a><a class="item" href="\posts\31923\" title="一个人的旅行——香港&澳门"><span class="title">一个人的旅行——香港&澳门</span></a><a class="item" href="\posts\45037\" title="我的一些诗"><span class="title">我的一些诗</span></a><a class="item" href="\posts\54872\" title="符号测试"><span class="title">符号测试</span></a><a class="item" href="\posts\56014\" title="⬆️ 我的简历"><span class="title">⬆️ 我的简历</span><span class="excerpt">查看简历需要密码，可发邮件至email@malvern.love获取，谢谢！</span></a></div></section></div>
+
+
+
+
+
+      
+<footer class="page-footer reveal fs12"><hr><div class="text"><p>本站由 <a href="/">Malvern</a> 使用 <a target="_blank" rel="noopener" href="https://xaoxuu.com/wiki/stellar/">Stellar</a> 主题创建。<br>本博客所有文章除特别声明外，均采用 <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a> 许可协议，转载请注明出处。</p>
+</div></footer>
+<script src="/js/prism/prism.js" async></script>
+
+      <div class='float-panel mobile-only blur' style='display:none'>
+  <button type='button' class='sidebar-toggle mobile' onclick='sidebar.toggle()'>
+    <svg class="icon" style="width: 1em; height: 1em;vertical-align: middle;fill: currentColor;overflow: hidden;" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="15301"><path d="M566.407 808.3c26.9-0.1 49.3-20.8 51.6-47.6-1.9-27.7-23.9-49.7-51.6-51.6h-412.6c-28.2-1.4-52.6 19.5-55.5 47.6 2.3 26.8 24.6 47.5 51.6 47.6h416.5v4z m309.3-249.9c26.9-0.1 49.3-20.8 51.6-47.6-2.2-26.8-24.6-47.5-51.6-47.6h-721.9c-27.7-2.8-52.5 17.4-55.3 45.1-0.1 0.8-0.1 1.7-0.2 2.5 0.9 27.2 23.6 48.5 50.7 47.6H875.707z m-103.1-245.9c26.9-0.1 49.3-20.8 51.6-47.6-0.4-28.3-23.2-51.1-51.5-51.6h-618.9c-29.5-1.1-54.3 21.9-55.5 51.4v0.2c1.4 27.8 25.2 49.2 53 47.8 0.8 0 1.7-0.1 2.5-0.2h618.8z" p-id="15302"></path><path d="M566.407 808.3c26.9-0.1 49.3-20.8 51.6-47.6-1.9-27.7-23.9-49.7-51.6-51.6h-412.6c-28.2-1.4-52.6 19.5-55.5 47.6 1.9 27.7 23.9 49.7 51.6 51.6h416.5z m309.3-249.9c26.9-0.1 49.3-20.8 51.6-47.6-2.2-26.8-24.6-47.5-51.6-47.6h-721.9c-27.7-2.8-52.5 17.4-55.3 45.1-0.1 0.8-0.1 1.7-0.2 2.5 0.9 27.2 23.6 48.5 50.7 47.6H875.707z m-103.1-245.9c26.9-0.1 49.3-20.8 51.6-47.6-0.4-28.3-23.2-51.1-51.5-51.6h-618.9c-29.5-1.1-54.3 21.9-55.5 51.4v0.2c1.4 27.8 25.2 49.2 53 47.8 0.8 0 1.7-0.1 2.5-0.2h618.8z" p-id="15303"></path></svg>
+  </button>
+</div>
+
+    </div>
+  </div>
+  <div class='scripts'>
+    <script type="text/javascript">
+  stellar = {
+    // 懒加载 css https://github.com/filamentgroup/loadCSS
+    loadCSS: (href, before, media, attributes) => {
+      var doc = window.document;
+      var ss = doc.createElement("link");
+      var ref;
+      if (before) {
+        ref = before;
+      } else {
+        var refs = (doc.body || doc.getElementsByTagName("head")[0]).childNodes;
+        ref = refs[refs.length - 1];
+      }
+      var sheets = doc.styleSheets;
+      if (attributes) {
+        for (var attributeName in attributes) {
+          if (attributes.hasOwnProperty(attributeName)) {
+            ss.setAttribute(attributeName, attributes[attributeName]);
+          }
+        }
+      }
+      ss.rel = "stylesheet";
+      ss.href = href;
+      ss.media = "only x";
+      function ready(cb) {
+        if (doc.body) {
+          return cb();
+        }
+        setTimeout(function () {
+          ready(cb);
+        });
+      }
+      ready(function () {
+        ref.parentNode.insertBefore(ss, before ? ref : ref.nextSibling);
+      });
+      var onloadcssdefined = function (cb) {
+        var resolvedHref = ss.href;
+        var i = sheets.length;
+        while (i--) {
+          if (sheets[i].href === resolvedHref) {
+            return cb();
+          }
+        }
+        setTimeout(function () {
+          onloadcssdefined(cb);
+        });
+      };
+      function loadCB() {
+        if (ss.addEventListener) {
+          ss.removeEventListener("load", loadCB);
+        }
+        ss.media = media || "all";
+      }
+      if (ss.addEventListener) {
+        ss.addEventListener("load", loadCB);
+      }
+      ss.onloadcssdefined = onloadcssdefined;
+      onloadcssdefined(loadCB);
+      return ss;
+    },
+
+    // 从 butterfly 和 volantis 获得灵感
+    loadScript: (src, opt) => new Promise((resolve, reject) => {
+      var script = document.createElement('script');
+      script.src = src;
+      if (opt) {
+        for (let key of Object.keys(opt)) {
+          script[key] = opt[key]
+        }
+      } else {
+        // 默认异步，如果需要同步，第二个参数传入 {} 即可
+        script.async = true
+      }
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    }),
+
+    // https://github.com/jerryc127/hexo-theme-butterfly
+    jQuery: (fn) => {
+      if (typeof jQuery === 'undefined') {
+        stellar.loadScript(stellar.plugins.jQuery).then(fn)
+      } else {
+        fn()
+      }
+    }
+  };
+  stellar.version = '1.17.1';
+  stellar.github = 'https://github.com/xaoxuu/hexo-theme-stellar/tree/1.17.1';
+  stellar.config = {
+    date_suffix: {
+      just: '刚刚',
+      min: '分钟前',
+      hour: '小时前',
+      day: '天前',
+      month: '个月前',
+    },
+  };
+
+  // required plugins (only load if needs)
+  stellar.plugins = {
+    jQuery: 'https://fastly.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js'
+  };
+
+  if ('local_search') {
+    stellar.search = {};
+    stellar.search.service = 'local_search';
+    if (stellar.search.service == 'local_search') {
+      let service_obj = Object.assign({}, {"field":"all","path":"/search.json","content":true});
+      stellar.search[stellar.search.service] = service_obj;
+    }
+  }
+
+  // stellar js
+  stellar.plugins.stellar = Object.assign({"sites":"/js/plugins/sites.js","friends":"/js/plugins/friends.js","ghinfo":"/js/plugins/ghinfo.js","timeline":"/js/plugins/timeline.js","linkcard":"/js/plugins/linkcard.js","fcircle":"/js/plugins/fcircle.js"});
+
+  stellar.plugins.marked = Object.assign("https://cdn.bootcdn.net/ajax/libs/marked/4.0.18/marked.min.js");
+  // optional plugins
+  if ('true' == 'true') {
+    stellar.plugins.lazyload = Object.assign({"enable":true,"js":"https://fastly.jsdelivr.net/npm/vanilla-lazyload@17.3.1/dist/lazyload.min.js","transition":"blur"});
+  }
+  if ('true' == 'true') {
+    stellar.plugins.swiper = Object.assign({"enable":true,"css":"https://unpkg.com/swiper@6/swiper-bundle.min.css","js":"https://unpkg.com/swiper@6/swiper-bundle.min.js"});
+  }
+  if ('true' == 'true') {
+    stellar.plugins.scrollreveal = Object.assign({"enable":true,"js":"https://fastly.jsdelivr.net/npm/scrollreveal@4.0.9/dist/scrollreveal.min.js","distance":"8px","duration":500,"interval":100,"scale":1});
+  }
+  if ('true' == 'true') {
+    stellar.plugins.preload = Object.assign({"enable":true,"service":"flying_pages","instant_page":"https://fastly.jsdelivr.net/gh/volantis-x/cdn-volantis@4.1.2/js/instant_page.js","flying_pages":"https://fastly.jsdelivr.net/gh/gijo-varghese/flying-pages@2.1.2/flying-pages.min.js"});
+  }
+  if ('true' == 'true') {
+    stellar.plugins.fancybox = Object.assign({"enable":true,"js":"https://fastly.jsdelivr.net/npm/@fancyapps/ui@4.0/dist/fancybox.umd.js","css":"https://fastly.jsdelivr.net/npm/@fancyapps/ui@4.0/dist/fancybox.css","selector":".swiper-slide img"});
+  }
+  if ('false' == 'true') {
+    stellar.plugins.heti = Object.assign({"enable":false,"css":"https://unpkg.com/heti/umd/heti.min.css","js":"https://unpkg.com/heti/umd/heti-addon.min.js"});
+  }
+</script>
+
+<!-- required -->
+
+  
+<script src="/js/main.js" async></script>
+
+
+
+<!-- optional -->
+
+
+
+<!-- inject -->
+
+
+  </div>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+</body>
+</html>
