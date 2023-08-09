@@ -1,0 +1,429 @@
+<!DOCTYPE html>
+<html lang='zh-CN'>
+
+<head><!-- hexo injector head_begin start -->
+<link rel="stylesheet" href="/css/bilicard.css">
+<!-- hexo injector head_begin end -->
+  <meta name="generator" content="Hexo 6.3.0">
+  <meta name="hexo-theme" content="https://github.com/xaoxuu/hexo-theme-stellar/tree/1.19.0">
+  <meta charset="utf-8">
+  
+
+  <meta http-equiv='x-dns-prefetch-control' content='on' />
+  <link rel='dns-prefetch' href='https://fastly.jsdelivr.net'>
+  <link rel="preconnect" href="https://fastly.jsdelivr.net" crossorigin>
+  <link rel='dns-prefetch' href='//unpkg.com'>
+
+  <meta name="renderer" content="webkit">
+  <meta name="force-rendering" content="webkit">
+  <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+  <meta name="HandheldFriendly" content="True" >
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="theme-color" content="#f8f8f8">
+  
+  <title>用python实现曲柄摇杆机构的模拟仿真 - 𝑴𝒂𝒍𝒗𝒆𝒓𝒏′𝑠博客</title>
+
+  
+    <meta name="description" content="本文讲述了关于如果使用python，实现对曲柄摇杆机构（含双曲柄，双摇杆和以摇杆为主动件的尚未完成）的模拟仿真。如有大佬，望不吝赐教，感谢！  实现原理如图所示，l0为机架，l1为主动件，l2为连杆，l3为从动件，a01为主动件旋转角度。可在任意时刻作辅助线l4，根据余弦定理可计算得出$$l_4&#x3D;\sqrt[2]{l_0^2+l_1^2-2l_0l_1\cos{\alpha_{01}}}; ，$">
+<meta property="og:type" content="article">
+<meta property="og:title" content="用python实现曲柄摇杆机构的模拟仿真">
+<meta property="og:url" content="https://malvern.love/posts/41835/index.html">
+<meta property="og:site_name" content="𝑴𝒂𝒍𝒗𝒆𝒓𝒏′𝑠博客">
+<meta property="og:description" content="本文讲述了关于如果使用python，实现对曲柄摇杆机构（含双曲柄，双摇杆和以摇杆为主动件的尚未完成）的模拟仿真。如有大佬，望不吝赐教，感谢！  实现原理如图所示，l0为机架，l1为主动件，l2为连杆，l3为从动件，a01为主动件旋转角度。可在任意时刻作辅助线l4，根据余弦定理可计算得出$$l_4&#x3D;\sqrt[2]{l_0^2+l_1^2-2l_0l_1\cos{\alpha_{01}}}; ，$">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2023-08-09T12:45:29.577Z">
+<meta property="article:modified_time" content="2023-08-09T14:12:28.948Z">
+<meta property="article:author" content="Malvern">
+<meta property="article:tag" content="机械">
+<meta property="article:tag" content="编程">
+<meta name="twitter:card" content="summary">
+  
+  
+
+  <!-- feed -->
+  
+
+  
+    
+<link rel="stylesheet" href="/css/main.css">
+
+  
+
+  
+
+  
+
+  
+
+
+  
+
+<style>.github-emoji { position: relative; display: inline-block; width: 1.2em; min-height: 1.2em; overflow: hidden; vertical-align: top; color: transparent; }  .github-emoji > span { position: relative; z-index: 10; }  .github-emoji img, .github-emoji .fancybox { margin: 0 !important; padding: 0 !important; border: none !important; outline: none !important; text-decoration: none !important; user-select: none !important; cursor: auto !important; }  .github-emoji img { height: 1.2em !important; width: 1.2em !important; position: absolute !important; left: 50% !important; top: 50% !important; transform: translate(-50%, -50%) !important; user-select: none !important; cursor: auto !important; } .github-emoji-fallback { color: inherit; } .github-emoji-fallback img { opacity: 0 !important; }</style>
+</head>
+<link rel="stylesheet" href="/js/prism/prism.css">
+
+<body>
+  
+
+
+
+
+  <div class='l_body' id='start'>
+    <aside class='l_left' layout='post'>
+    
+
+  
+
+<header class="header"><div class="logo-wrap"><a class="avatar" href="/about/me.jpg"><div class="bg" style="opacity:0;background-image:url(https://fastly.jsdelivr.net/gh/cdn-x/placeholder@1.0.2/avatar/round/rainbow64@3x.webp);"></div><img no-lazy class="avatar" src="\about\me.jpg" onerror="javascript:this.classList.add('error');this.src='https://fastly.jsdelivr.net/gh/cdn-x/placeholder@1.0.1/image/2659360.svg';"></a><a class="title" href="/"><div class="main" ff="title">𝑴𝒂𝒍𝒗𝒆𝒓𝒏′𝑠博客</div><div class="sub normal cap">✌</div><div class="sub hover cap" style="opacity:0">我就是自己的礼物</div></a></div>
+
+<nav class="menu dis-select"><a class="nav-item active" href="/">博客主页</a><a class="nav-item" href="/about">关于我</a></nav>
+</header>
+
+
+<div class="widgets">
+
+<widget class="widget-wrapper toc single" id="toc"><div class="widget-header cap dis-select"><span class="name">用python实现曲柄摇杆机构的模拟仿真</span></div><div class="widget-body fs14"><div class="doc-tree active"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%9E%E7%8E%B0%E5%8E%9F%E7%90%86"><span class="toc-text">实现原理</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BB%A3%E7%A0%81"><span class="toc-text">代码</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%A4%BA%E4%BE%8B"><span class="toc-text">示例</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%B0%8F%E7%BB%93"><span class="toc-text">小结</span></a></li></ol></div></div></widget>
+
+
+
+<widget class="widget-wrapper search"><div class="widget-body"><div class="search-wrapper" id="search"><form class="search-form"><input type="text" class="search-input" id="search-input" placeholder="站内搜索"></form><div id="search-result"></div><div class="search-no-result">没有找到内容！</div></div></div></widget>
+
+
+</div>
+
+
+    </aside>
+    <div class='l_main'>
+      
+
+      
+
+
+<div class="bread-nav fs12"><div id="breadcrumb"><a class="cap breadcrumb" href="/">主页</a><span class="sep"></span><a class="cap breadcrumb" href="/">文章</a></div><div id="post-meta">发布于&nbsp;<time datetime="2023-08-09T12:45:29.577Z">2023-08-09</time></div></div>
+
+<article class='md-text content post reveal'>
+<h1 class="article-title"><span>用python实现曲柄摇杆机构的模拟仿真</span></h1>
+<blockquote>
+<p>本文讲述了关于如果使用python，实现对曲柄摇杆机构（含双曲柄，双摇杆和以摇杆为主动件的尚未完成）的模拟仿真。如有大佬，望不吝赐教，感谢！</p>
+</blockquote>
+<h2 id="实现原理"><a href="#实现原理" class="headerlink" title="实现原理"></a>实现原理</h2><p>如图所示，l0为机架，l1为主动件，l2为连杆，l3为从动件，a01为主动件旋转角度。可在任意时刻作辅助线l4，根据余弦定理可计算得出<br>$$l_4=\sqrt[2]{l_0^2+l_1^2-2l_0l_1\cos{\alpha_{01}}}; ，$$<br>同理可得${\alpha_{04}}$和${\alpha_{34}}$。</p>
+<p>值得注意的是，${\alpha_{03}}$的计算分为两种$\begin{cases} {\alpha_{03}}=180^\circ-({\alpha_{34}}+{\alpha_{04}});,{\alpha_{01}}\leq180^\circ\ {\alpha_{03}}=180^\circ-({\alpha_{34}}-{\alpha_{04}});,{\alpha_{01}}&gt;180^\circ \end{cases}$，角度均以$x+$方向起始。</p>
+<iframe src="https://onedrive.live.com/embed?resid=66FACC16560E7683%213581&amp;authkey=!APDmpZAPOjwcsnU" width="98" height="120" frameborder="0" scrolling="no"></iframe>
+
+<h2 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h2><pre class="line-numbers language-python" data-language="python"><div class="caption"><span>代码</span></div><code class="language-python"><span class="token keyword">import</span> math
+<span class="token keyword">import</span> tkinter
+<span class="token keyword">import</span> time
+
+l0 <span class="token operator">=</span> <span class="token number">90</span>    <span class="token comment">#机架</span>
+l1 <span class="token operator">=</span> <span class="token number">120</span>   <span class="token comment">#主动杆</span>
+l2 <span class="token operator">=</span> <span class="token number">95</span>    <span class="token comment">#连杆</span>
+l3 <span class="token operator">=</span> <span class="token number">110</span>   <span class="token comment">#从动杆</span>
+n <span class="token operator">=</span> <span class="token number">10</span>     <span class="token comment">#转动圈数</span>
+
+<span class="token comment"># 判定</span>
+<span class="token keyword">if</span> <span class="token builtin">min</span><span class="token punctuation">(</span>l0<span class="token punctuation">,</span>l1<span class="token punctuation">,</span> l2<span class="token punctuation">,</span> l3<span class="token punctuation">)</span> <span class="token operator">+</span> <span class="token builtin">max</span><span class="token punctuation">(</span>l0<span class="token punctuation">,</span>l1<span class="token punctuation">,</span> l2<span class="token punctuation">,</span> l3<span class="token punctuation">)</span> <span class="token operator">&lt;=</span> l0 <span class="token operator">+</span> l1 <span class="token operator">+</span> l2 <span class="token operator">+</span> l3 <span class="token operator">-</span> <span class="token builtin">min</span><span class="token punctuation">(</span>l0<span class="token punctuation">,</span>l1<span class="token punctuation">,</span> l2<span class="token punctuation">,</span> l3<span class="token punctuation">)</span> <span class="token operator">-</span> <span class="token builtin">max</span><span class="token punctuation">(</span>l0<span class="token punctuation">,</span>l1<span class="token punctuation">,</span> l2<span class="token punctuation">,</span> l3<span class="token punctuation">)</span><span class="token punctuation">:</span>
+    <span class="token keyword">if</span> l0 <span class="token operator">==</span> <span class="token builtin">min</span><span class="token punctuation">(</span>l0<span class="token punctuation">,</span>l1<span class="token punctuation">,</span> l2<span class="token punctuation">,</span> l3<span class="token punctuation">)</span><span class="token punctuation">:</span>
+        <span class="token keyword">print</span><span class="token punctuation">(</span><span class="token string">'双曲柄机构'</span><span class="token punctuation">)</span>
+    <span class="token keyword">elif</span> l2 <span class="token operator">==</span> <span class="token builtin">min</span><span class="token punctuation">(</span>l0<span class="token punctuation">,</span>l1<span class="token punctuation">,</span> l2<span class="token punctuation">,</span> l3<span class="token punctuation">)</span><span class="token punctuation">:</span>
+        <span class="token keyword">print</span><span class="token punctuation">(</span><span class="token string">'双摇杆机构'</span><span class="token punctuation">)</span>
+    <span class="token keyword">else</span><span class="token punctuation">:</span>
+        <span class="token keyword">print</span><span class="token punctuation">(</span><span class="token string">'曲柄摇杆机构'</span><span class="token punctuation">)</span>
+<span class="token keyword">else</span><span class="token punctuation">:</span>
+    <span class="token keyword">print</span><span class="token punctuation">(</span><span class="token string">'双摇杆机构'</span><span class="token punctuation">)</span>
+
+
+root <span class="token operator">=</span> tkinter<span class="token punctuation">.</span>Tk<span class="token punctuation">(</span><span class="token punctuation">)</span>
+root<span class="token punctuation">.</span>title<span class="token punctuation">(</span><span class="token string">'曲柄摇杆模拟'</span><span class="token punctuation">)</span>
+root<span class="token punctuation">.</span>geometry<span class="token punctuation">(</span><span class="token string">'500x500'</span><span class="token punctuation">)</span>
+root<span class="token punctuation">.</span>resizable<span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">,</span><span class="token number">0</span><span class="token punctuation">)</span>
+
+cv <span class="token operator">=</span> tkinter<span class="token punctuation">.</span>Canvas<span class="token punctuation">(</span>root<span class="token punctuation">,</span> width<span class="token operator">=</span><span class="token number">500</span><span class="token punctuation">,</span> height<span class="token operator">=</span><span class="token number">300</span><span class="token punctuation">)</span>
+cv<span class="token punctuation">.</span>pack<span class="token punctuation">(</span><span class="token punctuation">)</span>
+
+
+<span class="token comment"># 原点 (80,100)</span>
+x0<span class="token punctuation">,</span> y0 <span class="token operator">=</span> <span class="token number">100</span><span class="token punctuation">,</span> <span class="token number">150</span>
+cv<span class="token punctuation">.</span>create_oval<span class="token punctuation">(</span>x0<span class="token operator">-</span><span class="token number">2</span><span class="token punctuation">,</span>y0<span class="token operator">-</span><span class="token number">2</span><span class="token punctuation">,</span>x0<span class="token operator">+</span><span class="token number">2</span><span class="token punctuation">,</span>y0<span class="token operator">+</span><span class="token number">2</span><span class="token punctuation">,</span>fill<span class="token operator">=</span><span class="token string">'black'</span><span class="token punctuation">)</span>
+<span class="token comment"># 机架</span>
+cv<span class="token punctuation">.</span>create_line<span class="token punctuation">(</span>x0<span class="token punctuation">,</span>y0<span class="token punctuation">,</span>x0<span class="token operator">+</span>l0<span class="token punctuation">,</span>y0<span class="token punctuation">,</span>fill<span class="token operator">=</span><span class="token string">'black'</span><span class="token punctuation">,</span>width<span class="token operator">=</span><span class="token number">3</span><span class="token punctuation">)</span>
+cv<span class="token punctuation">.</span>create_oval<span class="token punctuation">(</span>x0<span class="token operator">+</span>l0<span class="token operator">-</span><span class="token number">2</span><span class="token punctuation">,</span>y0<span class="token operator">-</span><span class="token number">2</span><span class="token punctuation">,</span>x0<span class="token operator">+</span>l0<span class="token operator">+</span><span class="token number">2</span><span class="token punctuation">,</span>y0<span class="token operator">+</span><span class="token number">2</span><span class="token punctuation">,</span>fill<span class="token operator">=</span><span class="token string">'black'</span><span class="token punctuation">)</span>
+
+<span class="token keyword">for</span> a1 <span class="token keyword">in</span> <span class="token builtin">range</span><span class="token punctuation">(</span><span class="token number">360</span><span class="token operator">*</span>n<span class="token operator">+</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+    <span class="token comment"># 删除之前的</span>
+    cv<span class="token punctuation">.</span>delete<span class="token punctuation">(</span><span class="token string">'tmp'</span><span class="token punctuation">)</span>
+    
+    <span class="token comment"># 主动杆角度</span>
+    a1 <span class="token operator">=</span> math<span class="token punctuation">.</span>radians<span class="token punctuation">(</span>a1<span class="token punctuation">)</span>
+
+    <span class="token comment"># 主动杆坐标</span>
+    x1 <span class="token operator">=</span> l1 <span class="token operator">*</span> math<span class="token punctuation">.</span>cos<span class="token punctuation">(</span>a1<span class="token punctuation">)</span>
+    y1 <span class="token operator">=</span> l1 <span class="token operator">*</span> math<span class="token punctuation">.</span>sin<span class="token punctuation">(</span>a1<span class="token punctuation">)</span>
+    <span class="token comment"># print('主动杆坐标：({},{})'.format(x1, y1))</span>
+
+    <span class="token comment"># 中间杆长</span>
+    l4 <span class="token operator">=</span> l1<span class="token operator">**</span><span class="token number">2</span> <span class="token operator">+</span> l0<span class="token operator">**</span><span class="token number">2</span> <span class="token operator">-</span> <span class="token number">2</span><span class="token operator">*</span>l0<span class="token operator">*</span>l1<span class="token operator">*</span>math<span class="token punctuation">.</span>cos<span class="token punctuation">(</span>a1<span class="token punctuation">)</span>
+    l4 <span class="token operator">=</span> math<span class="token punctuation">.</span>sqrt<span class="token punctuation">(</span>l4<span class="token punctuation">)</span>
+
+    <span class="token comment"># 从动杆角度</span>
+    <span class="token keyword">if</span> <span class="token builtin">abs</span><span class="token punctuation">(</span><span class="token punctuation">(</span>l0<span class="token operator">**</span><span class="token number">2</span> <span class="token operator">+</span> l4<span class="token operator">**</span><span class="token number">2</span> <span class="token operator">-</span> l1<span class="token operator">**</span><span class="token number">2</span><span class="token punctuation">)</span> <span class="token operator">/</span> <span class="token punctuation">(</span><span class="token number">2</span><span class="token operator">*</span>l0<span class="token operator">*</span>l4<span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token operator">&gt;</span> <span class="token number">1</span><span class="token punctuation">:</span>
+        a04 <span class="token operator">=</span> math<span class="token punctuation">.</span>acos<span class="token punctuation">(</span><span class="token punctuation">(</span>l0<span class="token operator">**</span><span class="token number">2</span> <span class="token operator">+</span> l4<span class="token operator">**</span><span class="token number">2</span> <span class="token operator">-</span> l1<span class="token operator">**</span><span class="token number">2</span><span class="token punctuation">)</span> <span class="token operator">/</span> <span class="token punctuation">(</span><span class="token number">2.06</span><span class="token operator">*</span>l0<span class="token operator">*</span>l4<span class="token punctuation">)</span><span class="token punctuation">)</span>
+    <span class="token keyword">else</span><span class="token punctuation">:</span>
+        a04 <span class="token operator">=</span> math<span class="token punctuation">.</span>acos<span class="token punctuation">(</span><span class="token punctuation">(</span>l0<span class="token operator">**</span><span class="token number">2</span> <span class="token operator">+</span> l4<span class="token operator">**</span><span class="token number">2</span> <span class="token operator">-</span> l1<span class="token operator">**</span><span class="token number">2</span><span class="token punctuation">)</span> <span class="token operator">/</span> <span class="token punctuation">(</span><span class="token number">2</span><span class="token operator">*</span>l0<span class="token operator">*</span>l4<span class="token punctuation">)</span><span class="token punctuation">)</span>
+    <span class="token keyword">if</span> <span class="token builtin">abs</span><span class="token punctuation">(</span><span class="token punctuation">(</span>l3<span class="token operator">**</span><span class="token number">2</span> <span class="token operator">+</span> l4<span class="token operator">**</span><span class="token number">2</span> <span class="token operator">-</span> l2<span class="token operator">**</span><span class="token number">2</span><span class="token punctuation">)</span> <span class="token operator">/</span> <span class="token punctuation">(</span><span class="token number">2</span><span class="token operator">*</span>l3<span class="token operator">*</span>l4<span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token operator">&gt;</span> <span class="token number">1</span><span class="token punctuation">:</span>
+        a34 <span class="token operator">=</span> math<span class="token punctuation">.</span>acos<span class="token punctuation">(</span><span class="token punctuation">(</span>l3<span class="token operator">**</span><span class="token number">2</span> <span class="token operator">+</span> l4<span class="token operator">**</span><span class="token number">2</span> <span class="token operator">-</span> l2<span class="token operator">**</span><span class="token number">2</span><span class="token punctuation">)</span> <span class="token operator">/</span> <span class="token punctuation">(</span><span class="token number">2.06</span><span class="token operator">*</span>l3<span class="token operator">*</span>l4<span class="token punctuation">)</span><span class="token punctuation">)</span>
+    <span class="token keyword">else</span><span class="token punctuation">:</span>
+        a34 <span class="token operator">=</span> math<span class="token punctuation">.</span>acos<span class="token punctuation">(</span><span class="token punctuation">(</span>l3<span class="token operator">**</span><span class="token number">2</span> <span class="token operator">+</span> l4<span class="token operator">**</span><span class="token number">2</span> <span class="token operator">-</span> l2<span class="token operator">**</span><span class="token number">2</span><span class="token punctuation">)</span> <span class="token operator">/</span> <span class="token punctuation">(</span><span class="token number">2.06</span><span class="token operator">*</span>l3<span class="token operator">*</span>l4<span class="token punctuation">)</span><span class="token punctuation">)</span>
+    <span class="token keyword">if</span> math<span class="token punctuation">.</span>degrees<span class="token punctuation">(</span>a1<span class="token punctuation">)</span> <span class="token operator">%</span> <span class="token number">360</span> <span class="token operator">&lt;=</span> <span class="token number">180</span><span class="token punctuation">:</span>
+        a3 <span class="token operator">=</span> math<span class="token punctuation">.</span>pi <span class="token operator">-</span> <span class="token punctuation">(</span>a34 <span class="token operator">+</span> a04<span class="token punctuation">)</span>
+    <span class="token keyword">else</span><span class="token punctuation">:</span>
+        a3 <span class="token operator">=</span> math<span class="token punctuation">.</span>pi <span class="token operator">-</span> <span class="token punctuation">(</span>a34 <span class="token operator">-</span> a04<span class="token punctuation">)</span>
+
+    <span class="token comment"># 从动杆坐标</span>
+    x3 <span class="token operator">=</span> l3 <span class="token operator">*</span> math<span class="token punctuation">.</span>cos<span class="token punctuation">(</span>a3<span class="token punctuation">)</span> <span class="token operator">+</span> l0
+    y3 <span class="token operator">=</span> l3 <span class="token operator">*</span> math<span class="token punctuation">.</span>sin<span class="token punctuation">(</span>a3<span class="token punctuation">)</span>
+    <span class="token comment"># print('从动杆坐标：({},{})'.format(x3, y3))</span>
+
+    time<span class="token punctuation">.</span>sleep<span class="token punctuation">(</span><span class="token number">0.02</span><span class="token punctuation">)</span>
+
+    <span class="token comment"># 主动杆</span>
+    cv<span class="token punctuation">.</span>create_line<span class="token punctuation">(</span>x0<span class="token punctuation">,</span>y0<span class="token punctuation">,</span>x0<span class="token operator">+</span>x1<span class="token punctuation">,</span>y0<span class="token operator">-</span>y1<span class="token punctuation">,</span>fill<span class="token operator">=</span><span class="token string">'blue'</span><span class="token punctuation">,</span>tag<span class="token operator">=</span><span class="token string">'tmp'</span><span class="token punctuation">,</span>width<span class="token operator">=</span><span class="token number">2</span><span class="token punctuation">)</span>
+    cv<span class="token punctuation">.</span>create_oval<span class="token punctuation">(</span>x0<span class="token operator">+</span>x1<span class="token operator">-</span><span class="token number">0.5</span><span class="token punctuation">,</span>y0<span class="token operator">-</span>y1<span class="token operator">-</span><span class="token number">0.5</span><span class="token punctuation">,</span>x0<span class="token operator">+</span>x1<span class="token operator">+</span><span class="token number">0.5</span><span class="token punctuation">,</span>y0<span class="token operator">-</span>y1<span class="token operator">+</span><span class="token number">0.5</span><span class="token punctuation">,</span>fill<span class="token operator">=</span><span class="token string">'black'</span><span class="token punctuation">)</span>
+    <span class="token comment"># 连杆</span>
+    cv<span class="token punctuation">.</span>create_line<span class="token punctuation">(</span>x0<span class="token operator">+</span>x1<span class="token punctuation">,</span>y0<span class="token operator">-</span>y1<span class="token punctuation">,</span>x0<span class="token operator">+</span>x3<span class="token punctuation">,</span>y0<span class="token operator">-</span>y3<span class="token punctuation">,</span>fill<span class="token operator">=</span><span class="token string">'green'</span><span class="token punctuation">,</span>tag<span class="token operator">=</span><span class="token string">'tmp'</span><span class="token punctuation">,</span>width<span class="token operator">=</span><span class="token number">2</span><span class="token punctuation">)</span>
+    <span class="token comment"># 从动杆</span>
+    cv<span class="token punctuation">.</span>create_line<span class="token punctuation">(</span>x0<span class="token operator">+</span>l0<span class="token punctuation">,</span>y0<span class="token punctuation">,</span>x0<span class="token operator">+</span>x3<span class="token punctuation">,</span>y0<span class="token operator">-</span>y3<span class="token punctuation">,</span>fill<span class="token operator">=</span><span class="token string">'red'</span><span class="token punctuation">,</span>tag<span class="token operator">=</span><span class="token string">'tmp'</span><span class="token punctuation">,</span>width<span class="token operator">=</span><span class="token number">2</span><span class="token punctuation">)</span>
+    cv<span class="token punctuation">.</span>create_oval<span class="token punctuation">(</span>x0<span class="token operator">+</span>x3<span class="token operator">-</span><span class="token number">0.5</span><span class="token punctuation">,</span>y0<span class="token operator">-</span>y3<span class="token operator">-</span><span class="token number">0.5</span><span class="token punctuation">,</span>x0<span class="token operator">+</span>x3<span class="token operator">+</span><span class="token number">0.5</span><span class="token punctuation">,</span>y0<span class="token operator">-</span>y3<span class="token operator">+</span><span class="token number">0.5</span><span class="token punctuation">,</span>fill<span class="token operator">=</span><span class="token string">'black'</span><span class="token punctuation">)</span>
+
+    root<span class="token punctuation">.</span>update<span class="token punctuation">(</span><span class="token punctuation">)</span>
+
+
+root<span class="token punctuation">.</span>mainloop<span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h2 id="示例"><a href="#示例" class="headerlink" title="示例"></a>示例</h2><iframe src="https://onedrive.live.com/embed?resid=66FACC16560E7683%213580&amp;authkey=!ALBVFE5rg8iHssA" width="98" height="120" frameborder="0" scrolling="no"></iframe>
+
+<iframe src="https://onedrive.live.com/embed?resid=66FACC16560E7683%213579&amp;authkey=!AIaEiNwCkEassKA" width="98" height="120" frameborder="0" scrolling="no"></iframe>
+
+<h2 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h2><ol>
+<li><p>由于python的特性（浮点数精度保留），计算反余弦时有概率会报错，因为其值超出[-1,1]的区间了，网上也没什么特别好的方法，据说改调用numpy库会解决这一问题，但我想尽量使用自带库就没有尝试，后期可能会试一下，目前是使用判定，若超出范围，则对其值乘上0.97（即代码中的值2.06）使之强行落在范围内，所以在一些特定情形下会出现从动件l3跳跃和抖动。</p>
+</li>
+<li><p>值得注意的是math库中计算三角函数角度单位均为弧度（rad），这可能也是导致第1条的一个原因吧。</p>
+</li>
+<li><p>同样还是python自带库的问题，range函数无法生成小数间隔的数列，所以目前最小分辨率是1°，后期会自己写一个生成器或采用numpy库的。</p>
+</li>
+<li><p>暂时因为时间原因尚未完成双摇杆和以摇杆为主动件的模拟仿真，未来即将补上。</p>
+</li>
+<li><p>即将补上的还有完善GUI布局。</p>
+</li>
+<li><p>如果有大佬或者其他感兴趣的同志，欢迎和我联系(<a href="mailto:malvern@88.com">malvern@88.com</a>)。</p>
+</li>
+</ol>
+
+
+<div class="article-footer reveal fs14"><section id="license"><div class="header"><span>许可协议</span></div><div class="body"><p>本文采用 <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">署名-非商业性使用-相同方式共享 4.0 国际</a> 许可协议，转载请注明出处。</p>
+</div></section><section id="share"><div class="header"><span>分享文章</span></div><div class="body"><div class="link"><input class="copy-area" readonly="true" id="copy-link" value="https://malvern.love/posts/41835/" /></div><div class="social-wrap dis-select"><a class="social share-item wechat" onclick="util.toggle(&quot;qrcode-wechat&quot)"><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://fastly.jsdelivr.net/gh/cdn-x/placeholder@1.0.1/social/b32ef3da1162a.svg"/></a><a class="social share-item weibo" target="_blank" rel="external nofollow noopener noreferrer" href="https://service.weibo.com/share/share.php?url=https://malvern.love/posts/41835/&title=用python实现曲柄摇杆机构的模拟仿真 - 𝑴𝒂𝒍𝒗𝒆𝒓𝒏′𝑠博客&summary=
+本文讲述了关于如果使用python，实现对曲柄摇杆机构（含双曲柄，双摇杆和以摇杆为主动件的尚未完成）的模拟仿真。如有大佬，望不吝赐教，感谢！
+
+实现原理如图所示，l0为机架，l1为主动件，l2为连杆，l3为从动件，a01为主动件旋转..."><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://fastly.jsdelivr.net/gh/cdn-x/placeholder@1.0.1/social/80c07e4dbb303.svg"/></a><a class="social share-item email" href="mailto:?subject=用python实现曲柄摇杆机构的模拟仿真 - 𝑴𝒂𝒍𝒗𝒆𝒓𝒏′𝑠博客&amp;body=https://malvern.love/posts/41835/"><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://fastly.jsdelivr.net/gh/cdn-x/placeholder@1.0.1/social/a1b00e20f425d.svg"/></a><a class="social share-item link" onclick="util.copy(&quot;copy-link&quot;, &quot;复制成功&quot;)"><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://fastly.jsdelivr.net/gh/cdn-x/placeholder@1.0.1/social/8411ed322ced6.svg"/></a></div><div class="qrcode" id="qrcode-wechat" style="visibility:hidden;height:0"><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://api.qrserver.com/v1/create-qr-code/?size=256x256&data=https://malvern.love/posts/41835/index.html"/></div></div></section></div>
+
+</article>
+
+<div class="related-wrap reveal" id="read-next"><section class="body"><div class="item" id="prev"></div><div class="item" id="next"><div class="note">较早文章</div><a href="/posts/9383/">汉语注音符号</a></div></section></div>
+
+
+
+
+
+
+
+
+      
+<footer class="page-footer reveal fs12"><hr><div class="text"><p>本站由 <a href="/">Malvern</a> 使用 <a target="_blank" rel="noopener" href="https://xaoxuu.com/wiki/stellar/">Stellar</a> 主题创建。<br>本博客所有文章除特别声明外，均采用 <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a> 许可协议，转载请注明出处。</p>
+</div></footer>
+<script src="/js/prism/prism.js" async></script>
+
+      <div class='float-panel mobile-only blur' style='display:none'>
+  <button type='button' class='sidebar-toggle mobile' onclick='sidebar.toggle()'>
+    <svg class="icon" style="width: 1em; height: 1em;vertical-align: middle;fill: currentColor;overflow: hidden;" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="15301"><path d="M566.407 808.3c26.9-0.1 49.3-20.8 51.6-47.6-1.9-27.7-23.9-49.7-51.6-51.6h-412.6c-28.2-1.4-52.6 19.5-55.5 47.6 2.3 26.8 24.6 47.5 51.6 47.6h416.5v4z m309.3-249.9c26.9-0.1 49.3-20.8 51.6-47.6-2.2-26.8-24.6-47.5-51.6-47.6h-721.9c-27.7-2.8-52.5 17.4-55.3 45.1-0.1 0.8-0.1 1.7-0.2 2.5 0.9 27.2 23.6 48.5 50.7 47.6H875.707z m-103.1-245.9c26.9-0.1 49.3-20.8 51.6-47.6-0.4-28.3-23.2-51.1-51.5-51.6h-618.9c-29.5-1.1-54.3 21.9-55.5 51.4v0.2c1.4 27.8 25.2 49.2 53 47.8 0.8 0 1.7-0.1 2.5-0.2h618.8z" p-id="15302"></path><path d="M566.407 808.3c26.9-0.1 49.3-20.8 51.6-47.6-1.9-27.7-23.9-49.7-51.6-51.6h-412.6c-28.2-1.4-52.6 19.5-55.5 47.6 1.9 27.7 23.9 49.7 51.6 51.6h416.5z m309.3-249.9c26.9-0.1 49.3-20.8 51.6-47.6-2.2-26.8-24.6-47.5-51.6-47.6h-721.9c-27.7-2.8-52.5 17.4-55.3 45.1-0.1 0.8-0.1 1.7-0.2 2.5 0.9 27.2 23.6 48.5 50.7 47.6H875.707z m-103.1-245.9c26.9-0.1 49.3-20.8 51.6-47.6-0.4-28.3-23.2-51.1-51.5-51.6h-618.9c-29.5-1.1-54.3 21.9-55.5 51.4v0.2c1.4 27.8 25.2 49.2 53 47.8 0.8 0 1.7-0.1 2.5-0.2h618.8z" p-id="15303"></path></svg>
+  </button>
+</div>
+
+    </div>
+  </div>
+  <div class='scripts'>
+    <script type="text/javascript">
+  stellar = {
+    // 懒加载 css https://github.com/filamentgroup/loadCSS
+    loadCSS: (href, before, media, attributes) => {
+      var doc = window.document;
+      var ss = doc.createElement("link");
+      var ref;
+      if (before) {
+        ref = before;
+      } else {
+        var refs = (doc.body || doc.getElementsByTagName("head")[0]).childNodes;
+        ref = refs[refs.length - 1];
+      }
+      var sheets = doc.styleSheets;
+      if (attributes) {
+        for (var attributeName in attributes) {
+          if (attributes.hasOwnProperty(attributeName)) {
+            ss.setAttribute(attributeName, attributes[attributeName]);
+          }
+        }
+      }
+      ss.rel = "stylesheet";
+      ss.href = href;
+      ss.media = "only x";
+      function ready(cb) {
+        if (doc.body) {
+          return cb();
+        }
+        setTimeout(function () {
+          ready(cb);
+        });
+      }
+      ready(function () {
+        ref.parentNode.insertBefore(ss, before ? ref : ref.nextSibling);
+      });
+      var onloadcssdefined = function (cb) {
+        var resolvedHref = ss.href;
+        var i = sheets.length;
+        while (i--) {
+          if (sheets[i].href === resolvedHref) {
+            return cb();
+          }
+        }
+        setTimeout(function () {
+          onloadcssdefined(cb);
+        });
+      };
+      function loadCB() {
+        if (ss.addEventListener) {
+          ss.removeEventListener("load", loadCB);
+        }
+        ss.media = media || "all";
+      }
+      if (ss.addEventListener) {
+        ss.addEventListener("load", loadCB);
+      }
+      ss.onloadcssdefined = onloadcssdefined;
+      onloadcssdefined(loadCB);
+      return ss;
+    },
+
+    // 从 butterfly 和 volantis 获得灵感
+    loadScript: (src, opt) => new Promise((resolve, reject) => {
+      var script = document.createElement('script');
+      script.src = src;
+      if (opt) {
+        for (let key of Object.keys(opt)) {
+          script[key] = opt[key]
+        }
+      } else {
+        // 默认异步，如果需要同步，第二个参数传入 {} 即可
+        script.async = true
+      }
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    }),
+
+    // https://github.com/jerryc127/hexo-theme-butterfly
+    jQuery: (fn) => {
+      if (typeof jQuery === 'undefined') {
+        stellar.loadScript(stellar.plugins.jQuery).then(fn)
+      } else {
+        fn()
+      }
+    }
+  };
+  stellar.version = '1.17.1';
+  stellar.github = 'https://github.com/xaoxuu/hexo-theme-stellar/tree/1.17.1';
+  stellar.config = {
+    date_suffix: {
+      just: '刚刚',
+      min: '分钟前',
+      hour: '小时前',
+      day: '天前',
+      month: '个月前',
+    },
+  };
+
+  // required plugins (only load if needs)
+  stellar.plugins = {
+    jQuery: 'https://fastly.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js'
+  };
+
+  if ('local_search') {
+    stellar.search = {};
+    stellar.search.service = 'local_search';
+    if (stellar.search.service == 'local_search') {
+      let service_obj = Object.assign({}, {"field":"all","path":"/search.json","content":true});
+      stellar.search[stellar.search.service] = service_obj;
+    }
+  }
+
+  // stellar js
+  stellar.plugins.stellar = Object.assign({"sites":"/js/plugins/sites.js","friends":"/js/plugins/friends.js","ghinfo":"/js/plugins/ghinfo.js","timeline":"/js/plugins/timeline.js","linkcard":"/js/plugins/linkcard.js","fcircle":"/js/plugins/fcircle.js"});
+
+  stellar.plugins.marked = Object.assign("https://cdn.bootcdn.net/ajax/libs/marked/4.0.18/marked.min.js");
+  // optional plugins
+  if ('true' == 'true') {
+    stellar.plugins.lazyload = Object.assign({"enable":true,"js":"https://fastly.jsdelivr.net/npm/vanilla-lazyload@17.3.1/dist/lazyload.min.js","transition":"blur"});
+  }
+  if ('true' == 'true') {
+    stellar.plugins.swiper = Object.assign({"enable":true,"css":"https://unpkg.com/swiper@6/swiper-bundle.min.css","js":"https://unpkg.com/swiper@6/swiper-bundle.min.js"});
+  }
+  if ('true' == 'true') {
+    stellar.plugins.scrollreveal = Object.assign({"enable":true,"js":"https://fastly.jsdelivr.net/npm/scrollreveal@4.0.9/dist/scrollreveal.min.js","distance":"8px","duration":500,"interval":100,"scale":1});
+  }
+  if ('true' == 'true') {
+    stellar.plugins.preload = Object.assign({"enable":true,"service":"flying_pages","instant_page":"https://fastly.jsdelivr.net/gh/volantis-x/cdn-volantis@4.1.2/js/instant_page.js","flying_pages":"https://fastly.jsdelivr.net/gh/gijo-varghese/flying-pages@2.1.2/flying-pages.min.js"});
+  }
+  if ('true' == 'true') {
+    stellar.plugins.fancybox = Object.assign({"enable":true,"js":"https://fastly.jsdelivr.net/npm/@fancyapps/ui@4.0/dist/fancybox.umd.js","css":"https://fastly.jsdelivr.net/npm/@fancyapps/ui@4.0/dist/fancybox.css","selector":".swiper-slide img"});
+  }
+  if ('false' == 'true') {
+    stellar.plugins.heti = Object.assign({"enable":false,"css":"https://unpkg.com/heti/umd/heti.min.css","js":"https://unpkg.com/heti/umd/heti-addon.min.js"});
+  }
+</script>
+
+<!-- required -->
+
+  
+<script src="/js/main.js" async></script>
+
+
+
+<!-- optional -->
+
+
+
+<!-- inject -->
+
+
+  </div>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+</body>
+</html>
