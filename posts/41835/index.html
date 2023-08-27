@@ -32,12 +32,16 @@
 <meta property="og:site_name" content="𝑴𝒂𝒍𝒗𝒆𝒓𝒏′𝑠博客">
 <meta property="og:description" content="本文讲述了关于如果使用python，实现对曲柄摇杆机构（含双曲柄，双摇杆和以摇杆为主动件的尚未完成）的模拟仿真。如有大佬，望不吝赐教，感谢！  实现原理如图所示，l0为机架，l1为主动件，l2为连杆，l3为从动件，a01为主动件旋转角度。可在任意时刻作辅助线l4，根据余弦定理可计算得出$$l_4&#x3D;\sqrt[2]{l_0^2+l_1^2-2l_0l_1\cos{\alpha_{01}}}; ，$">
 <meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://s2.loli.net/2023/08/27/quUITY3bQNvd4mE.png">
+<meta property="og:image" content="https://s2.loli.net/2023/08/27/mRx5HSwEMXVDoi8.png">
+<meta property="og:image" content="https://s2.loli.net/2023/08/27/xbKaSDmg7nCcy3d.png">
 <meta property="article:published_time" content="2023-08-09T12:45:29.577Z">
-<meta property="article:modified_time" content="2023-08-09T14:12:28.948Z">
+<meta property="article:modified_time" content="2023-08-27T13:10:14.679Z">
 <meta property="article:author" content="Malvern">
 <meta property="article:tag" content="机械">
 <meta property="article:tag" content="编程">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://s2.loli.net/2023/08/27/quUITY3bQNvd4mE.png">
   
   
 
@@ -54,6 +58,10 @@
 
   
 
+  
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.0/dist/katex.min.css" integrity="sha384-Xi8rHCmBmhbuyyhbI88391ZKP2dmfnOl4rT9ZfRI7mLTdk1wblIUnrIq35nqwEvC" crossorigin="anonymous">
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.0/dist/katex.min.js" integrity="sha384-X/XCfMm41VSsqRNQgDerQczD69XqmjOOOwYQvr/uuC+j4OPoNhVgjdGFwhvN02Ja" crossorigin="anonymous"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.0/dist/contrib/auto-render.min.js" integrity="sha384-+XBljXPPiv+OzfbB3cVmLHf4hdUFHlWNZN5spNQ7rmHTXpd7WvJum6fIACpNNfIR" crossorigin="anonymous"onload="renderMathInElement(document.body);"></script>
   
 
 
@@ -109,7 +117,7 @@
 </blockquote>
 <h2 id="实现原理"><a href="#实现原理" class="headerlink" title="实现原理"></a>实现原理</h2><p>如图所示，l0为机架，l1为主动件，l2为连杆，l3为从动件，a01为主动件旋转角度。可在任意时刻作辅助线l4，根据余弦定理可计算得出<br>$$l_4=\sqrt[2]{l_0^2+l_1^2-2l_0l_1\cos{\alpha_{01}}}; ，$$<br>同理可得${\alpha_{04}}$和${\alpha_{34}}$。</p>
 <p>值得注意的是，${\alpha_{03}}$的计算分为两种$\begin{cases} {\alpha_{03}}=180^\circ-({\alpha_{34}}+{\alpha_{04}});,{\alpha_{01}}\leq180^\circ\ {\alpha_{03}}=180^\circ-({\alpha_{34}}-{\alpha_{04}});,{\alpha_{01}}&gt;180^\circ \end{cases}$，角度均以$x+$方向起始。</p>
-<iframe src="https://onedrive.live.com/embed?resid=66FACC16560E7683%213581&amp;authkey=!APDmpZAPOjwcsnU" width="98" height="120" frameborder="0" scrolling="no"></iframe>
+<div class="tag-plugin image"><div class="image-bg" style="background:#ffffff;"><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://s2.loli.net/2023/08/27/quUITY3bQNvd4mE.png" fancybox="true"><a class="image-download blur" style="opacity:0" target="_blank" rel="noopener" href="https://s2.loli.net/2023/08/27/quUITY3bQNvd4mE.png"><svg class="icon" style="width: 1em; height: 1em;vertical-align: middle;fill: currentColor;overflow: hidden;" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="3734"><path d="M561.00682908 685.55838913a111.03077546 111.03077546 0 0 1-106.8895062 0L256.23182837 487.72885783a55.96309219 55.96309219 0 0 1 79.13181253-79.18777574L450.70357448 523.88101491V181.55477937a55.96309219 55.96309219 0 0 1 111.92618438 0v344.06109173l117.07478902-117.07478901a55.96309219 55.96309219 0 0 1 79.13181252 79.18777574zM282.81429711 797.1487951h447.70473912a55.96309219 55.96309219 0 0 1 0 111.92618438H282.81429711a55.96309219 55.96309219 0 0 1 0-111.92618438z" p-id="3735"></path></svg></a></div></div>
 
 <h2 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h2><pre class="line-numbers language-python" data-language="python"><div class="caption"><span>代码</span></div><code class="language-python"><span class="token keyword">import</span> math
 <span class="token keyword">import</span> tkinter
@@ -201,9 +209,10 @@ cv<span class="token punctuation">.</span>create_oval<span class="token punctuat
 root<span class="token punctuation">.</span>mainloop<span class="token punctuation">(</span><span class="token punctuation">)</span>
 <span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
-<h2 id="示例"><a href="#示例" class="headerlink" title="示例"></a>示例</h2><iframe src="https://onedrive.live.com/embed?resid=66FACC16560E7683%213580&amp;authkey=!ALBVFE5rg8iHssA" width="98" height="120" frameborder="0" scrolling="no"></iframe>
+<h2 id="示例"><a href="#示例" class="headerlink" title="示例"></a>示例</h2><div class="tag-plugin image"><div class="image-bg"><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://s2.loli.net/2023/08/27/mRx5HSwEMXVDoi8.png" fancybox="true"><a class="image-download blur" style="opacity:0" target="_blank" rel="noopener" href="https://s2.loli.net/2023/08/27/mRx5HSwEMXVDoi8.png"><svg class="icon" style="width: 1em; height: 1em;vertical-align: middle;fill: currentColor;overflow: hidden;" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="3734"><path d="M561.00682908 685.55838913a111.03077546 111.03077546 0 0 1-106.8895062 0L256.23182837 487.72885783a55.96309219 55.96309219 0 0 1 79.13181253-79.18777574L450.70357448 523.88101491V181.55477937a55.96309219 55.96309219 0 0 1 111.92618438 0v344.06109173l117.07478902-117.07478901a55.96309219 55.96309219 0 0 1 79.13181252 79.18777574zM282.81429711 797.1487951h447.70473912a55.96309219 55.96309219 0 0 1 0 111.92618438H282.81429711a55.96309219 55.96309219 0 0 1 0-111.92618438z" p-id="3735"></path></svg></a></div></div>
 
-<iframe src="https://onedrive.live.com/embed?resid=66FACC16560E7683%213579&amp;authkey=!AIaEiNwCkEassKA" width="98" height="120" frameborder="0" scrolling="no"></iframe>
+<div class="tag-plugin image"><div class="image-bg"><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://s2.loli.net/2023/08/27/xbKaSDmg7nCcy3d.png" fancybox="true"><a class="image-download blur" style="opacity:0" target="_blank" rel="noopener" href="https://s2.loli.net/2023/08/27/xbKaSDmg7nCcy3d.png"><svg class="icon" style="width: 1em; height: 1em;vertical-align: middle;fill: currentColor;overflow: hidden;" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="3734"><path d="M561.00682908 685.55838913a111.03077546 111.03077546 0 0 1-106.8895062 0L256.23182837 487.72885783a55.96309219 55.96309219 0 0 1 79.13181253-79.18777574L450.70357448 523.88101491V181.55477937a55.96309219 55.96309219 0 0 1 111.92618438 0v344.06109173l117.07478902-117.07478901a55.96309219 55.96309219 0 0 1 79.13181252 79.18777574zM282.81429711 797.1487951h447.70473912a55.96309219 55.96309219 0 0 1 0 111.92618438H282.81429711a55.96309219 55.96309219 0 0 1 0-111.92618438z" p-id="3735"></path></svg></a></div></div>
+
 
 <h2 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h2><ol>
 <li><p>由于python的特性（浮点数精度保留），计算反余弦时有概率会报错，因为其值超出[-1,1]的区间了，网上也没什么特别好的方法，据说改调用numpy库会解决这一问题，但我想尽量使用自带库就没有尝试，后期可能会试一下，目前是使用判定，若超出范围，则对其值乘上0.97（即代码中的值2.06）使之强行落在范围内，所以在一些特定情形下会出现从动件l3跳跃和抖动。</p>
