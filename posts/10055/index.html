@@ -22,21 +22,26 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <meta name="theme-color" content="#f8f8f8">
   
-  <title>Solidworks快捷键 - 𝑴𝒂𝒍𝒗𝒆𝒓𝒏′𝑠 博客</title>
+  <title>SolidWorks VBA二次开发：遍历装配体 - 𝑴𝒂𝒍𝒗𝒆𝒓𝒏′𝑠 博客</title>
 
   
-    <meta name="description" content="标准Windows快捷键 Ctrl + O：打开文件 Ctrl + S：保存文件 Ctrl + Z：撤回 Ctrl + C：复制 Ctrl + V：粘贴 Alt + 数字：插入标准Windows符号（如下例） Alt + 0176：插入° Alt + 0216：插入Ø Alt + 0181：插入µ 详细请见： https:&#x2F;&#x2F;www.cnblogs.com&#x2F;letisl&#x2F;p&#x2F;12372408.ht">
+    <meta name="description" content="前言其实SolidWorks软件本身就是根据SolidWorks API的基础上开发而成的，其API主要可以通过VBA、C++和C#进行调用。一般情况下，SolidWorks自带VBA编译器，所以使用VBA进行开发是最容易的。但如果追求更高阶和复杂的二次开发，使用C#则较为轻松。 SolidWorks启动界面   “宏”在哪里打开SolidWorks后，点击图示位置。 SolidWorks主界面">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Solidworks快捷键">
-<meta property="og:url" content="https://malvern2050.top/posts/10024/index.html">
+<meta property="og:title" content="SolidWorks VBA二次开发：遍历装配体">
+<meta property="og:url" content="https://malvern2050.top/posts/10055/index.html">
 <meta property="og:site_name" content="𝑴𝒂𝒍𝒗𝒆𝒓𝒏′𝑠 博客">
-<meta property="og:description" content="标准Windows快捷键 Ctrl + O：打开文件 Ctrl + S：保存文件 Ctrl + Z：撤回 Ctrl + C：复制 Ctrl + V：粘贴 Alt + 数字：插入标准Windows符号（如下例） Alt + 0176：插入° Alt + 0216：插入Ø Alt + 0181：插入µ 详细请见： https:&#x2F;&#x2F;www.cnblogs.com&#x2F;letisl&#x2F;p&#x2F;12372408.ht">
+<meta property="og:description" content="前言其实SolidWorks软件本身就是根据SolidWorks API的基础上开发而成的，其API主要可以通过VBA、C++和C#进行调用。一般情况下，SolidWorks自带VBA编译器，所以使用VBA进行开发是最容易的。但如果追求更高阶和复杂的二次开发，使用C#则较为轻松。 SolidWorks启动界面   “宏”在哪里打开SolidWorks后，点击图示位置。 SolidWorks主界面">
 <meta property="og:locale" content="zh_CN">
-<meta property="article:published_time" content="2023-01-14T08:36:31.877Z">
-<meta property="article:modified_time" content="2023-01-27T02:23:11.000Z">
+<meta property="og:image" content="https://s2.loli.net/2023/11/12/FwQNZtiJufT7qSG.png">
+<meta property="og:image" content="https://s2.loli.net/2023/11/12/VnA4Olgu5mjiJbQ.png">
+<meta property="og:image" content="https://s2.loli.net/2023/11/12/hnSTXRu4pKPvZl3.png">
+<meta property="article:published_time" content="2023-11-12T08:55:32.193Z">
+<meta property="article:modified_time" content="2023-11-12T13:07:43.424Z">
 <meta property="article:author" content="Malvern">
 <meta property="article:tag" content="机械">
+<meta property="article:tag" content="编程">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://s2.loli.net/2023/11/12/FwQNZtiJufT7qSG.png">
   
   
 
@@ -86,7 +91,7 @@
 
 <div class="widgets">
 
-<widget class="widget-wrapper toc single" id="toc"><div class="widget-header cap dis-select"><span class="name">Solidworks快捷键</span></div><div class="widget-body fs14"><div class="doc-tree active"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%A0%87%E5%87%86Windows%E5%BF%AB%E6%8D%B7%E9%94%AE"><span class="toc-text">标准Windows快捷键</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%94%A8%E6%88%B7%E7%95%8C%E9%9D%A2%E5%BF%AB%E6%8D%B7%E9%94%AE"><span class="toc-text">用户界面快捷键</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%98%BE%E7%A4%BA%E5%BF%AB%E6%8D%B7%E9%94%AE"><span class="toc-text">显示快捷键</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%80%89%E6%8B%A9%E5%BF%AB%E6%8D%B7%E9%94%AE"><span class="toc-text">选择快捷键</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%A7%BB%E5%8A%A8%E5%BF%AB%E6%8D%B7%E9%94%AE"><span class="toc-text">移动快捷键</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%8D%89%E7%BB%98%E5%BF%AB%E6%8D%B7%E9%94%AE"><span class="toc-text">草绘快捷键</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%A3%85%E9%85%8D%E4%BD%93%E5%BF%AB%E6%8D%B7%E9%94%AE"><span class="toc-text">装配体快捷键</span></a></li></ol></div></div></widget>
+<widget class="widget-wrapper toc single" id="toc"><div class="widget-header cap dis-select"><span class="name">SolidWorks VBA二次开发：遍历装配体</span></div><div class="widget-body fs14"><div class="doc-tree active"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%89%8D%E8%A8%80"><span class="toc-text">前言</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E2%80%9C%E5%AE%8F%E2%80%9D%E5%9C%A8%E5%93%AA%E9%87%8C"><span class="toc-text">“宏”在哪里</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%80%9D%E8%B7%AF"><span class="toc-text">思路</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BB%A3%E7%A0%81"><span class="toc-text">代码</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8F%82%E8%80%83%E8%B5%84%E6%96%99"><span class="toc-text">参考资料</span></a></li></ol></div></div></widget>
 
 
 
@@ -103,107 +108,83 @@
       
 
 
-<div class="bread-nav fs12"><div id="breadcrumb"><a class="cap breadcrumb" href="/">主页</a><span class="sep"></span><a class="cap breadcrumb" href="/">文章</a></div><div id="post-meta">发布于&nbsp;<time datetime="2023-01-14T08:36:31.877Z">2023-01-14</time></div></div>
+<div class="bread-nav fs12"><div id="breadcrumb"><a class="cap breadcrumb" href="/">主页</a><span class="sep"></span><a class="cap breadcrumb" href="/">文章</a></div><div id="post-meta">发布于&nbsp;<time datetime="2023-11-12T08:55:32.193Z">2023-11-12</time></div></div>
 
 <article class='md-text content post reveal'>
-<h1 class="article-title"><span>Solidworks快捷键</span></h1>
-<h2 id="标准Windows快捷键"><a href="#标准Windows快捷键" class="headerlink" title="标准Windows快捷键"></a>标准Windows快捷键</h2><ol>
-<li><kbd>Ctrl</kbd> + <kbd>O</kbd>：打开文件</li>
-<li><kbd>Ctrl</kbd> + <kbd>S</kbd>：保存文件</li>
-<li><kbd>Ctrl</kbd> + <kbd>Z</kbd>：撤回</li>
-<li><kbd>Ctrl</kbd> + <kbd>C</kbd>：复制</li>
-<li><kbd>Ctrl</kbd> + <kbd>V</kbd>：粘贴</li>
-<li><kbd>Alt</kbd> + <kbd>数字</kbd>：插入标准Windows符号（如下例）</li>
-<li><kbd>Alt</kbd> + <kbd>0176</kbd>：插入°</li>
-<li><kbd>Alt</kbd> + <kbd>0216</kbd>：插入Ø</li>
-<li><kbd>Alt</kbd> + <kbd>0181</kbd>：插入µ</li>
-<li>详细请见： <div class="tag-plugin link dis-select"><a class="link-card rich" title="" href="https://www.cnblogs.com/letisl/p/12372408.html" target="_blank" rel="external nofollow noopener noreferrer" cardlink="" autofill="title,icon,desc"><div class="top"><div class="lazy img" data-bg="https://fastly.jsdelivr.net/gh/cdn-x/placeholder@1.0.1/link/8f277b4ee0ecd.svg"></div><span class="cap link fs12">https://www.cnblogs.com/letisl/p/12372408.html</span></div><div class="bottom"><span class="title">https://www.cnblogs.com/letisl/p/12372408.html</span><span class="cap desc fs12"></span></div></a></div> <div class="tag-plugin link dis-select"><a class="link-card rich" title="" href="https://unicode-table.com/cn/" target="_blank" rel="external nofollow noopener noreferrer" cardlink="" autofill="title,icon,desc"><div class="top"><div class="lazy img" data-bg="https://fastly.jsdelivr.net/gh/cdn-x/placeholder@1.0.1/link/8f277b4ee0ecd.svg"></div><span class="cap link fs12">https://unicode-table.com/cn/</span></div><div class="bottom"><span class="title">https://unicode-table.com/cn/</span><span class="cap desc fs12"></span></div></a></div></li>
-</ol>
-<h2 id="用户界面快捷键"><a href="#用户界面快捷键" class="headerlink" title="用户界面快捷键"></a>用户界面快捷键</h2><ol>
-<li><kbd>Ctrl</kbd> + <kbd>Q</kbd>：强制重新生成</li>
-<li><kbd>Ctrl</kbd> + <kbd>Tab</kbd>：在打开的SolidWorks文件之间切换文件</li>
-<li><kbd>Enter</kbd>：重复上一命令</li>
-</ol>
-<h2 id="显示快捷键"><a href="#显示快捷键" class="headerlink" title="显示快捷键"></a>显示快捷键</h2><ol>
-<li><kbd>Alt</kbd> + <kbd>方向键</kbd>：顺时针或者逆时针旋转</li>
-<li><kbd>Alt</kbd> + <kbd>鼠标中键</kbd>： 平行视图平面旋转模型</li>
-<li><kbd>Shift</kbd> + <kbd>方向键</kbd>：水平或者垂直旋转模型90°</li>
-<li><kbd>Shift</kbd> + <kbd>Z</kbd>：放大模型</li>
-<li><kbd>Z</kbd>：缩小模型</li>
-<li><kbd>F</kbd>：整屏显示模型</li>
-<li><kbd>G</kbd>：放大镜</li>
-<li><kbd>空格键</kbd>：视图定向菜单</li>
-</ol>
-<h2 id="选择快捷键"><a href="#选择快捷键" class="headerlink" title="选择快捷键"></a>选择快捷键</h2><ol>
-<li><kbd>Ctrl</kbd> + <kbd>鼠标左键</kbd>：选择多个</li>
-<li><kbd>Shift</kbd> + <kbd>鼠标左键</kbd>：选择FeatureManager设计树中两个选定项目之间的所有特征</li>
-</ol>
-<h2 id="移动快捷键"><a href="#移动快捷键" class="headerlink" title="移动快捷键"></a>移动快捷键</h2><ol>
-<li><kbd>Ctrl</kbd> + <kbd>鼠标中键</kbd>：移动模型</li>
-<li><kbd>Shift</kbd> + <kbd>鼠标左键拖拽</kbd>：</li>
-</ol>
-<ul>
-<li>草图模式下会移动一组草图实体。</li>
-<li>零件模式下会移动特征</li>
-<li>工程图模式下将选定的图形视图和任何相关视图一起移动，就好像它们是一个实体一样。</li>
-</ul>
-<h2 id="草绘快捷键"><a href="#草绘快捷键" class="headerlink" title="草绘快捷键"></a>草绘快捷键</h2><ol>
-<li><kbd>Ctrl</kbd> + <kbd>左键拖拽</kbd>：拖动端点时抑制推理线
-</li>
-<li><kbd>Shift</kbd> + <kbd>左键拖拽</kbd>：当绘制一条线时，该线将按照特定的长度进行捕捉
-</li>
-<li><kbd>Tab</kbd> ：在3D草图中绘制草图时，改变XYZ平面</li>
-</ol>
-<h2 id="装配体快捷键"><a href="#装配体快捷键" class="headerlink" title="装配体快捷键"></a>装配体快捷键</h2><ol>
-<li><kbd>Alt</kbd> + <kbd>鼠标左键拖拽</kbd>：</li>
-</ol>
-<ul>
-<li>复制组件并创建智能配合</li>
-<li>重新排序组件。 在FeatureManager设计树中移动组件时，确保组件在树中保持在同一级别，并防止组件移动到子组件中</li>
-</ul>
-<ol start="2">
-<li><kbd>Ctrl</kbd> + <kbd>鼠标左键拖拽</kbd>：</li>
-</ol>
-<ul>
-<li>复制组件</li>
-<li>在具有预选组件的组合中，当按<kbd>Ctrl</kbd>拖动选择框时，会逆转选择</li>
-<li>在将工具箱组件拖动到装配体中时，创建零件而不是配置。</li>
-</ul>
-<ol start="3">
-<li><kbd>Tab</kbd>：</li>
-</ol>
-<ul>
-<li>隐藏指针下面的所有组件</li>
-<li>插入组件时。 旋转组件90º</li>
-</ul>
-<ol start="4">
-<li><kbd>Shift</kbd> + <kbd>Tab</kbd>：</li>
-</ol>
-<ul>
-<li>显示指针下面的所有组件</li>
-<li>插入组件时，旋转组件90º</li>
-</ul>
-<ol start="5">
-<li><kbd>Ctrl</kbd> + <kbd>Shift</kbd> + <kbd>Tab</kbd> ：暂时将所有隐藏的组件显示为透明，并让您选择要显示的组件</li>
-</ol>
-<blockquote>
-<p>本文转自 </p><div class="tag-plugin link dis-select"><a class="link-card plain" title="史上最全Solidworks快捷键，赶紧收藏！" href="https://mp.weixin.qq.com/s/jtR-8zbDaAB9TR6pHUjRRw" target="_blank" rel="external nofollow noopener noreferrer" cardlink="" autofill="icon"><div class="left"><span class="title">史上最全Solidworks快捷键，赶紧收藏！</span><span class="cap link fs12">https://mp.weixin.qq.com/s/jtR-8zbDaAB9TR6pHUjRRw</span></div><div class="right"><div class="lazy img" data-bg="https://fastly.jsdelivr.net/gh/cdn-x/placeholder@1.0.1/link/8f277b4ee0ecd.svg"></div></div></a></div><p></p>
-</blockquote>
+<h1 class="article-title"><span>SolidWorks VBA二次开发：遍历装配体</span></h1>
+<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>其实SolidWorks软件本身就是根据SolidWorks API的基础上开发而成的，其API主要可以通过VBA、C++和C#进行调用。<br>一般情况下，SolidWorks自带VBA编译器，所以使用VBA进行开发是最容易的。但如果追求更高阶和复杂的二次开发，使用C#则较为轻松。</p>
+<div class="tag-plugin image"><div class="image-bg"><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://s2.loli.net/2023/11/12/FwQNZtiJufT7qSG.png" alt="SolidWorks启动界面" fancybox="true"></div><div class="image-meta"><span class="image-caption center">SolidWorks启动界面</span></div></div>
+
+
+<h2 id="“宏”在哪里"><a href="#“宏”在哪里" class="headerlink" title="“宏”在哪里"></a>“宏”在哪里</h2><p>打开SolidWorks后，点击图示位置。</p>
+<div class="tag-plugin image"><div class="image-bg"><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://s2.loli.net/2023/11/12/VnA4Olgu5mjiJbQ.png" alt="SolidWorks主界面" fancybox="true"></div><div class="image-meta"><span class="image-caption center">SolidWorks主界面</span></div></div>
+
+<p><em>注：实际使用中如果找不到所需的函数方法，可以用录制宏后编辑看看。</em></p>
+<h2 id="思路"><a href="#思路" class="headerlink" title="思路"></a>思路</h2><div class="tag-plugin image"><div class="image-bg"><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://s2.loli.net/2023/11/12/hnSTXRu4pKPvZl3.png" alt="思路" fancybox="true"></div><div class="image-meta"><span class="image-caption center">思路</span></div></div>
+
+<h2 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h2><pre class="line-numbers language-VB" data-language="VB"><code class="language-VB">Dim swApp As Object
+Dim swModel As SldWorks.AssemblyDoc
+Dim designer As String
+Dim valout As String
+Dim longstatus As Long, longwarnings As Long
+Dim swAssy As SldWorks.AssemblyDoc
+
+Sub main()
+    Set swApp = Application.SldWorks
+    Set swModel = swApp.ActiveDoc
+
+    '遍历装配体
+    Dim swAssy As Variant
+    swAssy = swModel.GetComponents(True)
+    tmp = GetAsmChild(swAssy)
+
+    swModel.Save
+
+End Sub
+
+Function GetAsmChild(swmodelComps As Variant)
+    Dim swmodelComp As SldWorks.Component2
+    Dim swmodel As ModelDoc2
+    Dim swAsm As SldWorks.AssemblyDoc
+    Dim text As String
+    Set myd = CreateObject("Scripting.Dictionary")
+
+    '遍历装配体所有东西
+    For i = 0 To UBound(swmodelComps)
+        Set swmodelComp = swmodelComps(i)
+        Set swmodel = swmodelComp.GetModelDoc2
+
+        '跳过重复零件
+        If myd.Exists(swmodel.GetTitle) Then
+            GoTo Continue
+        Else
+            myd.Add swmodel.GetTitle, i
+        End If
+
+        '递归改名
+        If swmodel.GetType = 1 Then
+            'do something here
+        ElseIf swmodel.GetType = 2 Then
+            swAsm = swmodel
+            t = GetAsmChild(swAsm.GetComponents(True), designer, no)
+        End If
+Continue:
+    Next
+
+    m = MsgBox(text, 64, Title)
+
+End Function
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h2 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h2><div class="tag-plugin link dis-select"><a class="link-card rich" title="SOLIDWORKS强大功能—宏(二)" href="https://zhuanlan.zhihu.com/p/512005451" target="_blank" rel="external nofollow noopener noreferrer" cardlink="" autofill="icon,desc"><div class="top"><div class="lazy img" data-bg="https://fastly.jsdelivr.net/gh/cdn-x/placeholder@1.0.1/link/8f277b4ee0ecd.svg"></div><span class="cap link fs12">https://zhuanlan.zhihu.com/p/512005451</span></div><div class="bottom"><span class="title">SOLIDWORKS强大功能—宏(二)</span><span class="cap desc fs12"></span></div></a></div>
 
 
 <div class="article-footer reveal fs14"><section id="license"><div class="header"><span>许可协议</span></div><div class="body"><p>本文采用 <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">署名-非商业性使用-相同方式共享 4.0 国际</a> 许可协议，转载请注明出处。</p>
-</div></section><section id="share"><div class="header"><span>分享文章</span></div><div class="body"><div class="link"><input class="copy-area" readonly="true" id="copy-link" value="https://malvern2050.top/posts/10024/" /></div><div class="social-wrap dis-select"><a class="social share-item wechat" onclick="util.toggle(&quot;qrcode-wechat&quot)"><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://fastly.jsdelivr.net/gh/cdn-x/placeholder@1.0.1/social/b32ef3da1162a.svg"/></a><a class="social share-item weibo" target="_blank" rel="external nofollow noopener noreferrer" href="https://service.weibo.com/share/share.php?url=https://malvern2050.top/posts/10024/&title=Solidworks快捷键 - 𝑴𝒂𝒍𝒗𝒆𝒓𝒏′𝑠 博客&summary=标准Windows快捷键
-Ctrl + O：打开文件
-Ctrl + S：保存文件
-Ctrl + Z：撤回
-Ctrl + C：复制
-Ctrl + V：粘贴
-Alt + 数字：插入标准Windows符号（如下例）
-Alt + 0176：插..."><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://fastly.jsdelivr.net/gh/cdn-x/placeholder@1.0.1/social/80c07e4dbb303.svg"/></a><a class="social share-item email" href="mailto:?subject=Solidworks快捷键 - 𝑴𝒂𝒍𝒗𝒆𝒓𝒏′𝑠 博客&amp;body=https://malvern2050.top/posts/10024/"><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://fastly.jsdelivr.net/gh/cdn-x/placeholder@1.0.1/social/a1b00e20f425d.svg"/></a><a class="social share-item link" onclick="util.copy(&quot;copy-link&quot;, &quot;复制成功&quot;)"><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://fastly.jsdelivr.net/gh/cdn-x/placeholder@1.0.1/social/8411ed322ced6.svg"/></a></div><div class="qrcode" id="qrcode-wechat" style="visibility:hidden;height:0"><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://api.qrserver.com/v1/create-qr-code/?size=256x256&data=https://malvern2050.top/posts/10024/index.html"/></div></div></section></div>
+</div></section><section id="share"><div class="header"><span>分享文章</span></div><div class="body"><div class="link"><input class="copy-area" readonly="true" id="copy-link" value="https://malvern2050.top/posts/10055/" /></div><div class="social-wrap dis-select"><a class="social share-item wechat" onclick="util.toggle(&quot;qrcode-wechat&quot)"><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://fastly.jsdelivr.net/gh/cdn-x/placeholder@1.0.1/social/b32ef3da1162a.svg"/></a><a class="social share-item weibo" target="_blank" rel="external nofollow noopener noreferrer" href="https://service.weibo.com/share/share.php?url=https://malvern2050.top/posts/10055/&title=SolidWorks VBA二次开发：遍历装配体 - 𝑴𝒂𝒍𝒗𝒆𝒓𝒏′𝑠 博客&summary=前言其实SolidWorks软件本身就是根据SolidWorks API的基础上开发而成的，其API主要可以通过VBA、C++和C#进行调用。一般情况下，SolidWorks自带VBA编译器，所以使用VBA进行开发是最容易的。但如果追..."><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://fastly.jsdelivr.net/gh/cdn-x/placeholder@1.0.1/social/80c07e4dbb303.svg"/></a><a class="social share-item email" href="mailto:?subject=SolidWorks VBA二次开发：遍历装配体 - 𝑴𝒂𝒍𝒗𝒆𝒓𝒏′𝑠 博客&amp;body=https://malvern2050.top/posts/10055/"><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://fastly.jsdelivr.net/gh/cdn-x/placeholder@1.0.1/social/a1b00e20f425d.svg"/></a><a class="social share-item link" onclick="util.copy(&quot;copy-link&quot;, &quot;复制成功&quot;)"><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://fastly.jsdelivr.net/gh/cdn-x/placeholder@1.0.1/social/8411ed322ced6.svg"/></a></div><div class="qrcode" id="qrcode-wechat" style="visibility:hidden;height:0"><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://api.qrserver.com/v1/create-qr-code/?size=256x256&data=https://malvern2050.top/posts/10055/index.html"/></div></div></section></div>
 
 </article>
 
-<div class="related-wrap reveal" id="read-next"><section class="body"><div class="item" id="prev"><div class="note">较新文章</div><a href="/posts/25911/">NX UG快捷键</a></div><div class="item" id="next"><div class="note">较早文章</div><a href="/posts/45037/">我的一些诗</a></div></section></div>
+<div class="related-wrap reveal" id="read-next"><section class="body"><div class="item" id="prev"></div><div class="item" id="next"><div class="note">较早文章</div><a href="/posts/3137/">arduino板载LED实现摩斯电码</a></div></section></div>
 
 
 
