@@ -1,0 +1,401 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="hexo-theme" content="https://github.com/xaoxuu/hexo-theme-stellar/tree/1.29.1" theme-name="Stellar" theme-version="1.29.1"><meta name="generator" content="Hexo 7.3.0"><meta http-equiv="x-dns-prefetch-control" content="on"><meta name="renderer" content="webkit"><meta name="force-rendering" content="webkit"><meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1"><meta name="HandheldFriendly" content="True"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1"><meta name="theme-color" media="(prefers-color-scheme: dark)" content="#000"><meta name="theme-color" content="#f9fafb"><title>Python3 常用内置函数 - Malvern's Blog</title><meta name="description" content="本文罗列了一些自己常用的函数，并添加一些自己的见解。如有纰漏，望不吝赐教，谢谢！参考资料 https:&#x2F;&#x2F;docs.python.org&#x2F;zh-cn&#x2F;3&#x2F;library&#x2F;functions.html  abs() abs(x)返回一个数的绝对值。参数可以是整数、浮点数或任何实现了__abs__() 的对象。如果参数是一个复数，则返回它的模。  all() all(iterable)如果 iter"><meta property="og:type" content="article"><meta property="og:title" content="Python3 常用内置函数"><meta property="og:url" content="https://20508888.xyz/posts/35163/index.html"><meta property="og:site_name" content="Malvern&#39;s Blog"><meta property="og:description" content="本文罗列了一些自己常用的函数，并添加一些自己的见解。如有纰漏，望不吝赐教，谢谢！参考资料 https:&#x2F;&#x2F;docs.python.org&#x2F;zh-cn&#x2F;3&#x2F;library&#x2F;functions.html  abs() abs(x)返回一个数的绝对值。参数可以是整数、浮点数或任何实现了__abs__() 的对象。如果参数是一个复数，则返回它的模。  all() all(iterable)如果 iter"><meta property="og:locale" content="zh_CN"><meta property="article:published_time" content="2024-03-10T07:00:00.000Z"><meta property="article:modified_time" content="2024-03-10T13:00:00.000Z"><meta property="article:author" content="Malvern"><meta property="article:tag" content="原创"><meta property="article:tag" content="编程"><meta name="twitter:card" content="summary"><meta name="keywords" content="原创,编程"><link rel="alternate" href="/atom.xml" title="Malvern's Blog" type="application/atom+xml"><link rel="stylesheet" href="/css/main.css?v=1.29.1"><link rel="shortcut icon" href="https://bu.dusays.com/2024/11/17/67399c5bce84f.png"></head><body><div class="l_body s:aa content tech" id="start" layout="post" text-indent><aside class="l_left"><div class="leftbar-container"><header class="header"><div class="logo-wrap"><a class="avatar" href="/about/"><div class="bg" style="opacity:0;background-image:url(https://bu.dusays.com/2024/11/17/67399c6fd659d.png)"></div><img no-lazy class="avatar" src="https://bu.dusays.com/2024/11/17/67399c5bce84f.png" onerror="javascript:this.classList.add('error');this.src='https://gcore.jsdelivr.net/gh/cdn-x/placeholder@1.0.12/image/2659360.svg';"></a><a class="title" href="/"><div class="main" ff="title">Malvern's Blog</div><div class="sub normal cap">I am my own gift ✌️</div><div class="sub hover cap" style="opacity:0">我就是我自己的礼物 🧌</div></a></div></header><div class="nav-area"><div class="search-wrapper" id="search-wrapper"><form class="search-form"><a class="search-button" onclick="document.getElementById(&quot;search-input&quot;).focus();"><svg t="1705074644177" viewBox="0 0 1025 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="1560" width="200" height="200"><path d="M1008.839137 935.96571L792.364903 719.491476a56.783488 56.783488 0 0 0-80.152866 0 358.53545 358.53545 0 1 1 100.857314-335.166073 362.840335 362.840335 0 0 1-3.689902 170.145468 51.248635 51.248635 0 1 0 99.217358 26.444296 462.057693 462.057693 0 1 0-158.255785 242.303546l185.930047 185.725053a51.248635 51.248635 0 0 0 72.568068 0 51.248635 51.248635 0 0 0 0-72.978056z" p-id="1561"></path><path d="M616.479587 615.969233a50.428657 50.428657 0 0 0-61.498362-5.534852 174.655348 174.655348 0 0 1-177.525271 3.484907 49.403684 49.403684 0 0 0-58.833433 6.76482l-3.074918 2.869923a49.403684 49.403684 0 0 0 8.609771 78.10292 277.767601 277.767601 0 0 0 286.992355-5.739847 49.403684 49.403684 0 0 0 8.404776-76.667958z" p-id="1562"></path></svg></a><input type="text" class="search-input" id="search-input" placeholder="站内搜索"></form><div id="search-result"></div><div class="search-no-result">没有找到内容！</div></div><nav class="menu dis-select"></nav></div><div class="widgets"><widget class="widget-wrapper markdown"><div class="widget-header dis-select"><span class="name">欢迎来到我的博客 🎉</span></div><div class="widget-body fs14"><ul><li>在此分享一些我的所见所闻，也会有收录一些我觉得有价值的雄文。</li><li>本站托管于<a target="_blank" rel="noopener" href="https://github.com/MalvernLove/MalvernLove.github.io">GitHub</a>，可能国内加载较慢，还望见谅。</li><li>如果发现文章内容有误，请致信📮<a href="mailto:&#109;&#97;&#x6c;&#118;&#x65;&#114;&#110;&#x40;&#56;&#x38;&#x2e;&#99;&#x6f;&#x6d;">&#109;&#97;&#x6c;&#118;&#x65;&#114;&#110;&#x40;&#56;&#x38;&#x2e;&#99;&#x6f;&#x6d;</a>。</li></ul></div></widget><widget class="widget-wrapper post-list"><div class="widget-header dis-select"><span class="name">最近更新</span><a class="cap-action" id="rss" title="Subscribe" href="/atom.xml"><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><path fill="currentColor" d="M5 21q-.825 0-1.412-.587T3 19q0-.825.588-1.412T5 17q.825 0 1.413.588T7 19q0 .825-.587 1.413T5 21m13.5 0q-.65 0-1.088-.475T16.9 19.4q-.275-2.425-1.312-4.537T12.9 11.1q-1.65-1.65-3.762-2.687T4.6 7.1q-.65-.075-1.125-.512T3 5.5q0-.65.45-1.062t1.075-.363q3.075.275 5.763 1.563t4.737 3.337q2.05 2.05 3.338 4.738t1.562 5.762q.05.625-.363 1.075T18.5 21m-6 0q-.625 0-1.075-.437T10.85 19.5q-.225-1.225-.787-2.262T8.65 15.35q-.85-.85-1.888-1.412T4.5 13.15q-.625-.125-1.062-.575T3 11.5q0-.65.45-1.075t1.075-.325q1.825.25 3.413 1.063t2.837 2.062q1.25 1.25 2.063 2.838t1.062 3.412q.1.625-.325 1.075T12.5 21"/></svg></a></div><div class="widget-body fs14"><a class="item title" href="/posts/56014/"><span class="title">🔥 本人简历｜My Resume</span></a><a class="item title" href="/posts/49615/"><span class="title">☭关于中国及我们党的立场 - 瑞典共产党</span></a><a class="item title" href="/posts/57148/"><span class="title">☭“所谓原始积累” 的含义</span></a><a class="item title" href="/posts/6836/"><span class="title">☭全球所有的共产党和工人党</span></a><a class="item title" href="/posts/32540/"><span class="title">我的书单</span></a><a class="item title" href="/posts/23552/"><span class="title">“零门槛” 查看三维模型 —— 机械设计软件的奇妙另存为</span></a><a class="item title" href="/posts/27177/"><span class="title">我的旅行计划</span></a><a class="item title" href="/posts/11794/"><span class="title">曲柄滑块机构利用 Excel 数学可视化</span></a><a class="item title" href="/posts/13883/"><span class="title">一个人的旅行 —— 百丈漈 & 雁荡山</span></a><a class="item title" href="/posts/11287/"><span class="title">一个人的旅行 —— 北京（重游）</span></a><a class="item title" href="/posts/28409/"><span class="title">小事：关于博客网站维护</span></a></div></widget></div></div></aside><div class="l_main" id="main"><div class="article banner top"><div class="content"><div class="top bread-nav footnote"><div class="left"><div class="flex-row" id="breadcrumb"><a class="cap breadcrumb" href="/">主页</a> <span class="sep"></span><a class="cap breadcrumb" href="/">文章</a><span class="sep"></span><a class="cap breadcrumb-link" href="/categories/%E7%BC%96%E7%A8%8B/">编程</a></div><div class="flex-row" id="post-meta"><span class="text created">发布于：<time datetime="2024-03-10T07:00:00.000Z">2024-03-10</time></span><span class="sep updated"></span><span class="text updated">更新于：<time datetime="2024-03-10T13:00:00.000Z">2024-03-10</time></span></div></div></div><div class="bottom only-title"><div class="text-area"><h1 class="text title"><span>Python3 常用内置函数</span></h1></div></div></div></div><article class="md-text content"><link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/hint.css/2.4.1/hint.min.css"><blockquote><p>本文罗列了一些自己常用的函数，并添加一些自己的见解。如有纰漏，望不吝赐教，谢谢！<br>参考资料 <a target="_blank" rel="noopener" href="https://docs.python.org/zh-cn/3/library/functions.html">https://docs.python.org/zh-cn/3/library/functions.html</a></p></blockquote><h2 id="abs"><a href="#abs" class="headerlink" title="abs()"></a>abs()</h2><ul><li><code>abs(x)</code><br>返回一个数的绝对值。参数可以是整数、浮点数或任何实现了<a target="_blank" rel="noopener" href="https://docs.python.org/zh-cn/3/reference/datamodel.html#object.__abs_">__abs__()</a> 的对象。如果参数是一个复数，则返回它的模。</li></ul><h2 id="all"><a href="#all" class="headerlink" title="all()"></a>all()</h2><ul><li><code>all(iterable)</code><br>如果 <em>iterable</em> 的所有元素均为真值（或可迭代对象为空）则返回 <code>True</code>。<details class="tag-plugin colorful folding" child="codeblock"><summary><span>等价于:</span></summary><div class="body"><figure class="highlight python"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">all</span>(<span class="params">iterable</span>):</span><br><span class="line">    <span class="keyword">for</span> element <span class="keyword">in</span> iterable:</span><br><span class="line">        <span class="keyword">if</span> <span class="keyword">not</span> element:</span><br><span class="line">            <span class="keyword">return</span> <span class="literal">False</span></span><br><span class="line">    <span class="keyword">return</span> <span class="literal">True</span></span><br></pre></td></tr></tbody></table></figure></div></details></li></ul><h2 id="any"><a href="#any" class="headerlink" title="any()"></a>any()</h2><ul><li><code>any(iterable)</code><br>如果 <em>iterable</em> 的任一元素为真值则返回 <code>True</code>。如果可迭代对象为空，返回 <code>False</code>。<details class="tag-plugin colorful folding" child="codeblock"><summary><span>等价于:</span></summary><div class="body"><figure class="highlight python"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">any</span>(<span class="params">iterable</span>):</span><br><span class="line">    <span class="keyword">for</span> element <span class="keyword">in</span> iterable:</span><br><span class="line">        <span class="keyword">if</span> element:</span><br><span class="line">            <span class="keyword">return</span> <span class="literal">True</span></span><br><span class="line">    <span class="keyword">return</span> <span class="literal">False</span></span><br></pre></td></tr></tbody></table></figure></div></details></li></ul><h2 id="bin"><a href="#bin" class="headerlink" title="bin()"></a>bin()</h2><ul><li><code>bin(x)</code><br>将一个整数转换为带前缀 “0b” 的二进制数字符串。例如：<figure class="highlight python"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">&gt; <span class="built_in">bin</span>(<span class="number">3</span>)</span><br><span class="line"><span class="comment"># '0b11'</span></span><br><span class="line">&gt; <span class="built_in">bin</span>(-<span class="number">10</span>)</span><br><span class="line"><span class="comment"># '-0b1010'</span></span><br><span class="line">&gt; <span class="built_in">format</span>(<span class="number">14</span>, <span class="string">'#b'</span>), <span class="built_in">format</span>(<span class="number">14</span>, <span class="string">'b'</span>)</span><br><span class="line"><span class="comment"># ('0b1110', '1110')</span></span><br><span class="line">&gt; <span class="string">f'<span class="subst">{<span class="number">14</span>:#b}</span>'</span>, <span class="string">f'<span class="subst">{<span class="number">14</span>:b}</span>'</span></span><br><span class="line"><span class="comment"># ('0b1110', '1110')</span></span><br></pre></td></tr></tbody></table></figure></li></ul><h2 id="callable"><a href="#callable" class="headerlink" title="callable()"></a>callable()</h2><ul><li><code>callable(object)</code><br>如果 <em>object</em> 参数是可调用的则返回 <code>True</code>，否则返回 <code>False</code>。<div class="tag-plugin colorful note"><div class="body"><p>一般用来判断变量名是否已经声明</p></div></div></li></ul><h2 id="chr"><a href="#chr" class="headerlink" title="chr()"></a>chr()</h2><ul><li><code>chr(i)</code><br>返回 Unicode 码位为整数 <em>i</em> 的字符的字符串格式。这是 <a href="#ord"><code>ord()</code></a>的逆函数。例如：<figure class="highlight python"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&gt; <span class="built_in">chr</span>(<span class="number">97</span>)</span><br><span class="line"><span class="comment"># 'a'</span></span><br><span class="line">&gt; <span class="built_in">chr</span>(<span class="number">8364</span>)</span><br><span class="line"><span class="comment"># '€'</span></span><br></pre></td></tr></tbody></table></figure>实参 <em>i</em> 的合法范围是 0 到 1,114,111（16 进制表示是 0x10FFFF）。如果 <em>i</em> 超过这个范围，会触发 <a target="_blank" rel="noopener" href="https://docs.python.org/zh-cn/3/library/exceptions.html#ValueError">ValueError</a> 异常。</li></ul><h2 id="dict"><a href="#dict" class="headerlink" title="dict()"></a>dict()</h2><ul><li><code>dict(**kwarg)</code></li><li><code>dict(mapping, **kwarg)</code></li><li><code>dict(iterable, **kwarg)</code><br>创建一个新的字典。例如：<figure class="highlight python"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&gt; <span class="built_in">dict</span>()</span><br><span class="line"><span class="comment"># {}</span></span><br><span class="line">&gt; <span class="built_in">dict</span>(a=<span class="string">'a'</span>, b=<span class="string">'b'</span>, c=<span class="string">'c'</span>)</span><br><span class="line"><span class="comment"># {'a': 'a', 'b': 'b', 'c': 'c'}</span></span><br><span class="line">&gt; <span class="built_in">dict</span>([(<span class="string">'a'</span>, <span class="string">'a'</span>), (<span class="string">'b'</span>, <span class="string">'b'</span>), (<span class="string">'c'</span>, <span class="string">'c'</span>)])</span><br><span class="line"><span class="comment"># {'a': 'a', 'b': 'b', 'c': 'c'}</span></span><br></pre></td></tr></tbody></table></figure></li></ul><h2 id="enumerate"><a href="#enumerate" class="headerlink" title="enumerate()"></a>enumerate()</h2><ul><li><code>enumerate(iterable, start=0)</code><br>返回一个枚举对象。<em>iterable</em> 必须是一个序列，或其他支持迭代的对象。<code>enumerate()</code> 返回的迭代器的<code>__next__()</code> 方法返回一个元组，里面包含一个计数值（从 <em>start</em> 开始，默认为 <em>0</em>）和通过迭代 <em>iterable</em> 获得的值。例如：<figure class="highlight python"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&gt; seasons = [<span class="string">'Spring'</span>, <span class="string">'Summer'</span>, <span class="string">'Fall'</span>, <span class="string">'Winter'</span>]</span><br><span class="line">&gt; <span class="built_in">list</span>(<span class="built_in">enumerate</span>(seasons))</span><br><span class="line"><span class="comment"># [(0, 'Spring'), (1, 'Summer'), (2, 'Fall'), (3, 'Winter')]</span></span><br><span class="line">&gt; <span class="built_in">list</span>(<span class="built_in">enumerate</span>(seasons, start=<span class="number">1</span>))</span><br><span class="line"><span class="comment"># [(1, 'Spring'), (2, 'Summer'), (3, 'Fall'), (4, 'Winter')]</span></span><br></pre></td></tr></tbody></table></figure><details class="tag-plugin colorful folding" child="codeblock"><summary><span>等价于:</span></summary><div class="body"><figure class="highlight python"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">enumerate</span>(<span class="params">iterable, start=<span class="number">0</span></span>):</span><br><span class="line">    n = start</span><br><span class="line">    <span class="keyword">for</span> elem <span class="keyword">in</span> iterable:</span><br><span class="line">        <span class="keyword">yield</span> n, elem</span><br><span class="line">        n += <span class="number">1</span></span><br></pre></td></tr></tbody></table></figure></div></details></li></ul><h2 id="eval"><a href="#eval" class="headerlink" title="eval()"></a>eval()</h2><ul><li><code>eval(expression, globals=None, locals=None)</code><br>实参是一个字符串，以及可选的 <em>globals</em> 和 <em>locals</em>。<em>globals</em> 实参必须是一个字典。<em>locals</em> 可以是任何映射对象。<br>返回值就是表达式的求值结果。语法错误将作为异常被报告。例如：<figure class="highlight python"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&gt; x=<span class="number">1</span></span><br><span class="line">&gt; <span class="built_in">eval</span>(<span class="string">'x+1'</span>)</span><br><span class="line"><span class="comment"># 2</span></span><br></pre></td></tr></tbody></table></figure><details class="tag-plugin colorful folding"><summary><span>官方解释</span></summary><div class="body"><p>表达式解析参数 <em>expression</em> 并作为 <em>Python</em> 表达式进行求值（从技术上说是一个条件列表），采用 <em>globals</em> 和 <em>locals</em> 字典作为全局和局部命名空间。如果存在 <em>globals</em> 字典，并且不包含 <em>__builtins__<em>键的值，则在解析</em> expression</em> 之前会插入以该字符串为键以对内置模块 <em>builtins</em> 的字典的引用为值的项。这样就可以在将 <em>globals</em> 传给 <code>eval()</code> 之前通过向其传入你自己的 <em>__builtins__<em>字典来控制可供被执行代码可以使用哪些内置模块。如果</em> locals</em> 字典被省略则它默认为 <em>globals</em> 字典。如果两个字典都被省略，则将使用调用 <code>eval()</code> 的环境中的 <em>globals</em> 和 <em>locals</em> 来执行该表达式。注意，<code>eval()</code> 无法访问闭包环境中的嵌套作用域 (非局部变量)。</p></div></details></li></ul><p>提示：</p><ul><li><code>exec()</code> 函数支持语句的动态执行。<code>globals()</code> 和 <code>locals()</code> 函数分别返回当前的全局和本地字典，可供传给 eval () 或 exec () 使用。</li><li>如果给出的源数据是个字符串，那么其前后的空格和制表符将被剔除。</li></ul><blockquote><p>另外可以参阅 <a target="_blank" rel="noopener" href="https://docs.python.org/zh-cn/3/library/ast.html#ast.literal_eval"><code>ast.literal_eval()</code></a>，该函数可以安全执行仅包含文字的表达式字符串。</p></blockquote><div class="tag-plugin colorful note" color="red"><div class="body"><p>不建议使用此函数，不仅执行效率低，而且可能会使代码存在风险。</p></div></div><h2 id="float"><a href="#float" class="headerlink" title="float()"></a>float()</h2><ul><li><code>float(x=0.0)</code><br>返回从数字或字符串 <em>x</em> 生成的浮点数。例如：<figure class="highlight python"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">&gt; <span class="built_in">float</span>(<span class="string">'+1.23'</span>)</span><br><span class="line"><span class="comment"># 1.23</span></span><br><span class="line">&gt; <span class="built_in">float</span>(<span class="string">'   -12345\n'</span>)</span><br><span class="line"><span class="comment"># -12345.0</span></span><br><span class="line">&gt; <span class="built_in">float</span>(<span class="string">'1e-003'</span>)</span><br><span class="line"><span class="comment"># 0.001</span></span><br><span class="line">&gt; <span class="built_in">float</span>(<span class="string">'+1E6'</span>)</span><br><span class="line"><span class="comment"># 1000000.0</span></span><br><span class="line">&gt; <span class="built_in">float</span>(<span class="string">'-Infinity'</span>)</span><br><span class="line"><span class="comment"># -inf</span></span><br></pre></td></tr></tbody></table></figure></li></ul><h2 id="format"><a href="#format" class="headerlink" title="format()"></a>format()</h2><ul><li><code>format(value, format_spec='')</code><br>将 <em>value</em> 转换为 “格式化后” 的形式，格式由 <em>format_spec</em> 进行控制。详见 <a target="_blank" rel="noopener" href="https://docs.python.org/zh-cn/3/library/string.html#formatspec">https://docs.python.org/zh-cn/3/library/string.html#formatspec</a>。<div class="tag-plugin colorful note"><div class="body"><p>现在一般使用 <code>f''</code>，代码会更简洁整齐。</p></div></div></li></ul><h2 id="hex"><a href="#hex" class="headerlink" title="hex()"></a>hex()</h2><ul><li><code>hex(x)</code><br>将整数转换为带前缀 “0x” 前缀的小写十六进制数字符串。例如：<figure class="highlight python"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">&gt; <span class="built_in">hex</span>(<span class="number">255</span>)</span><br><span class="line"><span class="comment"># '0xff'</span></span><br><span class="line">&gt; <span class="built_in">hex</span>(-<span class="number">42</span>)</span><br><span class="line"><span class="comment"># '-0x2a'</span></span><br><span class="line">&gt; %<span class="comment">#x' % 255, '%x' % 255, '%X' % 255</span></span><br><span class="line"><span class="comment"># ('0xff', 'ff', 'FF')</span></span><br><span class="line">&gt; <span class="built_in">format</span>(<span class="number">255</span>, <span class="string">'#x'</span>), <span class="built_in">format</span>(<span class="number">255</span>, <span class="string">'x'</span>), <span class="built_in">format</span>(<span class="number">255</span>, <span class="string">'X'</span>)</span><br><span class="line"><span class="comment"># ('0xff', 'ff', 'FF')</span></span><br><span class="line">&gt; <span class="string">f'<span class="subst">{<span class="number">255</span>:#x}</span>'</span>, <span class="string">f'<span class="subst">{<span class="number">255</span>:x}</span>'</span>, <span class="string">f'<span class="subst">{<span class="number">255</span>:X}</span>'</span></span><br><span class="line"><span class="comment"># ('0xff', 'ff', 'FF')</span></span><br></pre></td></tr></tbody></table></figure><blockquote><p>如果要获取浮点数的十六进制字符串形式，请使用 <code>float.hex()</code> 方法。</p></blockquote></li></ul><h2 id="input"><a href="#input" class="headerlink" title="input()"></a>input()</h2><ul><li><code>input()</code></li><li><code>input(prompt)</code><br>如果存在 <em>prompt</em> 实参，则将其写入标准输出，末尾不带换行符。接下来，该函数从输入中读取一行，将其转换为字符串（除了末尾的换行符）并返回。</li></ul><h2 id="int"><a href="#int" class="headerlink" title="int()"></a>int()</h2><ul><li><code>int(x=0)</code></li><li><code>int(x, base=10)</code><br>返回一个基于数字或字符串 <em>x</em> 构造的整数对象，或者在未给出参数时返回 <em>0</em>。如果 <em>x</em> 定义了<code>__int__()</code>，则 int (x) 将返回 <code>x.__int__()</code>。如果 <em>x</em> 定义了<code>__index__()</code>，则将返回 <code>x.__int__()</code>。如果 <em>x</em> 定义了<code>__trunc__()</code>，则将返回 <code>x.__trunc__()</code>。<strong>对于浮点数，这将向零方向截断。</strong></li></ul><h2 id="import"><a href="#import" class="headerlink" title="import"></a>import</h2><p>这个说起来有些复杂，参阅 <a target="_blank" rel="noopener" href="https://medium.com/pyladies-taiwan/python-%E7%9A%84-import-%E9%99%B7%E9%98%B1-3538e74f57e3">Python 的 Import 陷阱</a>和 <a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/362150439">python3 中关于 import 的疑难杂症</a>，这里头说的很棒。</p><h2 id="isinstance"><a href="#isinstance" class="headerlink" title="isinstance()"></a>isinstance()</h2><ul><li><code>isinstance(object, classinfo)</code><br>如果 <em>object</em> 参数是 <em>classinfo</em> 参数的实例，或者是其 (直接、间接或虚拟) 子类的实例则返回 <code>True</code>。如果 <em>object</em> 不是给定类型的对象，则该函数总是返回 <code>False</code>。例如：<figure class="highlight python"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&gt; a=<span class="number">10</span></span><br><span class="line">&gt; <span class="built_in">print</span>(<span class="built_in">isinstance</span>(a, <span class="built_in">int</span>))</span><br><span class="line"><span class="comment"># True</span></span><br><span class="line">&gt; <span class="built_in">print</span>(<span class="built_in">isinstance</span>(a, <span class="built_in">str</span>))</span><br><span class="line"><span class="comment"># False</span></span><br><span class="line">&gt; <span class="built_in">print</span>(<span class="built_in">isinstance</span>(a, (<span class="built_in">str</span>, <span class="built_in">int</span>, <span class="built_in">list</span>)))</span><br><span class="line"><span class="comment"># True</span></span><br></pre></td></tr></tbody></table></figure><blockquote><p><em>classinfo</em> 基本类型包括 <em>int</em>、<em>float</em>、<em>bool</em>、<em>complex</em>、<em>str</em>、<em>list</em>、<em>dict</em>、<em>set</em> 和 <em>tuple</em>。</p></blockquote></li></ul><h2 id="len"><a href="#len" class="headerlink" title="len()"></a>len()</h2><ul><li><code>len(s)</code><br>返回对象的长度（元素个数）。实参可以是序列（如 <em>string</em>、<em>bytes</em>、<em>tuple</em>、<em>list</em> 或 <em>range</em> 等）或集合（如 <em>dictionary</em>、<em>set</em> 或 <em>frozenset</em> 等）。</li></ul><h2 id="map"><a href="#map" class="headerlink" title="map()"></a>map()</h2><ul><li><code>map(function, iterable, *iterables)</code><br>返回一个将 <em>function</em> 应用于 <em>iterable</em> 的每一项，并产生其结果的迭代器。例如：<figure class="highlight python"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&gt; <span class="keyword">def</span> <span class="title function_">square</span>(<span class="params">x</span>):</span><br><span class="line">&gt;   <span class="keyword">return</span> x ** <span class="number">2</span></span><br><span class="line">&gt; <span class="built_in">list</span>(<span class="built_in">map</span>(square, [<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>]))</span><br><span class="line"><span class="comment"># [1, 4, 9, 16, 25]</span></span><br></pre></td></tr></tbody></table></figure></li></ul><h2 id="max"><a href="#max" class="headerlink" title="max()"></a>max()</h2><ul><li><code>max(iterable, *, key=None)</code></li><li><code>max(iterable, *, default, key=None)</code></li><li><code>max(arg1, arg2, *args, key=None)</code><br>返回可迭代对象中最大的元素，或者返回两个及以上实参中最大的。</li></ul><h2 id="min"><a href="#min" class="headerlink" title="min()"></a>min()</h2><ul><li><code>min(iterable, *, key=None)</code></li><li><code>min(iterable, *, default, key=None)</code></li><li><code>min(arg1, arg2, *args, key=None)</code><br>返回可迭代对象中最小的元素，或者返回两个及以上实参中最小的。</li></ul><h2 id="oct"><a href="#oct" class="headerlink" title="oct()"></a>oct()</h2><ul><li><code>oct(x)</code><br>将整数转换为带前缀 “0o” 的八进制数字符串。<figure class="highlight python"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">&gt; <span class="built_in">oct</span>(<span class="number">8</span>)</span><br><span class="line"><span class="comment"># '0o10'</span></span><br><span class="line">&gt; <span class="built_in">oct</span>(-<span class="number">56</span>)</span><br><span class="line"><span class="comment"># '-0o70'</span></span><br><span class="line">&gt; <span class="string">'%#o'</span> % <span class="number">10</span>, <span class="string">'%o'</span> % <span class="number">10</span></span><br><span class="line"><span class="comment"># ('0o12', '12')</span></span><br><span class="line">&gt; <span class="built_in">format</span>(<span class="number">10</span>, <span class="string">'#o'</span>), <span class="built_in">format</span>(<span class="number">10</span>, <span class="string">'o'</span>)</span><br><span class="line"><span class="comment"># ('0o12', '12')</span></span><br><span class="line">&gt; <span class="string">f'<span class="subst">{<span class="number">10</span>:#o}</span>'</span>, <span class="string">f'<span class="subst">{<span class="number">10</span>:o}</span>'</span></span><br><span class="line"><span class="comment"># ('0o12', '12')</span></span><br></pre></td></tr></tbody></table></figure></li></ul><h2 id="open"><a href="#open" class="headerlink" title="open()"></a>open()</h2><ul><li><code>open(file, mode='r', buffering=-1, encoding=None, errors=None, newline=None, closefd=True, opener=None)</code><br>打开 <em>file</em> 并返回对应的 <em>file object</em>。详见 <a target="_blank" rel="noopener" href="https://www.runoob.com/python3/python3-func-open.html">https://www.runoob.com/python3/python3-func-open.html</a><div class="tag-plugin colorful note"><div class="body"><p>建议使用 <code>with open() as...</code> 的形式</p></div></div></li></ul><h2 id="ord"><a href="#ord" class="headerlink" title="ord()"></a>ord()</h2><ul><li><code>ord(c)</code><br>对表示单个 <em>Unicode</em> 字符的字符串，返回代表它 <em>Unicode</em> 码的整数。例如 <code>ord('a')</code> 返回整数 <code>97</code>，<code>ord('€')</code> 返回 <code>8364</code>。这是 <a href="#chr"><code>chr()</code></a>的逆函数。</li></ul><h2 id="pow"><a href="#pow" class="headerlink" title="pow()"></a>pow()</h2><ul><li><code>pow(base, exp, mod=None)</code><br>返回 <em>base</em> 的 <em>exp</em> 次幂；如果 <em>mod</em> 存在，则返回 <em>base</em> 的 <em>exp</em> 次幂对 <em>mod</em> 取余（比 <code>pow(base, exp) % mod</code> 更高效）。两参数形式 <code>pow(base, exp)</code> 等价于乘方运算符 <code>base ** exp</code>。<figure class="highlight python"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&gt; <span class="built_in">pow</span>(<span class="number">38</span>, -<span class="number">1</span>, mod=<span class="number">97</span>)</span><br><span class="line"><span class="comment"># 23</span></span><br></pre></td></tr></tbody></table></figure></li></ul><h2 id="range"><a href="#range" class="headerlink" title="range()"></a>range()</h2><ul><li><code>range(stop)</code></li><li><code>range(start, stop, step=1)</code><br>返回的结果是一个整数序列的对象，例如：<figure class="highlight python"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&gt; <span class="built_in">list</span>(<span class="built_in">range</span>(<span class="number">6</span>))</span><br><span class="line"><span class="comment"># [0, 1, 2, 3, 4, 5]</span></span><br><span class="line">&gt; <span class="built_in">list</span>(<span class="built_in">range</span>(<span class="number">1</span>, <span class="number">6</span>))</span><br><span class="line"><span class="comment"># [1, 2, 3, 4, 5]</span></span><br><span class="line">&gt; <span class="built_in">list</span>(<span class="built_in">range</span>(<span class="number">6</span>, <span class="number">1</span>, -<span class="number">1</span>))</span><br><span class="line"><span class="comment"># [6, 5, 4, 3, 2]</span></span><br></pre></td></tr></tbody></table></figure></li></ul><h2 id="print"><a href="#print" class="headerlink" title="print()"></a>print()</h2><ul><li><code>print(*objects, sep=' ', end='\n', file=None, flush=False)</code><br>输出文本至控制台。<div class="tag-plugin colorful note"><div class="body"><p>拓展：<a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/83053598">来看看 Python 炫酷的颜色输出与进度条打印</a></p></div></div></li></ul><h2 id="str"><a href="#str" class="headerlink" title="str()"></a>str()</h2><ul><li><code>str(object='')</code></li><li><code>str(object=b'', encoding='utf-8', errors='strict')</code><br>返回一个 <em>string</em> 类型的 <em>object</em>。</li></ul><h2 id="sum"><a href="#sum" class="headerlink" title="sum()"></a>sum()</h2><ul><li><code>sum(iterable, /, start=0)</code><br>从 <em>start</em> 开始<strong>自左向右</strong>对 <em>iterable</em> 的项求和并返回总计值。<em>iterable</em> 为数字，<em>start</em> 值不允许为字符串。<div class="tag-plugin colorful note"><div class="body"><p>提示：拼接字符串序列的更好更快方式是调用<code>''.join(sequence)</code>。</p></div></div></li></ul><h2 id="type"><a href="#type" class="headerlink" title="type()"></a>type()</h2><ul><li><code>type(object)</code></li><li><code>type(name, bases, dict, **kwds)</code><br>传入一个参数时，返回其类型。返回值是一个 <em>type</em> 对象，通常与 <code>object.__class__</code>所返回的对象相同。<div class="tag-plugin colorful note"><div class="body"><p>推荐使用 <a href="#isinstance"><code>isinstance()</code></a>内置函数来检测对象的类型，因为它会考虑子类的情况。</p></div></div></li></ul><h2 id="zip"><a href="#zip" class="headerlink" title="zip()"></a>zip()</h2><ul><li><code>zip(*iterables, strict=False)</code><br>在多个迭代器上并行迭代，从每个迭代器返回一个数据项组成元组。例如：<figure class="highlight python"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&gt;<span class="keyword">for</span> item <span class="keyword">in</span> <span class="built_in">zip</span>([<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>], [<span class="string">'a'</span>, <span class="string">'c'</span>, <span class="string">'c'</span>]):</span><br><span class="line">&gt;    <span class="built_in">print</span>(item)</span><br><span class="line"><span class="comment"># (1, 'a')</span></span><br><span class="line"><span class="comment"># (2, 'b')</span></span><br><span class="line"><span class="comment"># (3, 'c')</span></span><br></pre></td></tr></tbody></table></figure>默认情况下（<code>strict=False</code>），<code>zip()</code> 在最短的迭代完成后停止。较长可迭代对象中的剩余项将被忽略，结果会裁切至最短可迭代对象的长度。<details class="tag-plugin colorful folding" child="codeblock"><summary><span>提示：_*zip ()_ 运算符相结合可以用来拆解一个列表。</span></summary><div class="body"><figure class="highlight python"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&gt; x = [<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>]</span><br><span class="line">&gt; y = [<span class="number">4</span>, <span class="number">5</span>, <span class="number">6</span>]</span><br><span class="line">&gt; <span class="built_in">list</span>(<span class="built_in">zip</span>(x, y))</span><br><span class="line"><span class="comment"># [(1, 4), (2, 5), (3, 6)]</span></span><br><span class="line">&gt; x2, y2 = <span class="built_in">zip</span>(*<span class="built_in">zip</span>(x, y))</span><br><span class="line">&gt; x == <span class="built_in">list</span>(x2) <span class="keyword">and</span> y == <span class="built_in">list</span>(y2)</span><br><span class="line"><span class="comment"># True</span></span><br></pre></td></tr></tbody></table></figure></div></details></li></ul><div class="article-footer fs14"><section id="license"><div class="header"><span>许可协议</span></div><div class="body"><p>本文采用 <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a> 许可协议，转载请注明出处，谢谢！</p></div></section><section id="share"><div class="header"><span>分享文章</span></div><div class="body"><div class="link"><input class="copy-area" readonly id="copy-link" value="https://20508888.xyz/posts/35163/"></div><div class="social-wrap dis-select"><a class="social share-item wechat" onclick="util.toggle(&quot;qrcode-wechat&quot;)"><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://gcore.jsdelivr.net/gh/cdn-x/placeholder@1.0.12/social/b32ef3da1162a.svg"></a><a class="social share-item weibo" target="_blank" rel="external nofollow noopener noreferrer" href="https://service.weibo.com/share/share.php?url=https://20508888.xyz/posts/35163/&title=Python3 常用内置函数 - Malvern's Blog&summary=
+本文罗列了一些自己常用的函数，并添加一些自己的见解。如有纰漏，望不吝赐教，谢谢！参考资料 https://docs.python.org/zh-cn/3/library/functions.html
+
+abs()
+abs(x)返回一..."><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://gcore.jsdelivr.net/gh/cdn-x/placeholder@1.0.12/social/80c07e4dbb303.svg"></a><a class="social share-item email" href="mailto:?subject=Python3 常用内置函数 - Malvern's Blog&amp;body=https://20508888.xyz/posts/35163/"><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://gcore.jsdelivr.net/gh/cdn-x/placeholder@1.0.12/social/a1b00e20f425d.svg"></a><a class="social share-item link" onclick="util.copy(&quot;copy-link&quot;, &quot;复制成功&quot;)"><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://gcore.jsdelivr.net/gh/cdn-x/placeholder@1.0.12/social/8411ed322ced6.svg"></a></div><div class="qrcode" id="qrcode-wechat" style="opacity:0;height:0"><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://api.qrserver.com/v1/create-qr-code/?size=256x256&data=https://20508888.xyz/posts/35163/"></div></div></section></div></article><div class="related-wrap" id="read-next"><section class="body"><div class="item" id="prev"><div class="note">较新文章</div><a href="/posts/19706/">常用机械螺纹之随笔</a></div><div class="item" id="next"><div class="note">较早文章</div><a href="/posts/35472/">一个人的旅行 —— 京都・奈良・大阪・东京・神奈川</a></div></section></div><footer class="page-footer footnote"><hr><div class="text"><div align="center"><a title="里面或许能发现一些奇妙的东西哟" href="https://20508888.xyz/sitemap.txt" target="_blank">本站地图</a> | <a title="我的Uptime监控及状态页面" href="https://uf.20508888.xyz/" target="_blank">状态监测</a> | <a title="加密/解密一张图片" href="https://20508888.xyz/jpgcrypt.github.io/" target="_blank">图片加密&解密</a> | <a title="这是Malvern's Blog文件和图片的服务器。" href="http://117.72.17.109/" target="_blank">File Server</a> | <a title="博客人的朋友圈，博客收录与文章RSS聚合网站。" href="https://www.boyouquan.com/home" target="_blank">博友圈</a> | <a title="博客说旨在全收录优质的中文个人博客，提供博客收录、文章聚合展示等功能，欢迎来这里发现有趣的博友以及他们的最新动态！" href="https://blog.ns.ci/home" target="_blank">博客说</a></div><div align="center">Copyright 2022-2025 | Powered by <a href="https://hexo.io/zh-cn/" target="_blank">Hexo 7.3.0</a> & <a href="https://xaoxuu.com/wiki/stellar/" target="_blank">Stellar 1.29.1</a></div><div align="center"><span id="busuanzi_container_site_pv">总访问量<span id="busuanzi_value_site_pv"></span>次 | <span id="sitetime"></span></span></div><script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script><script language="javascript">function siteTime(){window.setTimeout("siteTime()",1e3);var e=36e5,t=24*e,o=new Date,i=o.getFullYear(),a=o.getMonth()+1,n=o.getDate(),r=o.getHours(),l=o.getMinutes(),s=o.getSeconds(),M=(Date.UTC(2022,11,28,20,0,0),Date.UTC(i,a,n,r,l,s)),T=Date.UTC(2034,2,25,0,0,0)-M,g=Math.floor(T/31536e6),m=Math.floor(T/t-365*g),f=Math.floor((T-(365*g+m)*t)/e),h=Math.floor((T-(365*g+m)*t-f*e)/6e4),u=Math.floor((T-(365*g+m)*t-f*e-6e4*h)/1e3);document.getElementById("sitetime").innerHTML="本网址将在"+g+"年"+m+"天"+f+"小时"+h+"分钟"+u+"秒后过期"}siteTime()</script></div></footer><div class="main-mask" onclick="sidebar.dismiss()"></div></div><aside class="l_right"><div class="widgets"><widget class="widget-wrapper toc" id="data-toc" collapse="auto"><div class="widget-header dis-select"><span class="name">本文目录</span><a class="cap-action" onclick="sidebar.toggleTOC()"><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6h11m-11 6h11m-11 6h11M4 6h1v4m-1 0h2m0 8H4c0-1 2-2 2-3s-1-1.5-2-1"/></svg></a></div><div class="widget-body"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#abs"><span class="toc-number">1.</span> <span class="toc-text">abs()</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#all"><span class="toc-number">2.</span> <span class="toc-text">all()</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#any"><span class="toc-number">3.</span> <span class="toc-text">any()</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#bin"><span class="toc-number">4.</span> <span class="toc-text">bin()</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#callable"><span class="toc-number">5.</span> <span class="toc-text">callable()</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#chr"><span class="toc-number">6.</span> <span class="toc-text">chr()</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#dict"><span class="toc-number">7.</span> <span class="toc-text">dict()</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#enumerate"><span class="toc-number">8.</span> <span class="toc-text">enumerate()</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#eval"><span class="toc-number">9.</span> <span class="toc-text">eval()</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#float"><span class="toc-number">10.</span> <span class="toc-text">float()</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#format"><span class="toc-number">11.</span> <span class="toc-text">format()</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#hex"><span class="toc-number">12.</span> <span class="toc-text">hex()</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#input"><span class="toc-number">13.</span> <span class="toc-text">input()</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#int"><span class="toc-number">14.</span> <span class="toc-text">int()</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#import"><span class="toc-number">15.</span> <span class="toc-text">import</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#isinstance"><span class="toc-number">16.</span> <span class="toc-text">isinstance()</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#len"><span class="toc-number">17.</span> <span class="toc-text">len()</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#map"><span class="toc-number">18.</span> <span class="toc-text">map()</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#max"><span class="toc-number">19.</span> <span class="toc-text">max()</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#min"><span class="toc-number">20.</span> <span class="toc-text">min()</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#oct"><span class="toc-number">21.</span> <span class="toc-text">oct()</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#open"><span class="toc-number">22.</span> <span class="toc-text">open()</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#ord"><span class="toc-number">23.</span> <span class="toc-text">ord()</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#pow"><span class="toc-number">24.</span> <span class="toc-text">pow()</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#range"><span class="toc-number">25.</span> <span class="toc-text">range()</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#print"><span class="toc-number">26.</span> <span class="toc-text">print()</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#str"><span class="toc-number">27.</span> <span class="toc-text">str()</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#sum"><span class="toc-number">28.</span> <span class="toc-text">sum()</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#type"><span class="toc-number">29.</span> <span class="toc-text">type()</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#zip"><span class="toc-number">30.</span> <span class="toc-text">zip()</span></a></li></ol></div><div class="widget-footer"><a class="top" onclick="util.scrollTop()"><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.5"><path d="M2 12c0-4.714 0-7.071 1.464-8.536C4.93 2 7.286 2 12 2c4.714 0 7.071 0 8.535 1.464C22 4.93 22 7.286 22 12c0 4.714 0 7.071-1.465 8.535C19.072 22 16.714 22 12 22s-7.071 0-8.536-1.465C2 19.072 2 16.714 2 12Z"/><path stroke-linecap="round" stroke-linejoin="round" d="m9 15.5l3-3l3 3m-6-4l3-3l3 3"/></g></svg><span>回到顶部</span></a></div></widget></div></aside><div class="float-panel blur"><button type="button" style="display:none" class="laptop-only rightbar-toggle mobile" onclick="sidebar.rightbar()"><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6h11m-11 6h11m-11 6h11M4 6h1v4m-1 0h2m0 8H4c0-1 2-2 2-3s-1-1.5-2-1"/></svg></button> <button type="button" style="display:none" class="mobile-only leftbar-toggle mobile" onclick="sidebar.leftbar()"><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.5"><path d="M2 11c0-3.771 0-5.657 1.172-6.828C4.343 3 6.229 3 10 3h4c3.771 0 5.657 0 6.828 1.172C22 5.343 22 7.229 22 11v2c0 3.771 0 5.657-1.172 6.828C19.657 21 17.771 21 14 21h-4c-3.771 0-5.657 0-6.828-1.172C2 18.657 2 16.771 2 13z"/><path id="sep" stroke-linecap="round" d="M5.5 10h6m-5 4h4m4.5 7V3"/></g></svg></button></div></div><div class="scripts"><script type="text/javascript">const ctx = {
+    date_suffix: {
+      just: `刚刚`,
+      min: `分钟前`,
+      hour: `小时前`,
+      day: `天前`,
+    },
+    root : `/`,
+  };
+
+  // required plugins (only load if needs)
+  if (`local_search`) {
+    ctx.search = {};
+    ctx.search.service = `local_search`;
+    if (ctx.search.service == 'local_search') {
+      let service_obj = Object.assign({}, `{"field":"all","path":"/search.json","content":true,"sort":"-date"}`);
+      ctx.search[ctx.search.service] = service_obj;
+    }
+  }
+  const def = {
+    avatar: `https://gcore.jsdelivr.net/gh/cdn-x/placeholder@1.0.12/avatar/round/3442075.svg`,
+    cover: `https://gcore.jsdelivr.net/gh/cdn-x/placeholder@1.0.12/cover/76b86c0226ffd.svg`,
+  };
+  const deps = {
+    jquery: `https://cdn.jsdelivr.net/npm/jquery@3.7.1/dist/jquery.min.js`,
+    marked: `https://cdn.jsdelivr.net/npm/marked@13.0.1/lib/marked.umd.min.js`
+  }</script><script type="text/javascript">const utils = {
+    // 懒加载 css https://github.com/filamentgroup/loadCSS
+    css: (href, before, media, attributes) => {
+      var doc = window.document;
+      var ss = doc.createElement("link");
+      var ref;
+      if (before) {
+        ref = before;
+      } else {
+        var refs = (doc.body || doc.getElementsByTagName("head")[0]).childNodes;
+        ref = refs[refs.length - 1];
+      }
+      var sheets = doc.styleSheets;
+      if (attributes) {
+        for (var attributeName in attributes) {
+          if (attributes.hasOwnProperty(attributeName)) {
+            ss.setAttribute(attributeName, attributes[attributeName]);
+          }
+        }
+      }
+      ss.rel = "stylesheet";
+      ss.href = href;
+      ss.media = "only x";
+      function ready(cb) {
+        if (doc.body) {
+          return cb();
+        }
+        setTimeout(function () {
+          ready(cb);
+        });
+      }
+      ready(function () {
+        ref.parentNode.insertBefore(ss, before ? ref : ref.nextSibling);
+      });
+      var onloadcssdefined = function (cb) {
+        var resolvedHref = ss.href;
+        var i = sheets.length;
+        while (i--) {
+          if (sheets[i].href === resolvedHref) {
+            return cb();
+          }
+        }
+        setTimeout(function () {
+          onloadcssdefined(cb);
+        });
+      };
+      function loadCB() {
+        if (ss.addEventListener) {
+          ss.removeEventListener("load", loadCB);
+        }
+        ss.media = media || "all";
+      }
+      if (ss.addEventListener) {
+        ss.addEventListener("load", loadCB);
+      }
+      ss.onloadcssdefined = onloadcssdefined;
+      onloadcssdefined(loadCB);
+      return ss;
+    },
+
+    js: (src, opt) => new Promise((resolve, reject) => {
+      var script = document.createElement('script');
+      if (src.startsWith('/')){
+        src = ctx.root + src.substring(1);
+      }
+      script.src = src;
+      if (opt) {
+        for (let key of Object.keys(opt)) {
+          script[key] = opt[key]
+        }
+      } else {
+        // 默认异步，如果需要同步，第二个参数传入 {} 即可
+        script.async = true
+      }
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    }),
+
+    jq: (fn) => {
+      if (typeof jQuery === 'undefined') {
+        utils.js(deps.jquery).then(fn)
+      } else {
+        fn()
+      }
+    },
+    
+    onLoading: (el) => {
+      if (el) {
+        $(el).append('<div class="loading-wrap"><svg xmlns="http://www.w3.org/2000/svg" width="2em" height="2em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-width="2"><path stroke-dasharray="60" stroke-dashoffset="60" stroke-opacity=".3" d="M12 3C16.9706 3 21 7.02944 21 12C21 16.9706 16.9706 21 12 21C7.02944 21 3 16.9706 3 12C3 7.02944 7.02944 3 12 3Z"><animate fill="freeze" attributeName="stroke-dashoffset" dur="1.3s" values="60;0"/></path><path stroke-dasharray="15" stroke-dashoffset="15" d="M12 3C16.9706 3 21 7.02944 21 12"><animate fill="freeze" attributeName="stroke-dashoffset" dur="0.3s" values="15;0"/><animateTransform attributeName="transform" dur="1.5s" repeatCount="indefinite" type="rotate" values="0 12 12;360 12 12"/></path></g></svg></div>');
+      }
+    },
+    onLoadSuccess: (el) => {
+      if (el) {
+        $(el).find('.loading-wrap').remove();
+      }
+    },
+    onLoadFailure: (el) => {
+      if (el) {
+        $(el).find('.loading-wrap svg').remove();
+        $(el).find('.loading-wrap').append('<svg xmlns="http://www.w3.org/2000/svg" width="2em" height="2em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"><path stroke-dasharray="60" stroke-dashoffset="60" d="M12 3L21 20H3L12 3Z"><animate fill="freeze" attributeName="stroke-dashoffset" dur="0.5s" values="60;0"/></path><path stroke-dasharray="6" stroke-dashoffset="6" d="M12 10V14"><animate fill="freeze" attributeName="stroke-dashoffset" begin="0.6s" dur="0.2s" values="6;0"/></path></g><circle cx="12" cy="17" r="1" fill="currentColor" fill-opacity="0"><animate fill="freeze" attributeName="fill-opacity" begin="0.8s" dur="0.4s" values="0;1"/></circle></svg>');
+        $(el).find('.loading-wrap').addClass('error');
+      }
+    },
+    request: (el, url, callback, onFailure) => {
+      let retryTimes = 3;
+      utils.onLoading(el);
+      function req() {
+        return new Promise((resolve, reject) => {
+          let status = 0; // 0 等待 1 完成 2 超时
+          let timer = setTimeout(() => {
+            if (status === 0) {
+              status = 2;
+              timer = null;
+              reject('请求超时');
+              if (retryTimes == 0) {
+                onFailure();
+              }
+            }
+          }, 5000);
+          fetch(url).then(function(response) {
+            if (status !== 2) {
+              clearTimeout(timer);
+              resolve(response);
+              timer = null;
+              status = 1;
+            }
+            if (response.ok) {
+              return response.json();
+            }
+            throw new Error('Network response was not ok.');
+          }).then(function(data) {
+            retryTimes = 0;
+            utils.onLoadSuccess(el);
+            callback(data);
+          }).catch(function(error) {
+            if (retryTimes > 0) {
+              retryTimes -= 1;
+              setTimeout(() => {
+                req();
+              }, 5000);
+            } else {
+              utils.onLoadFailure(el);
+              onFailure();
+            }
+          });
+        });
+      }
+      req();
+    },
+  };</script><script>const sidebar = {
+    leftbar: () => {
+      if (l_body) {
+        l_body.toggleAttribute('leftbar');
+        l_body.removeAttribute('rightbar');
+      }
+    },
+    rightbar: () => {
+      if (l_body) {
+        l_body.toggleAttribute('rightbar');
+        l_body.removeAttribute('leftbar');
+      }
+    },
+    dismiss: () => {
+      if (l_body) {
+        l_body.removeAttribute('leftbar');
+        l_body.removeAttribute('rightbar');
+      }
+    },
+    toggleTOC: () => {
+      document.querySelector('#data-toc').classList.toggle('collapse');
+    }
+  }</script><script type="text/javascript">(() => {
+    const tagSwitchers = document.querySelectorAll('.tag-subtree.parent-tag > a > .tag-switcher-wrapper')
+    for (const tagSwitcher of tagSwitchers) {
+      tagSwitcher.addEventListener('click', (e) => {
+        const parent = e.target.closest('.tag-subtree.parent-tag')
+        parent.classList.toggle('expanded')
+        e.preventDefault()
+      })
+    }
+
+    // Get active tag from query string, then activate it.
+    const urlParams = new URLSearchParams(window.location.search)
+    const activeTag = urlParams.get('tag')
+    if (activeTag) {
+      let tag = document.querySelector(`.tag-subtree[data-tag="${activeTag}"]`)
+      if (tag) {
+        tag.querySelector('a').classList.add('active')
+        
+        while (tag) {
+          tag.classList.add('expanded')
+          tag = tag.parentElement.closest('.tag-subtree.parent-tag')
+        }
+      }
+    }
+  })()</script><script src="/js/main.js?v=1.29.1" defer></script><script type="text/javascript">const applyTheme = (theme) => {
+    if (theme === 'auto') {
+      document.documentElement.removeAttribute('data-theme')
+    } else {
+      document.documentElement.setAttribute('data-theme', theme)
+    }
+
+    applyThemeToGiscus(theme)
+  }
+
+  const applyThemeToGiscus = (theme) => {
+    theme = theme === 'auto' ? 'preferred_color_scheme' : theme
+
+    const cmt = document.getElementById('giscus')
+    if (cmt) {
+      // This works before giscus load.
+      cmt.setAttribute('data-theme', theme)
+    }
+
+    const iframe = document.querySelector('#comments > section.giscus > iframe')
+    if (iframe) {
+      // This works after giscus loaded.
+      const src = iframe.src
+      const newSrc = src.replace(/theme=[\w]+/, `theme=${theme}`)
+      iframe.src = newSrc
+    }
+  }
+
+  const switchTheme = () => {
+    // light -> dark -> auto -> light -> ...
+    const currentTheme = document.documentElement.getAttribute('data-theme')
+    let newTheme;
+    switch (currentTheme) {
+      case 'light':
+        newTheme = 'dark'
+        break
+      case 'dark':
+        newTheme = 'auto'
+        break
+      default:
+        newTheme = 'light'
+    }
+    applyTheme(newTheme)
+    window.localStorage.setItem('Stellar.theme', newTheme)
+
+    const messages = {
+      light: `切换到浅色模式`,
+      dark: `切换到深色模式`,
+      auto: `切换到跟随系统配色`,
+    }
+    hud?.toast?.(messages[newTheme])
+  }
+
+  (() => {
+    // Apply user's preferred theme, if any.
+    const theme = window.localStorage.getItem('Stellar.theme')
+    if (theme !== null) {
+      applyTheme(theme)
+    }
+  })()</script><script defer>window.addEventListener('DOMContentLoaded', (event) => {
+    ctx.services = Object.assign({}, JSON.parse(`{"mdrender":{"js":"/js/services/mdrender.js"},"siteinfo":{"js":"/js/services/siteinfo.js","api":null},"ghinfo":{"js":"/js/services/ghinfo.js"},"sites":{"js":"/js/services/sites.js"},"friends":{"js":"/js/services/friends.js"},"timeline":{"js":"/js/services/timeline.js"},"fcircle":{"js":"/js/services/fcircle.js"},"weibo":{"js":"/js/services/weibo.js"},"memos":{"js":"/js/services/memos.js"}}`));
+    for (let id of Object.keys(ctx.services)) {
+      const js = ctx.services[id].js;
+      if (id == 'siteinfo') {
+        ctx.cardlinks = document.querySelectorAll('a.link-card[cardlink]');
+        if (ctx.cardlinks?.length > 0) {
+          utils.js(js, { defer: true }).then(function () {
+            setCardLink(ctx.cardlinks);
+          });
+        }
+      } else {
+        const els = document.getElementsByClassName(`ds-${id}`);
+        if (els?.length > 0) {
+          utils.jq(() => {
+            if (id == 'timeline' || 'memos' || 'marked') {
+              utils.js(deps.marked).then(function () {
+                utils.js(js, { defer: true });
+              });
+            } else {
+              utils.js(js, { defer: true });
+            }
+          });
+        }
+      }
+    }
+  });</script><script>window.addEventListener('DOMContentLoaded', (event) => {
+    ctx.search = {
+      path: `/search.json`,
+    }
+    utils.js('/js/search/local-search.js', { defer: true });
+  });</script><script>window.FPConfig={delay:0,ignoreKeywords:[],maxRPS:5,hoverDelay:25}</script><script defer src="https://cdn.jsdelivr.net/npm/flying-pages@2/flying-pages.min.js"></script><script defer src="https://cdn.jsdelivr.net/npm/vanilla-lazyload@19.1.3/dist/lazyload.min.js"></script><script>// https://www.npmjs.com/package/vanilla-lazyload
+  // Set the options globally
+  // to make LazyLoad self-initialize
+  window.lazyLoadOptions = {
+    elements_selector: ".lazy",
+  };
+  // Listen to the initialization event
+  // and get the instance of LazyLoad
+  window.addEventListener(
+    "LazyLoad::Initialized",
+    function (event) {
+      window.lazyLoadInstance = event.detail.instance;
+    },
+    false
+  );
+  document.addEventListener('DOMContentLoaded', function () {
+    window.lazyLoadInstance?.update();
+  });</script><script>ctx.fancybox = {
+    selector: `.timenode p>img`,
+    css: `https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0/dist/fancybox/fancybox.css`,
+    js: `https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0/dist/fancybox/fancybox.umd.js`
+  };
+  var selector = '[data-fancybox]:not(.error)';
+  if (ctx.fancybox.selector) {
+    selector += `, ${ctx.fancybox.selector}`
+  }
+  var needFancybox = document.querySelectorAll(selector).length !== 0;
+  if (!needFancybox) {
+    const els = document.getElementsByClassName('ds-memos');
+    if (els != undefined && els.length > 0) {
+      needFancybox = true;
+    }
+  }
+  if (needFancybox) {
+    utils.css(ctx.fancybox.css);
+    utils.js(ctx.fancybox.js, { defer: true }).then(function () {
+      Fancybox.bind(selector, {
+        hideScrollbar: false,
+        Thumbs: {
+          autoStart: false,
+        },
+        caption: (fancybox, slide) => {
+          return slide.triggerEl.alt || slide.triggerEl.dataset.caption || null
+        }
+      });
+    })
+  }</script><script>window.addEventListener('DOMContentLoaded', (event) => {
+    const swiper_api = document.getElementById('swiper-api');
+    if (swiper_api != undefined) {
+      utils.css(`https://unpkg.com/swiper@10.3.1/swiper-bundle.min.css`);
+      utils.js(`https://unpkg.com/swiper@10.3.1/swiper-bundle.min.js`, { defer: true }).then(function () {
+        const effect = swiper_api.getAttribute('effect') || '';
+        var swiper = new Swiper('.swiper#swiper-api', {
+          slidesPerView: 'auto',
+          spaceBetween: 8,
+          centeredSlides: true,
+          effect: effect,
+          rewind: true,
+          pagination: {
+            el: '.swiper-pagination',
+            clickable: true,
+          },
+          navigation: {
+            nextEl: '.swiper-button-next',
+            prevEl: '.swiper-button-prev',
+          },
+        });
+      })
+    }
+  });</script><script>document.addEventListener('DOMContentLoaded', function () {
+    window.codeElements = document.querySelectorAll('.code');
+    if (window.codeElements.length > 0) {
+      ctx.copycode = {
+        default_text: `Copy`,
+        success_text: `Copied`,
+        toast: `复制成功`,
+      };
+      utils.js('/js/plugins/copycode.js');
+    }
+  });</script></div></body></html>

@@ -1,0 +1,398 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="hexo-theme" content="https://github.com/xaoxuu/hexo-theme-stellar/tree/1.29.1" theme-name="Stellar" theme-version="1.29.1"><meta name="generator" content="Hexo 7.3.0"><meta http-equiv="x-dns-prefetch-control" content="on"><meta name="renderer" content="webkit"><meta name="force-rendering" content="webkit"><meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1"><meta name="HandheldFriendly" content="True"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1"><meta name="theme-color" media="(prefers-color-scheme: dark)" content="#000"><meta name="theme-color" content="#f9fafb"><title>从零开始写数控系统 0.5：【重写】直线插补 - Malvern's Blog</title><meta name="description" content="起因在上一片文章中，其实已经将逐点比较法的直线插补写得差不多了，但是因为象限问题，代码比较抽象。所以我使用面向对象的思路重写了一遍。 关于数字在所有的编程语言中，基本只用到整型和浮点数两种数字类型，但是面对这个数控编程，如果采用整型则无法满足精度要求，而浮点数因为其保留精度的特性，使用起来也较为不便（主要是需要重写判断两数相等），因此我使用了定点数来解决这一问题，所有与精度相关的数字都将其转换为了"><meta property="og:type" content="article"><meta property="og:title" content="从零开始写数控系统 0.5：【重写】直线插补"><meta property="og:url" content="https://20508888.xyz/posts/1000/index.html"><meta property="og:site_name" content="Malvern&#39;s Blog"><meta property="og:description" content="起因在上一片文章中，其实已经将逐点比较法的直线插补写得差不多了，但是因为象限问题，代码比较抽象。所以我使用面向对象的思路重写了一遍。 关于数字在所有的编程语言中，基本只用到整型和浮点数两种数字类型，但是面对这个数控编程，如果采用整型则无法满足精度要求，而浮点数因为其保留精度的特性，使用起来也较为不便（主要是需要重写判断两数相等），因此我使用了定点数来解决这一问题，所有与精度相关的数字都将其转换为了"><meta property="og:locale" content="zh_CN"><meta property="og:image" content="https://bu.dusays.com/2024/11/17/67399c6fd153c.webp"><meta property="article:published_time" content="2023-11-19T11:56:00.000Z"><meta property="article:modified_time" content="2023-11-19T11:56:00.000Z"><meta property="article:author" content="Malvern"><meta property="article:tag" content="机械"><meta property="article:tag" content="编程"><meta property="article:tag" content="计算机"><meta name="twitter:card" content="summary"><meta name="twitter:image" content="https://bu.dusays.com/2024/11/17/67399c6fd153c.webp"><meta name="keywords" content="机械,编程,计算机"><link rel="alternate" href="/atom.xml" title="Malvern's Blog" type="application/atom+xml"><link rel="stylesheet" href="/css/main.css?v=1.29.1"><link rel="shortcut icon" href="https://bu.dusays.com/2024/11/17/67399c5bce84f.png"></head><body><div class="l_body s:aa content tech" id="start" layout="post" text-indent><aside class="l_left"><div class="leftbar-container"><header class="header"><div class="logo-wrap"><a class="avatar" href="/about/"><div class="bg" style="opacity:0;background-image:url(https://bu.dusays.com/2024/11/17/67399c6fd659d.png)"></div><img no-lazy class="avatar" src="https://bu.dusays.com/2024/11/17/67399c5bce84f.png" onerror="javascript:this.classList.add('error');this.src='https://gcore.jsdelivr.net/gh/cdn-x/placeholder@1.0.12/image/2659360.svg';"></a><a class="title" href="/"><div class="main" ff="title">Malvern's Blog</div><div class="sub normal cap">I am my own gift ✌️</div><div class="sub hover cap" style="opacity:0">我就是我自己的礼物 🧌</div></a></div></header><div class="nav-area"><div class="search-wrapper" id="search-wrapper"><form class="search-form"><a class="search-button" onclick="document.getElementById(&quot;search-input&quot;).focus();"><svg t="1705074644177" viewBox="0 0 1025 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="1560" width="200" height="200"><path d="M1008.839137 935.96571L792.364903 719.491476a56.783488 56.783488 0 0 0-80.152866 0 358.53545 358.53545 0 1 1 100.857314-335.166073 362.840335 362.840335 0 0 1-3.689902 170.145468 51.248635 51.248635 0 1 0 99.217358 26.444296 462.057693 462.057693 0 1 0-158.255785 242.303546l185.930047 185.725053a51.248635 51.248635 0 0 0 72.568068 0 51.248635 51.248635 0 0 0 0-72.978056z" p-id="1561"></path><path d="M616.479587 615.969233a50.428657 50.428657 0 0 0-61.498362-5.534852 174.655348 174.655348 0 0 1-177.525271 3.484907 49.403684 49.403684 0 0 0-58.833433 6.76482l-3.074918 2.869923a49.403684 49.403684 0 0 0 8.609771 78.10292 277.767601 277.767601 0 0 0 286.992355-5.739847 49.403684 49.403684 0 0 0 8.404776-76.667958z" p-id="1562"></path></svg></a><input type="text" class="search-input" id="search-input" placeholder="站内搜索"></form><div id="search-result"></div><div class="search-no-result">没有找到内容！</div></div><nav class="menu dis-select"></nav></div><div class="widgets"><widget class="widget-wrapper markdown"><div class="widget-header dis-select"><span class="name">欢迎来到我的博客 🎉</span></div><div class="widget-body fs14"><ul><li>在此分享一些我的所见所闻，也会有收录一些我觉得有价值的雄文。</li><li>本站托管于<a target="_blank" rel="noopener" href="https://github.com/MalvernLove/MalvernLove.github.io">GitHub</a>，可能国内加载较慢，还望见谅。</li><li>如果发现文章内容有误，请致信📮<a href="mailto:&#x6d;&#x61;&#108;&#x76;&#x65;&#114;&#110;&#x40;&#56;&#x38;&#x2e;&#99;&#111;&#x6d;">&#x6d;&#x61;&#108;&#x76;&#x65;&#114;&#110;&#x40;&#56;&#x38;&#x2e;&#99;&#111;&#x6d;</a>。</li></ul></div></widget><widget class="widget-wrapper post-list"><div class="widget-header dis-select"><span class="name">最近更新</span><a class="cap-action" id="rss" title="Subscribe" href="/atom.xml"><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><path fill="currentColor" d="M5 21q-.825 0-1.412-.587T3 19q0-.825.588-1.412T5 17q.825 0 1.413.588T7 19q0 .825-.587 1.413T5 21m13.5 0q-.65 0-1.088-.475T16.9 19.4q-.275-2.425-1.312-4.537T12.9 11.1q-1.65-1.65-3.762-2.687T4.6 7.1q-.65-.075-1.125-.512T3 5.5q0-.65.45-1.062t1.075-.363q3.075.275 5.763 1.563t4.737 3.337q2.05 2.05 3.338 4.738t1.562 5.762q.05.625-.363 1.075T18.5 21m-6 0q-.625 0-1.075-.437T10.85 19.5q-.225-1.225-.787-2.262T8.65 15.35q-.85-.85-1.888-1.412T4.5 13.15q-.625-.125-1.062-.575T3 11.5q0-.65.45-1.075t1.075-.325q1.825.25 3.413 1.063t2.837 2.062q1.25 1.25 2.063 2.838t1.062 3.412q.1.625-.325 1.075T12.5 21"/></svg></a></div><div class="widget-body fs14"><a class="item title" href="/posts/56014/"><span class="title">🔥 本人简历｜My Resume</span></a><a class="item title" href="/posts/49615/"><span class="title">☭关于中国及我们党的立场 - 瑞典共产党</span></a><a class="item title" href="/posts/57148/"><span class="title">☭“所谓原始积累” 的含义</span></a><a class="item title" href="/posts/6836/"><span class="title">☭全球所有的共产党和工人党</span></a><a class="item title" href="/posts/32540/"><span class="title">我的书单</span></a><a class="item title" href="/posts/23552/"><span class="title">“零门槛” 查看三维模型 —— 机械设计软件的奇妙另存为</span></a><a class="item title" href="/posts/27177/"><span class="title">我的旅行计划</span></a><a class="item title" href="/posts/11794/"><span class="title">曲柄滑块机构利用 Excel 数学可视化</span></a><a class="item title" href="/posts/13883/"><span class="title">一个人的旅行 —— 百丈漈 & 雁荡山</span></a><a class="item title" href="/posts/11287/"><span class="title">一个人的旅行 —— 北京（重游）</span></a><a class="item title" href="/posts/28409/"><span class="title">小事：关于博客网站维护</span></a></div></widget></div></div></aside><div class="l_main" id="main"><div class="article banner top"><div class="content"><div class="top bread-nav footnote"><div class="left"><div class="flex-row" id="breadcrumb"><a class="cap breadcrumb" href="/">主页</a> <span class="sep"></span><a class="cap breadcrumb" href="/">文章</a><span class="sep"></span><a class="cap breadcrumb-link" href="/categories/%E6%9C%BA%E6%A2%B0/">机械</a></div><div class="flex-row" id="post-meta"><span class="text created">发布于：<time datetime="2023-11-19T11:56:00.000Z">2023-11-19</time></span><span class="sep updated"></span><span class="text updated">更新于：<time datetime="2023-11-19T11:56:00.000Z">2023-11-19</time></span></div></div></div><div class="bottom only-title"><div class="text-area"><h1 class="text title"><span>从零开始写数控系统 0.5：【重写】直线插补</span></h1></div></div></div></div><article class="md-text content"><link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/hint.css/2.4.1/hint.min.css"><h2 id="起因"><a href="#起因" class="headerlink" title="起因"></a>起因</h2><p>在上一片文章中，其实已经将逐点比较法的直线插补写得差不多了，但是因为象限问题，代码比较抽象。<br>所以我使用面向对象的思路重写了一遍。</p><h2 id="关于数字"><a href="#关于数字" class="headerlink" title="关于数字"></a>关于数字</h2><p>在所有的编程语言中，基本只用到整型和浮点数两种数字类型，但是面对这个数控编程，如果采用整型则无法满足精度要求，而浮点数因为其保留精度的特性，使用起来也较为不便（主要是需要重写判断两数相等），因此我使用了定点数来解决这一问题，所有与精度相关的数字都将其转换为了定点数。<br>具体如何使用定点数可以参考 <a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/157227878">Python decimal 模块使用方法详解</a>和官方文档 <a target="_blank" rel="noopener" href="https://docs.python.org/zh-cn/3/library/decimal.html">decimal—— 十进制定点和浮点运算</a>，我的代码中基本只用了如下两个方法。</p><figure class="highlight python"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="keyword">from</span> decimal <span class="keyword">import</span> *</span><br><span class="line"></span><br><span class="line"><span class="comment"># 将整型或浮点数x转换为定点数x</span></span><br><span class="line">Decimal(<span class="built_in">str</span>(x))</span><br><span class="line"></span><br><span class="line"><span class="comment"># 结果保留3位小数（四舍五入）</span></span><br><span class="line">num.quantize(Decimal(<span class="string">'0.000'</span>))</span><br></pre></td></tr></tbody></table></figure><h2 id="初始化实例"><a href="#初始化实例" class="headerlink" title="初始化实例"></a>初始化实例</h2><p>想要确定一条线段，必须有起点坐标以及三选一 —— 终点坐标、终点增量、直线长和角度，再转为起点和终点绝对坐标。</p><figure class="highlight python"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 直线类</span></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Line</span>(<span class="title class_ inherited__">object</span>):</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__init__</span>(<span class="params">self, start=(<span class="params"><span class="number">0</span>, <span class="number">0</span></span>), enda=<span class="number">0</span>, endd=<span class="number">0</span>, angle=<span class="number">0</span>, length=<span class="number">0</span></span>):</span><br><span class="line">        <span class="string">"""</span></span><br><span class="line"><span class="string">        start 起点,默认(0,0)</span></span><br><span class="line"><span class="string">        enda 终点绝对值 (x,y)</span></span><br><span class="line"><span class="string">        endd 终点增量值 (x,y)</span></span><br><span class="line"><span class="string">        angle 直线角度 (-180,180]</span></span><br><span class="line"><span class="string">        length 直线长度</span></span><br><span class="line"><span class="string">        """</span></span><br><span class="line">        <span class="variable language_">self</span>.start = <span class="built_in">tuple</span>(</span><br><span class="line">            <span class="built_in">map</span>(<span class="keyword">lambda</span> x: Decimal(<span class="built_in">str</span>(x)).quantize(Decimal(<span class="string">"0.000"</span>)), start))</span><br><span class="line"></span><br><span class="line">        <span class="comment"># 计算终点绝对坐标</span></span><br><span class="line">        <span class="keyword">if</span> enda:</span><br><span class="line">            <span class="variable language_">self</span>.end = <span class="built_in">tuple</span>(</span><br><span class="line">                <span class="built_in">map</span>(<span class="keyword">lambda</span> n: Decimal(<span class="built_in">str</span>(n)).quantize(Decimal(<span class="string">"0.000"</span>)), enda))</span><br><span class="line">        <span class="keyword">elif</span> endd:</span><br><span class="line">            <span class="variable language_">self</span>.end = <span class="built_in">tuple</span>(</span><br><span class="line">                <span class="built_in">map</span>(<span class="keyword">lambda</span> n: Decimal(<span class="built_in">str</span>(n)).quantize(Decimal(<span class="string">"0.000"</span>)), endd))</span><br><span class="line">        <span class="keyword">elif</span> angle <span class="keyword">and</span> length:</span><br><span class="line">            angle = Decimal(<span class="built_in">str</span>(math.radians(angle)))</span><br><span class="line">            length = Decimal(<span class="built_in">str</span>(length))</span><br><span class="line">            <span class="variable language_">self</span>.end = (</span><br><span class="line">                start[<span class="number">0</span>] + Decimal(<span class="built_in">str</span>(math.cos(angle))) * length,</span><br><span class="line">                start[<span class="number">1</span>] + Decimal(<span class="built_in">str</span>(math.sin(angle))) * length,)</span><br><span class="line">            <span class="variable language_">self</span>.end = <span class="built_in">tuple</span>(</span><br><span class="line">                <span class="built_in">map</span>(<span class="keyword">lambda</span> n: Decimal(<span class="built_in">str</span>(n)).quantize(Decimal(<span class="string">"0.000"</span>)), <span class="variable language_">self</span>.end))</span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            <span class="variable language_">self</span>.end = (Decimal(<span class="string">"0"</span>), Decimal(<span class="string">"0"</span>))</span><br></pre></td></tr></tbody></table></figure><h2 id="插补思路"><a href="#插补思路" class="headerlink" title="插补思路"></a>插补思路</h2><div class="tag-plugin image"><div class="image-bg"><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://bu.dusays.com/2024/11/17/67399c6fd153c.webp" alt="思路" data-fancybox="true"></div><div class="image-meta"><span class="image-caption center">思路</span></div></div><p>从性能角度考虑，我使用了迭代器输出插补的中间点。</p><h2 id="完整代码"><a href="#完整代码" class="headerlink" title="完整代码"></a>完整代码</h2><figure class="highlight python"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Python3</span></span><br><span class="line"><span class="keyword">from</span> decimal <span class="keyword">import</span> *</span><br><span class="line"><span class="keyword">import</span> math</span><br><span class="line"><span class="keyword">import</span> time</span><br><span class="line"></span><br><span class="line"><span class="comment"># 直线类</span></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Line</span>(<span class="title class_ inherited__">object</span>):</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__init__</span>(<span class="params">self, start=(<span class="params"><span class="number">0</span>, <span class="number">0</span></span>), enda=<span class="number">0</span>, endd=<span class="number">0</span>, angle=<span class="number">0</span>, length=<span class="number">0</span></span>):</span><br><span class="line">        <span class="string">"""</span></span><br><span class="line"><span class="string">        start 起点,默认(0,0)</span></span><br><span class="line"><span class="string">        enda 终点绝对值 (x,y)</span></span><br><span class="line"><span class="string">        endd 终点增量值 (x,y)</span></span><br><span class="line"><span class="string">        angle 直线角度 (-180,180]</span></span><br><span class="line"><span class="string">        length 直线长度</span></span><br><span class="line"><span class="string">        """</span></span><br><span class="line">        <span class="variable language_">self</span>.start = <span class="built_in">tuple</span>(</span><br><span class="line">            <span class="built_in">map</span>(<span class="keyword">lambda</span> x: Decimal(<span class="built_in">str</span>(x)).quantize(Decimal(<span class="string">"0.000"</span>)), start))</span><br><span class="line"></span><br><span class="line">        <span class="comment"># 放大系数&amp;增量</span></span><br><span class="line">        <span class="variable language_">self</span>.zoom = Decimal(<span class="number">1000</span>)</span><br><span class="line">        <span class="variable language_">self</span>.delta = Decimal(<span class="number">1</span>) / <span class="variable language_">self</span>.zoom</span><br><span class="line"></span><br><span class="line">        <span class="comment"># 计算终点绝对坐标</span></span><br><span class="line">        <span class="keyword">if</span> enda:</span><br><span class="line">            <span class="variable language_">self</span>.end = <span class="built_in">tuple</span>(</span><br><span class="line">                <span class="built_in">map</span>(<span class="keyword">lambda</span> n: Decimal(<span class="built_in">str</span>(n)).quantize(Decimal(<span class="string">"0.000"</span>)), enda))</span><br><span class="line">        <span class="keyword">elif</span> endd:</span><br><span class="line">            <span class="variable language_">self</span>.end = <span class="built_in">tuple</span>(</span><br><span class="line">                <span class="built_in">map</span>(<span class="keyword">lambda</span> n: Decimal(<span class="built_in">str</span>(n)).quantize(Decimal(<span class="string">"0.000"</span>)), endd))</span><br><span class="line">        <span class="keyword">elif</span> angle <span class="keyword">and</span> length:</span><br><span class="line">            angle = Decimal(<span class="built_in">str</span>(math.radians(angle)))</span><br><span class="line">            length = Decimal(<span class="built_in">str</span>(length))</span><br><span class="line">            <span class="variable language_">self</span>.end = (</span><br><span class="line">                start[<span class="number">0</span>] + Decimal(<span class="built_in">str</span>(math.cos(angle))) * length,</span><br><span class="line">                start[<span class="number">1</span>] + Decimal(<span class="built_in">str</span>(math.sin(angle))) * length,)</span><br><span class="line">            <span class="variable language_">self</span>.end = <span class="built_in">tuple</span>(</span><br><span class="line">                <span class="built_in">map</span>(<span class="keyword">lambda</span> n: Decimal(<span class="built_in">str</span>(n)).quantize(Decimal(<span class="string">"0.000"</span>)), <span class="variable language_">self</span>.end))</span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            <span class="variable language_">self</span>.end = (Decimal(<span class="string">"0"</span>), Decimal(<span class="string">"0"</span>))</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 重写字符串</span></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__str__</span>(<span class="params">self</span>) -&gt; <span class="built_in">str</span>:</span><br><span class="line">        <span class="keyword">return</span> <span class="string">"start=({:,.3f},{:,.3f}); end=({:,.3f},{:,.3f})"</span>.<span class="built_in">format</span>(</span><br><span class="line">            <span class="built_in">float</span>(<span class="variable language_">self</span>.start[<span class="number">0</span>]),</span><br><span class="line">            <span class="built_in">float</span>(<span class="variable language_">self</span>.start[<span class="number">1</span>]),</span><br><span class="line">            <span class="built_in">float</span>(<span class="variable language_">self</span>.end[<span class="number">0</span>]),</span><br><span class="line">            <span class="built_in">float</span>(<span class="variable language_">self</span>.end[<span class="number">1</span>]),)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 直线起点平移到原点</span></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__offset</span>(<span class="params">self</span>) -&gt; <span class="literal">None</span>:</span><br><span class="line">        xe = <span class="variable language_">self</span>.end[<span class="number">0</span>] - <span class="variable language_">self</span>.start[<span class="number">0</span>]</span><br><span class="line">        ye = <span class="variable language_">self</span>.end[<span class="number">1</span>] - <span class="variable language_">self</span>.start[<span class="number">1</span>]</span><br><span class="line">        <span class="variable language_">self</span>.end = (xe, ye)</span><br><span class="line">        <span class="variable language_">self</span>.f = <span class="number">0</span></span><br><span class="line">        <span class="comment"># 步长</span></span><br><span class="line">        <span class="variable language_">self</span>.step = <span class="built_in">abs</span>(xe) + <span class="built_in">abs</span>(ye)</span><br><span class="line">        <span class="variable language_">self</span>.step = <span class="variable language_">self</span>.step * <span class="variable language_">self</span>.zoom</span><br><span class="line">        <span class="comment"># 象限系数</span></span><br><span class="line">        <span class="variable language_">self</span>.kx = <span class="built_in">int</span>(math.copysign(<span class="number">1</span>, xe))</span><br><span class="line">        <span class="variable language_">self</span>.ky = <span class="built_in">int</span>(math.copysign(<span class="number">1</span>, ye))</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 直线补偿☆</span></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__compensation</span>(<span class="params">self</span>) -&gt; <span class="literal">None</span>:</span><br><span class="line">        <span class="comment"># 偏差判别</span></span><br><span class="line">        <span class="keyword">if</span> <span class="variable language_">self</span>.f &gt;= <span class="number">0</span>:</span><br><span class="line">            <span class="comment"># 终点在Y轴上</span></span><br><span class="line">            <span class="keyword">if</span> <span class="variable language_">self</span>.end[<span class="number">0</span>] == <span class="number">0</span>:</span><br><span class="line">                <span class="variable language_">self</span>.y = <span class="variable language_">self</span>.y + <span class="variable language_">self</span>.delta * <span class="variable language_">self</span>.ky</span><br><span class="line">                <span class="variable language_">self</span>.f = <span class="variable language_">self</span>.f</span><br><span class="line">            <span class="keyword">else</span>:</span><br><span class="line">                <span class="variable language_">self</span>.x = <span class="variable language_">self</span>.x + <span class="variable language_">self</span>.delta * <span class="variable language_">self</span>.kx</span><br><span class="line">                <span class="variable language_">self</span>.f = <span class="variable language_">self</span>.f - <span class="built_in">abs</span>(<span class="variable language_">self</span>.end[<span class="number">1</span>])</span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            <span class="variable language_">self</span>.y = <span class="variable language_">self</span>.y + <span class="variable language_">self</span>.delta * <span class="variable language_">self</span>.ky</span><br><span class="line">            <span class="variable language_">self</span>.f = <span class="variable language_">self</span>.f + <span class="built_in">abs</span>(<span class="variable language_">self</span>.end[<span class="number">0</span>])</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 迭代器</span></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__iter__</span>(<span class="params">self</span>):</span><br><span class="line">        <span class="variable language_">self</span>.__offset()</span><br><span class="line">        <span class="comment"># 当前点坐标</span></span><br><span class="line">        <span class="variable language_">self</span>.x = Decimal(<span class="number">0</span>)</span><br><span class="line">        <span class="variable language_">self</span>.y = Decimal(<span class="number">0</span>)</span><br><span class="line">        <span class="keyword">return</span> <span class="variable language_">self</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__next__</span>(<span class="params">self</span>):</span><br><span class="line">        <span class="comment"># 循环数=总步长</span></span><br><span class="line">        <span class="keyword">if</span> <span class="variable language_">self</span>.step:</span><br><span class="line">            <span class="variable language_">self</span>.__compensation()</span><br><span class="line">            <span class="variable language_">self</span>.step = <span class="variable language_">self</span>.step - <span class="number">1</span></span><br><span class="line">            <span class="keyword">return</span> (<span class="built_in">float</span>(<span class="variable language_">self</span>.x + <span class="variable language_">self</span>.start[<span class="number">0</span>]), <span class="built_in">float</span>(<span class="variable language_">self</span>.y + <span class="variable language_">self</span>.start[<span class="number">1</span>]))</span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            <span class="keyword">raise</span> StopIteration</span><br></pre></td></tr></tbody></table></figure><h3 id="试一下"><a href="#试一下" class="headerlink" title="试一下"></a>试一下</h3><figure class="highlight python"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">l1 = Line((<span class="number">0</span>, <span class="number">0</span>), angle=<span class="number">30</span>, length=<span class="number">2</span>)</span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span>(l1)</span><br><span class="line"><span class="comment"># Output: start=(0.000,0.000); end=(1.732,1.000)</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> l1:</span><br><span class="line">    <span class="built_in">print</span>(i)</span><br><span class="line"><span class="comment"># Output:</span></span><br><span class="line"><span class="comment"># (0.001, 0.0)</span></span><br><span class="line"><span class="comment"># (0.001, 0.001)</span></span><br><span class="line"><span class="comment"># (0.002, 0.001)</span></span><br><span class="line"><span class="comment"># ...</span></span><br><span class="line"><span class="comment"># (1.731, 0.999)</span></span><br><span class="line"><span class="comment"># (1.731, 1.0)</span></span><br><span class="line"><span class="comment"># (1.732, 1.0)</span></span><br></pre></td></tr></tbody></table></figure><div class="article-footer fs14"><section id="references"><div class="header"><span>参考资料</span></div><div class="body"><ul><li class="post-title"><p><a href="ttps://20508888.xyz/62492">从零开始写数控系统0：直线插补</a></p></li><li class="post-title"><p><a target="_blank" rel="noopener" href="https://blog.csdn.net/Lovely_him/article/details/122273709">数控技术 - 直线插补 - 逐点比较法</a></p></li><li class="post-title"><p><a target="_blank" rel="noopener" href="http://www.busnc.com/ly/zhudian/xiangxianchabu.htm">点比较法直线插补计算公式在其它几个象限中的处理方法</a></p></li></ul></div></section><section id="license"><div class="header"><span>许可协议</span></div><div class="body"><p>本文采用 <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a> 许可协议，转载请注明出处，谢谢！</p></div></section><section id="share"><div class="header"><span>分享文章</span></div><div class="body"><div class="link"><input class="copy-area" readonly id="copy-link" value="https://20508888.xyz/posts/1000/"></div><div class="social-wrap dis-select"><a class="social share-item wechat" onclick="util.toggle(&quot;qrcode-wechat&quot;)"><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://gcore.jsdelivr.net/gh/cdn-x/placeholder@1.0.12/social/b32ef3da1162a.svg"></a><a class="social share-item weibo" target="_blank" rel="external nofollow noopener noreferrer" href="https://service.weibo.com/share/share.php?url=https://20508888.xyz/posts/1000/&title=从零开始写数控系统 0.5：【重写】直线插补 - Malvern's Blog&summary=起因在上一片文章中，其实已经将逐点比较法的直线插补写得差不多了，但是因为象限问题，代码比较抽象。所以我使用面向对象的思路重写了一遍。
+关于数字在所有的编程语言中，基本只用到整型和浮点数两种数字类型，但是面对这个数控编程，如果采用整型则..."><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://gcore.jsdelivr.net/gh/cdn-x/placeholder@1.0.12/social/80c07e4dbb303.svg"></a><a class="social share-item email" href="mailto:?subject=从零开始写数控系统 0.5：【重写】直线插补 - Malvern's Blog&amp;body=https://20508888.xyz/posts/1000/"><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://gcore.jsdelivr.net/gh/cdn-x/placeholder@1.0.12/social/a1b00e20f425d.svg"></a><a class="social share-item link" onclick="util.copy(&quot;copy-link&quot;, &quot;复制成功&quot;)"><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://gcore.jsdelivr.net/gh/cdn-x/placeholder@1.0.12/social/8411ed322ced6.svg"></a></div><div class="qrcode" id="qrcode-wechat" style="opacity:0;height:0"><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://api.qrserver.com/v1/create-qr-code/?size=256x256&data=https://20508888.xyz/posts/1000/"></div></div></section></div></article><div class="related-wrap" id="read-next"><section class="body"><div class="item" id="prev"><div class="note">较新文章</div><a href="/posts/14017/">SolidWorks 一键导图（VBA）</a></div><div class="item" id="next"><div class="note">较早文章</div><a href="/posts/10055/">SolidWorks 遍历装配体（VBA）</a></div></section></div><footer class="page-footer footnote"><hr><div class="text"><div align="center"><a title="里面或许能发现一些奇妙的东西哟" href="https://20508888.xyz/sitemap.txt" target="_blank">本站地图</a> | <a title="我的Uptime监控及状态页面" href="https://uf.20508888.xyz/" target="_blank">状态监测</a> | <a title="加密/解密一张图片" href="https://20508888.xyz/jpgcrypt.github.io/" target="_blank">图片加密&解密</a> | <a title="这是Malvern's Blog文件和图片的服务器。" href="http://117.72.17.109/" target="_blank">File Server</a> | <a title="博客人的朋友圈，博客收录与文章RSS聚合网站。" href="https://www.boyouquan.com/home" target="_blank">博友圈</a> | <a title="博客说旨在全收录优质的中文个人博客，提供博客收录、文章聚合展示等功能，欢迎来这里发现有趣的博友以及他们的最新动态！" href="https://blog.ns.ci/home" target="_blank">博客说</a></div><div align="center">Copyright 2022-2025 | Powered by <a href="https://hexo.io/zh-cn/" target="_blank">Hexo 7.3.0</a> & <a href="https://xaoxuu.com/wiki/stellar/" target="_blank">Stellar 1.29.1</a></div><div align="center"><span id="busuanzi_container_site_pv">总访问量<span id="busuanzi_value_site_pv"></span>次 | <span id="sitetime"></span></span></div><script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script><script language="javascript">function siteTime(){window.setTimeout("siteTime()",1e3);var e=36e5,t=24*e,o=new Date,i=o.getFullYear(),a=o.getMonth()+1,n=o.getDate(),r=o.getHours(),l=o.getMinutes(),s=o.getSeconds(),M=(Date.UTC(2022,11,28,20,0,0),Date.UTC(i,a,n,r,l,s)),T=Date.UTC(2034,2,25,0,0,0)-M,g=Math.floor(T/31536e6),m=Math.floor(T/t-365*g),f=Math.floor((T-(365*g+m)*t)/e),h=Math.floor((T-(365*g+m)*t-f*e)/6e4),u=Math.floor((T-(365*g+m)*t-f*e-6e4*h)/1e3);document.getElementById("sitetime").innerHTML="本网址将在"+g+"年"+m+"天"+f+"小时"+h+"分钟"+u+"秒后过期"}siteTime()</script></div></footer><div class="main-mask" onclick="sidebar.dismiss()"></div></div><aside class="l_right"><div class="widgets"><widget class="widget-wrapper toc" id="data-toc" collapse="auto"><div class="widget-header dis-select"><span class="name">本文目录</span><a class="cap-action" onclick="sidebar.toggleTOC()"><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6h11m-11 6h11m-11 6h11M4 6h1v4m-1 0h2m0 8H4c0-1 2-2 2-3s-1-1.5-2-1"/></svg></a></div><div class="widget-body"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%B5%B7%E5%9B%A0"><span class="toc-number">1.</span> <span class="toc-text">起因</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%85%B3%E4%BA%8E%E6%95%B0%E5%AD%97"><span class="toc-number">2.</span> <span class="toc-text">关于数字</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%88%9D%E5%A7%8B%E5%8C%96%E5%AE%9E%E4%BE%8B"><span class="toc-number">3.</span> <span class="toc-text">初始化实例</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%8F%92%E8%A1%A5%E6%80%9D%E8%B7%AF"><span class="toc-number">4.</span> <span class="toc-text">插补思路</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%8C%E6%95%B4%E4%BB%A3%E7%A0%81"><span class="toc-number">5.</span> <span class="toc-text">完整代码</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%AF%95%E4%B8%80%E4%B8%8B"><span class="toc-number">5.1.</span> <span class="toc-text">试一下</span></a></li></ol></li></ol></div><div class="widget-footer"><a class="top" onclick="util.scrollTop()"><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.5"><path d="M2 12c0-4.714 0-7.071 1.464-8.536C4.93 2 7.286 2 12 2c4.714 0 7.071 0 8.535 1.464C22 4.93 22 7.286 22 12c0 4.714 0 7.071-1.465 8.535C19.072 22 16.714 22 12 22s-7.071 0-8.536-1.465C2 19.072 2 16.714 2 12Z"/><path stroke-linecap="round" stroke-linejoin="round" d="m9 15.5l3-3l3 3m-6-4l3-3l3 3"/></g></svg><span>回到顶部</span></a></div></widget></div></aside><div class="float-panel blur"><button type="button" style="display:none" class="laptop-only rightbar-toggle mobile" onclick="sidebar.rightbar()"><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6h11m-11 6h11m-11 6h11M4 6h1v4m-1 0h2m0 8H4c0-1 2-2 2-3s-1-1.5-2-1"/></svg></button> <button type="button" style="display:none" class="mobile-only leftbar-toggle mobile" onclick="sidebar.leftbar()"><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.5"><path d="M2 11c0-3.771 0-5.657 1.172-6.828C4.343 3 6.229 3 10 3h4c3.771 0 5.657 0 6.828 1.172C22 5.343 22 7.229 22 11v2c0 3.771 0 5.657-1.172 6.828C19.657 21 17.771 21 14 21h-4c-3.771 0-5.657 0-6.828-1.172C2 18.657 2 16.771 2 13z"/><path id="sep" stroke-linecap="round" d="M5.5 10h6m-5 4h4m4.5 7V3"/></g></svg></button></div></div><div class="scripts"><script type="text/javascript">const ctx = {
+    date_suffix: {
+      just: `刚刚`,
+      min: `分钟前`,
+      hour: `小时前`,
+      day: `天前`,
+    },
+    root : `/`,
+  };
+
+  // required plugins (only load if needs)
+  if (`local_search`) {
+    ctx.search = {};
+    ctx.search.service = `local_search`;
+    if (ctx.search.service == 'local_search') {
+      let service_obj = Object.assign({}, `{"field":"all","path":"/search.json","content":true,"sort":"-date"}`);
+      ctx.search[ctx.search.service] = service_obj;
+    }
+  }
+  const def = {
+    avatar: `https://gcore.jsdelivr.net/gh/cdn-x/placeholder@1.0.12/avatar/round/3442075.svg`,
+    cover: `https://gcore.jsdelivr.net/gh/cdn-x/placeholder@1.0.12/cover/76b86c0226ffd.svg`,
+  };
+  const deps = {
+    jquery: `https://cdn.jsdelivr.net/npm/jquery@3.7.1/dist/jquery.min.js`,
+    marked: `https://cdn.jsdelivr.net/npm/marked@13.0.1/lib/marked.umd.min.js`
+  }</script><script type="text/javascript">const utils = {
+    // 懒加载 css https://github.com/filamentgroup/loadCSS
+    css: (href, before, media, attributes) => {
+      var doc = window.document;
+      var ss = doc.createElement("link");
+      var ref;
+      if (before) {
+        ref = before;
+      } else {
+        var refs = (doc.body || doc.getElementsByTagName("head")[0]).childNodes;
+        ref = refs[refs.length - 1];
+      }
+      var sheets = doc.styleSheets;
+      if (attributes) {
+        for (var attributeName in attributes) {
+          if (attributes.hasOwnProperty(attributeName)) {
+            ss.setAttribute(attributeName, attributes[attributeName]);
+          }
+        }
+      }
+      ss.rel = "stylesheet";
+      ss.href = href;
+      ss.media = "only x";
+      function ready(cb) {
+        if (doc.body) {
+          return cb();
+        }
+        setTimeout(function () {
+          ready(cb);
+        });
+      }
+      ready(function () {
+        ref.parentNode.insertBefore(ss, before ? ref : ref.nextSibling);
+      });
+      var onloadcssdefined = function (cb) {
+        var resolvedHref = ss.href;
+        var i = sheets.length;
+        while (i--) {
+          if (sheets[i].href === resolvedHref) {
+            return cb();
+          }
+        }
+        setTimeout(function () {
+          onloadcssdefined(cb);
+        });
+      };
+      function loadCB() {
+        if (ss.addEventListener) {
+          ss.removeEventListener("load", loadCB);
+        }
+        ss.media = media || "all";
+      }
+      if (ss.addEventListener) {
+        ss.addEventListener("load", loadCB);
+      }
+      ss.onloadcssdefined = onloadcssdefined;
+      onloadcssdefined(loadCB);
+      return ss;
+    },
+
+    js: (src, opt) => new Promise((resolve, reject) => {
+      var script = document.createElement('script');
+      if (src.startsWith('/')){
+        src = ctx.root + src.substring(1);
+      }
+      script.src = src;
+      if (opt) {
+        for (let key of Object.keys(opt)) {
+          script[key] = opt[key]
+        }
+      } else {
+        // 默认异步，如果需要同步，第二个参数传入 {} 即可
+        script.async = true
+      }
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    }),
+
+    jq: (fn) => {
+      if (typeof jQuery === 'undefined') {
+        utils.js(deps.jquery).then(fn)
+      } else {
+        fn()
+      }
+    },
+    
+    onLoading: (el) => {
+      if (el) {
+        $(el).append('<div class="loading-wrap"><svg xmlns="http://www.w3.org/2000/svg" width="2em" height="2em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-width="2"><path stroke-dasharray="60" stroke-dashoffset="60" stroke-opacity=".3" d="M12 3C16.9706 3 21 7.02944 21 12C21 16.9706 16.9706 21 12 21C7.02944 21 3 16.9706 3 12C3 7.02944 7.02944 3 12 3Z"><animate fill="freeze" attributeName="stroke-dashoffset" dur="1.3s" values="60;0"/></path><path stroke-dasharray="15" stroke-dashoffset="15" d="M12 3C16.9706 3 21 7.02944 21 12"><animate fill="freeze" attributeName="stroke-dashoffset" dur="0.3s" values="15;0"/><animateTransform attributeName="transform" dur="1.5s" repeatCount="indefinite" type="rotate" values="0 12 12;360 12 12"/></path></g></svg></div>');
+      }
+    },
+    onLoadSuccess: (el) => {
+      if (el) {
+        $(el).find('.loading-wrap').remove();
+      }
+    },
+    onLoadFailure: (el) => {
+      if (el) {
+        $(el).find('.loading-wrap svg').remove();
+        $(el).find('.loading-wrap').append('<svg xmlns="http://www.w3.org/2000/svg" width="2em" height="2em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"><path stroke-dasharray="60" stroke-dashoffset="60" d="M12 3L21 20H3L12 3Z"><animate fill="freeze" attributeName="stroke-dashoffset" dur="0.5s" values="60;0"/></path><path stroke-dasharray="6" stroke-dashoffset="6" d="M12 10V14"><animate fill="freeze" attributeName="stroke-dashoffset" begin="0.6s" dur="0.2s" values="6;0"/></path></g><circle cx="12" cy="17" r="1" fill="currentColor" fill-opacity="0"><animate fill="freeze" attributeName="fill-opacity" begin="0.8s" dur="0.4s" values="0;1"/></circle></svg>');
+        $(el).find('.loading-wrap').addClass('error');
+      }
+    },
+    request: (el, url, callback, onFailure) => {
+      let retryTimes = 3;
+      utils.onLoading(el);
+      function req() {
+        return new Promise((resolve, reject) => {
+          let status = 0; // 0 等待 1 完成 2 超时
+          let timer = setTimeout(() => {
+            if (status === 0) {
+              status = 2;
+              timer = null;
+              reject('请求超时');
+              if (retryTimes == 0) {
+                onFailure();
+              }
+            }
+          }, 5000);
+          fetch(url).then(function(response) {
+            if (status !== 2) {
+              clearTimeout(timer);
+              resolve(response);
+              timer = null;
+              status = 1;
+            }
+            if (response.ok) {
+              return response.json();
+            }
+            throw new Error('Network response was not ok.');
+          }).then(function(data) {
+            retryTimes = 0;
+            utils.onLoadSuccess(el);
+            callback(data);
+          }).catch(function(error) {
+            if (retryTimes > 0) {
+              retryTimes -= 1;
+              setTimeout(() => {
+                req();
+              }, 5000);
+            } else {
+              utils.onLoadFailure(el);
+              onFailure();
+            }
+          });
+        });
+      }
+      req();
+    },
+  };</script><script>const sidebar = {
+    leftbar: () => {
+      if (l_body) {
+        l_body.toggleAttribute('leftbar');
+        l_body.removeAttribute('rightbar');
+      }
+    },
+    rightbar: () => {
+      if (l_body) {
+        l_body.toggleAttribute('rightbar');
+        l_body.removeAttribute('leftbar');
+      }
+    },
+    dismiss: () => {
+      if (l_body) {
+        l_body.removeAttribute('leftbar');
+        l_body.removeAttribute('rightbar');
+      }
+    },
+    toggleTOC: () => {
+      document.querySelector('#data-toc').classList.toggle('collapse');
+    }
+  }</script><script type="text/javascript">(() => {
+    const tagSwitchers = document.querySelectorAll('.tag-subtree.parent-tag > a > .tag-switcher-wrapper')
+    for (const tagSwitcher of tagSwitchers) {
+      tagSwitcher.addEventListener('click', (e) => {
+        const parent = e.target.closest('.tag-subtree.parent-tag')
+        parent.classList.toggle('expanded')
+        e.preventDefault()
+      })
+    }
+
+    // Get active tag from query string, then activate it.
+    const urlParams = new URLSearchParams(window.location.search)
+    const activeTag = urlParams.get('tag')
+    if (activeTag) {
+      let tag = document.querySelector(`.tag-subtree[data-tag="${activeTag}"]`)
+      if (tag) {
+        tag.querySelector('a').classList.add('active')
+        
+        while (tag) {
+          tag.classList.add('expanded')
+          tag = tag.parentElement.closest('.tag-subtree.parent-tag')
+        }
+      }
+    }
+  })()</script><script src="/js/main.js?v=1.29.1" defer></script><script type="text/javascript">const applyTheme = (theme) => {
+    if (theme === 'auto') {
+      document.documentElement.removeAttribute('data-theme')
+    } else {
+      document.documentElement.setAttribute('data-theme', theme)
+    }
+
+    applyThemeToGiscus(theme)
+  }
+
+  const applyThemeToGiscus = (theme) => {
+    theme = theme === 'auto' ? 'preferred_color_scheme' : theme
+
+    const cmt = document.getElementById('giscus')
+    if (cmt) {
+      // This works before giscus load.
+      cmt.setAttribute('data-theme', theme)
+    }
+
+    const iframe = document.querySelector('#comments > section.giscus > iframe')
+    if (iframe) {
+      // This works after giscus loaded.
+      const src = iframe.src
+      const newSrc = src.replace(/theme=[\w]+/, `theme=${theme}`)
+      iframe.src = newSrc
+    }
+  }
+
+  const switchTheme = () => {
+    // light -> dark -> auto -> light -> ...
+    const currentTheme = document.documentElement.getAttribute('data-theme')
+    let newTheme;
+    switch (currentTheme) {
+      case 'light':
+        newTheme = 'dark'
+        break
+      case 'dark':
+        newTheme = 'auto'
+        break
+      default:
+        newTheme = 'light'
+    }
+    applyTheme(newTheme)
+    window.localStorage.setItem('Stellar.theme', newTheme)
+
+    const messages = {
+      light: `切换到浅色模式`,
+      dark: `切换到深色模式`,
+      auto: `切换到跟随系统配色`,
+    }
+    hud?.toast?.(messages[newTheme])
+  }
+
+  (() => {
+    // Apply user's preferred theme, if any.
+    const theme = window.localStorage.getItem('Stellar.theme')
+    if (theme !== null) {
+      applyTheme(theme)
+    }
+  })()</script><script defer>window.addEventListener('DOMContentLoaded', (event) => {
+    ctx.services = Object.assign({}, JSON.parse(`{"mdrender":{"js":"/js/services/mdrender.js"},"siteinfo":{"js":"/js/services/siteinfo.js","api":null},"ghinfo":{"js":"/js/services/ghinfo.js"},"sites":{"js":"/js/services/sites.js"},"friends":{"js":"/js/services/friends.js"},"timeline":{"js":"/js/services/timeline.js"},"fcircle":{"js":"/js/services/fcircle.js"},"weibo":{"js":"/js/services/weibo.js"},"memos":{"js":"/js/services/memos.js"}}`));
+    for (let id of Object.keys(ctx.services)) {
+      const js = ctx.services[id].js;
+      if (id == 'siteinfo') {
+        ctx.cardlinks = document.querySelectorAll('a.link-card[cardlink]');
+        if (ctx.cardlinks?.length > 0) {
+          utils.js(js, { defer: true }).then(function () {
+            setCardLink(ctx.cardlinks);
+          });
+        }
+      } else {
+        const els = document.getElementsByClassName(`ds-${id}`);
+        if (els?.length > 0) {
+          utils.jq(() => {
+            if (id == 'timeline' || 'memos' || 'marked') {
+              utils.js(deps.marked).then(function () {
+                utils.js(js, { defer: true });
+              });
+            } else {
+              utils.js(js, { defer: true });
+            }
+          });
+        }
+      }
+    }
+  });</script><script>window.addEventListener('DOMContentLoaded', (event) => {
+    ctx.search = {
+      path: `/search.json`,
+    }
+    utils.js('/js/search/local-search.js', { defer: true });
+  });</script><script>window.FPConfig={delay:0,ignoreKeywords:[],maxRPS:5,hoverDelay:25}</script><script defer src="https://cdn.jsdelivr.net/npm/flying-pages@2/flying-pages.min.js"></script><script defer src="https://cdn.jsdelivr.net/npm/vanilla-lazyload@19.1.3/dist/lazyload.min.js"></script><script>// https://www.npmjs.com/package/vanilla-lazyload
+  // Set the options globally
+  // to make LazyLoad self-initialize
+  window.lazyLoadOptions = {
+    elements_selector: ".lazy",
+  };
+  // Listen to the initialization event
+  // and get the instance of LazyLoad
+  window.addEventListener(
+    "LazyLoad::Initialized",
+    function (event) {
+      window.lazyLoadInstance = event.detail.instance;
+    },
+    false
+  );
+  document.addEventListener('DOMContentLoaded', function () {
+    window.lazyLoadInstance?.update();
+  });</script><script>ctx.fancybox = {
+    selector: `.timenode p>img`,
+    css: `https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0/dist/fancybox/fancybox.css`,
+    js: `https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0/dist/fancybox/fancybox.umd.js`
+  };
+  var selector = '[data-fancybox]:not(.error)';
+  if (ctx.fancybox.selector) {
+    selector += `, ${ctx.fancybox.selector}`
+  }
+  var needFancybox = document.querySelectorAll(selector).length !== 0;
+  if (!needFancybox) {
+    const els = document.getElementsByClassName('ds-memos');
+    if (els != undefined && els.length > 0) {
+      needFancybox = true;
+    }
+  }
+  if (needFancybox) {
+    utils.css(ctx.fancybox.css);
+    utils.js(ctx.fancybox.js, { defer: true }).then(function () {
+      Fancybox.bind(selector, {
+        hideScrollbar: false,
+        Thumbs: {
+          autoStart: false,
+        },
+        caption: (fancybox, slide) => {
+          return slide.triggerEl.alt || slide.triggerEl.dataset.caption || null
+        }
+      });
+    })
+  }</script><script>window.addEventListener('DOMContentLoaded', (event) => {
+    const swiper_api = document.getElementById('swiper-api');
+    if (swiper_api != undefined) {
+      utils.css(`https://unpkg.com/swiper@10.3.1/swiper-bundle.min.css`);
+      utils.js(`https://unpkg.com/swiper@10.3.1/swiper-bundle.min.js`, { defer: true }).then(function () {
+        const effect = swiper_api.getAttribute('effect') || '';
+        var swiper = new Swiper('.swiper#swiper-api', {
+          slidesPerView: 'auto',
+          spaceBetween: 8,
+          centeredSlides: true,
+          effect: effect,
+          rewind: true,
+          pagination: {
+            el: '.swiper-pagination',
+            clickable: true,
+          },
+          navigation: {
+            nextEl: '.swiper-button-next',
+            prevEl: '.swiper-button-prev',
+          },
+        });
+      })
+    }
+  });</script><script>document.addEventListener('DOMContentLoaded', function () {
+    window.codeElements = document.querySelectorAll('.code');
+    if (window.codeElements.length > 0) {
+      ctx.copycode = {
+        default_text: `Copy`,
+        success_text: `Copied`,
+        toast: `复制成功`,
+      };
+      utils.js('/js/plugins/copycode.js');
+    }
+  });</script></div></body></html>
